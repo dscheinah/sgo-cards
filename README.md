@@ -1,5 +1,3 @@
-# sx-skeleton
+# SGO Cards
 
-This is a common setup for a simple sx application.
-
-All documentation and usage instructions must be derived from the commented example code.
+This is an experiment to rapid prototype a turn based browser game. It contains only the basic feature set and simple graphics to work as a proof of concept.
