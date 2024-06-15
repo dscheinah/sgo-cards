@@ -6,14 +6,14 @@
 
 :root {
     /* Used for navigations and highlighted (non interactive) parts. */
-    --primary-color: gray;
+    --primary-color: #577bfb;
     --primary-color-highlight: lightgray;
     --primary-color-inverse: white;
     /* Used for interactive parts (buttons and errors). */
-    --secondary-color: gray;
-    --secondary-color-highlight: lightgrey;
-    --secondary-color-inverse: white;
+    --secondary-color: #ea7d23;
+    --secondary-color-highlight: #f9e94e;
+    --secondary-color-inverse: black;
     /* Used for interactive highlights (anchors and focus). */
-    --tertiary-color: gray;
+    --tertiary-color: #f9e94e;
     --tertiary-color-highlight: lightgrey;
 }
