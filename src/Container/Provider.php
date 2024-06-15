@@ -9,6 +9,8 @@ use App\RouterFactory;
 use Sx\Application\Container\ApplicationProvider;
 use Sx\Container\Injector;
 use Sx\Container\ProviderInterface;
+use Sx\Data\Backend\MySqlBackendFactory;
+use Sx\Data\BackendInterface;
 use Sx\Log\Container\LogProvider;
 use Sx\Message\Container\MessageProvider;
 use Sx\Server\ApplicationInterface;
@@ -36,5 +38,7 @@ class Provider implements ProviderInterface
         $injector->set(ApplicationInterface::class, ApplicationFactory::class);
         $injector->set(RouterInterface::class, RouterFactory::class);
         $injector->set(ListHandler::class, ListHandlerFactory::class);
+
+        $injector->set(BackendInterface::class, MySqlBackendFactory::class);
     }
 }
