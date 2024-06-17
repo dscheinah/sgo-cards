@@ -2,7 +2,13 @@
 
 namespace App;
 
+use App\Handler\LeagueInformationHandler;
+use App\Handler\LeagueListHandler;
 use App\Handler\ListHandler;
+use App\Handler\RoundLoadHandler;
+use App\Handler\RoundNextHandler;
+use App\Handler\UserCreateHandler;
+use App\Handler\UserGetHandler;
 use Sx\Container\FactoryInterface;
 use Sx\Container\Injector;
 use Sx\Server\MiddlewareHandlerInterface;
@@ -29,6 +35,16 @@ class RouterFactory implements FactoryInterface
         $router = new Router($injector->get(MiddlewareHandlerInterface::class));
         // Add the example handler for the backend page.
         $router->post($prefix . 'list', ListHandler::class);
+
+        $router->get($prefix . 'league/list', LeagueListHandler::class);
+        $router->get($prefix . 'league/information', LeagueInformationHandler::class);
+
+        $router->get($prefix . 'round/load', RoundLoadHandler::class);
+        $router->post($prefix . 'round/next', RoundNextHandler::class);
+
+        $router->get($prefix . 'user/get', UserGetHandler::class);
+        $router->post($prefix . 'user/create', UserCreateHandler::class);
+
         return $router;
     }
 }
