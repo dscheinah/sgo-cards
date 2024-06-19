@@ -75,7 +75,7 @@
 
                 details.addEventListener('toggle', () => {
                     opened[id] = details.open;
-                    if (details.open) {
+                    if (details.open && !current) {
                         state.dispatch('loading', true);
                         state.dispatch('league', id);
                     }
@@ -102,6 +102,11 @@
             state.dispatch('loading', false);
             league[payload.id] = payload;
         });
+
+        listen('round-next', () => {
+            league = {};
+            opened = {}
+        })
     });
 </script>
 
