@@ -1,0 +1,131 @@
+<template>
+    <h1>League Statistics</h1>
+    <p>You can inspect the current and past league statistics here.</p>
+    <div id="statistics-list"></div>
+</template>
+
+<script type="module">
+    import {helper, page, state} from '../js/app.js';
+
+    let leagues = state.get('leagues') || [];
+    let league = {};
+    let opened = {};
+
+    function createStatistics(stats) {
+        let maxX = Math.max(0, ...Object.keys(stats).map((value) => parseInt(value)));
+        let maxY = 0;
+        let maxZ = 0;
+        Object.values(stats).forEach((layer) => {
+            maxY = Math.max(maxY, ...Object.keys(layer).map((value) => parseInt(value)));
+            maxZ = Math.max(maxZ, ...Object.values(layer));
+        });
+
+        let table = '';
+        for (let y = 0; y <= maxY; y++) {
+            table += '<tr>'
+            for (let x = 0; x <= maxX; x++) {
+                let z = stats[x] && stats[x][y] || 0;
+                table += `<td style="opacity: ${z || 0 / maxZ}"></td>`
+            }
+            table += '</tr>'
+        }
+        return table;
+    }
+
+    page.register('statistics', ({render, show, listen}) => {
+        render(() => {
+            helper.list('#statistics-list', leagues, (item) => {
+                const id = item.id;
+
+                const details = helper.create('details');
+
+                const summary = helper.create('summary');
+                summary.innerHTML = `<h2>#${id}</h2>`;
+
+                details.appendChild(summary);
+
+                const current = league[id];
+                if (current) {
+                    const div = helper.create('div');
+                    div.classList.add('sx-cards');
+                    div.innerHTML = `
+                        <div class="sx-card">
+                            <div>
+                                <h3>Modifier</h3>
+                                <p>${current['modifier']?.text || 'Not yet activated'}</p>
+                            </div>
+                        </div>
+                        <div class="sx-card">
+                            <div>
+                                <h3>Winner</h3>
+                                ${current['winner'] ? helper.player(current['winner']) : 'League in progress'}
+                            </div>
+                        </div>
+                        <div class="sx-card">
+                            <div>
+                                <h3>Layout</h3>
+                                <table class="statistics-layout">
+                                    ${createStatistics(current.statistics) || '<tr><td></td></tr>'}
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                    details.appendChild(div);
+                }
+
+                details.addEventListener('toggle', () => {
+                    opened[id] = details.open;
+                    if (details.open) {
+                        state.dispatch('loading', true);
+                        state.dispatch('league', id);
+                    }
+                });
+                if (opened[id]) {
+                    details.open = true;
+                }
+
+                return details;
+            });
+        });
+
+        show(() => {
+            state.dispatch('loading', true);
+            state.dispatch('leagues', leagues);
+        });
+
+        listen('leagues', (payload) => {
+            state.dispatch('loading', false);
+            leagues = payload;
+        });
+
+        listen('league', (payload) => {
+            state.dispatch('loading', false);
+            league[payload.id] = payload;
+        });
+    });
+</script>
+
+<style>
+    #statistics-list h2 {
+        display: inline;
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    #statistics-list details {
+        margin: 2em 0;
+    }
+
+    .statistics-layout {
+        margin: 0 auto;
+    }
+
+    .statistics-layout td {
+        width: 4px;
+        height: 4px;
+        border: 1px solid lightgray;
+        background: var(--primary-color);
+        opacity: 0;
+        font-size: 0;
+    }
+</style>

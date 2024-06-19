@@ -4,8 +4,11 @@ import State from '../vendor/dscheinah/sx-js/src/State.js';
 import init from './app/init.js';
 import navigate from './app/navigate.js';
 import * as data from './repository/data.js';
+import * as leagues from './repository/league.js';
+import * as round from './repository/round.js';
 // By separating the helpers to it's own namespace they do not need to packed to an object here.
 import * as helper from './helper.js';
+import user from "./app/user.js";
 
 // Create the global event listener (on window) to be used for e.g. navigation.
 const action = new Action(window);
@@ -19,6 +22,7 @@ const page = new Page(state, helper.element('#main'));
 
 // Populate the initial application state.
 init(state);
+user(state);
 
 // Handle the global navigation. This also handles links in pages automatically.
 // To add a link use <button value="${id}" data-navigation>...</button>.
@@ -40,6 +44,11 @@ state.listen('sx-show', () => state.dispatch('loading', false));
 // This is a simple example for async global state management.
 state.handle('backend-data', (payload) => data.load(payload));
 
+state.handle('leagues', () => leagues.list());
+state.handle('league', (payload) => leagues.information(payload));
+state.handle('round', (payload) => round.load(payload));
+state.handle('round-next', (payload) => round.next(...payload));
+
 // Define all pages and load the main page. The ID defined here is globally used for:
 //  - handling navigation by href or value (see above)
 //  - registering scopes in pages
@@ -47,8 +56,12 @@ state.handle('backend-data', (payload) => data.load(payload));
 // For real routing you can replace window.location.href with custom paths for each page.
 page.add('home', 'pages/home.html', window.location.href);
 page.add('backend', 'pages/backend.html', window.location.href);
+
+page.add('overview', 'pages/overview.html', window.location.href);
+page.add('game', 'pages/game.html', window.location.href);
+page.add('statistics', 'pages/statistics.html', window.location.href);
 // If used with routing this must be replaced with a check on the called route.
-page.show('home');
+page.show('overview');
 
 // The app.js file is used as a kind of service manager for dependency injection.
 // Import the file in pages to get access to the exported modules.

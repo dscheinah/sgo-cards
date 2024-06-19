@@ -1,0 +1,138 @@
+<template>
+    <h1>Play Game</h1>
+    <div id="game-login" class="game-hidden">
+        <p>Please log in to start playing.</p>
+        <button data-navigation value="overview"><span class="sx-button-icon">🪟</span> Login</button>
+    </div>
+    <div id="game-round" class="game-hidden">
+        <details>
+            <summary>Select a card to advance to the next round. Try to reach the limits.</summary>
+            <ul>
+                <li>Battles are calculated in background against a random enemy at your position</li>
+                <li>The position also shows your current loose:win ratio</li>
+                <li>Modifier values are invisible and only apply at battle time</li>
+                <li>Damage is reduced by enemies defense and vice versa</li>
+                <li>Magic is an extra attack mitigated by enemies magic</li>
+                <li>Speed adds one extra physical attack for the fastest</li>
+                <li>You loose when your health drops below zero while calculating damage</li>
+            </ul>
+        </details>
+        <h2>League #<span id="game-league-number"></span></h2>
+        <p>League modifier: <span id="game-league"></span></p>
+        <div id="game-cards" class="sx-cards"></div>
+        <p class="sx-actions">
+            <em id="game-result" class="sx-highlight"></em>
+        </p>
+        <h2>Player</h2>
+        <div id="game-player"></div>
+    </div>
+</template>
+
+<script type="module">
+    import {helper, page, state} from '../js/app.js';
+
+    let user = state.get('user');
+    let loading = state.get('loading');
+    let round = state.get('round');
+    let result = state.get('round-next');
+
+    page.register('game', ({render, show, action, listen}) => {
+        render(() => {
+            if (!user) {
+                return;
+            }
+            helper.style('#game-round', 'display', user.id ? 'initial': null);
+            helper.style('#game-login', 'display', user.create ? 'initial' : null);
+            if (!round) {
+                return;
+            }
+            helper.set('#game-league-number', 'innerHTML', round['league'].id);
+            helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
+            helper.set('#game-player', 'innerHTML', helper.player(round['player']));
+            helper.list('#game-cards', round['cards'], (card, index) => {
+                const div = helper.create('div');
+                div.classList.add('sx-card');
+                div.innerHTML = `
+                    <span class="game-icon">${card.icon}</span>
+                    <p><strong>${card.text}</strong></p>
+                    <button value="${index}" accesskey="${index + 1}" type="button">Select</button>
+                `;
+                return div;
+            });
+            helper.set('#game-cards button', 'disabled', loading);
+            let text = '';
+            if (result) {
+                if (result['league']) {
+                    text = '🏆️ Won current League 🏆️';
+                } else if (result['finished']) {
+                    text = '☠️ Lost current try ☠️';
+                } else if (result['winner']) {
+                    text = 'Victory'
+                } else {
+                    text = 'Defeat';
+                }
+            }
+            helper.set('#game-result', 'innerHTML', text);
+        });
+
+        show(() => {
+            if (!user?.id) {
+                return;
+            }
+            state.dispatch('loading', true);
+            state.dispatch('round', user.id);
+        });
+
+        action('#game-cards button', 'click', (event, target) => {
+            state.dispatch('loading', true);
+            state.dispatch('round-next', [user.id, target.value]);
+        });
+
+        listen('user', (payload) => {
+            user = payload;
+        });
+
+        listen('loading', (payload) => {
+            loading = payload;
+        });
+
+        listen('round', (payload) => {
+            round = payload;
+            state.dispatch('loading', false);
+        });
+
+        listen('round-next', (payload) => {
+            result = payload;
+            state.dispatch('round', user.id);
+        })
+    });
+</script>
+
+<style>
+    .game-hidden {
+        display: none;
+    }
+
+    .game-icon {
+        font-size: 42px;
+        margin: 0;
+    }
+
+    #game-cards > * {
+        width: 100%;
+    }
+
+    #game-cards p {
+        margin: 1em 0;
+    }
+
+    #game-result {
+        font-size: 1.2em;
+    }
+
+    @media only screen and (min-width: 666px) {
+        #game-cards {
+            flex-wrap: nowrap;
+        }
+    }
+</style>
