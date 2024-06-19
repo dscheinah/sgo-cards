@@ -49,12 +49,12 @@ return [
         'text' => 'Reduced global Speed',
     ],
     'increase_modifiers' => [
-        'modifiers' => 2,
+        'mods' => 2,
         'world' => true,
         'text' => 'Increased global Buff and Curse effectivity',
     ],
     'reduce_modifiers' => [
-        'modifiers' => 0.5,
+        'mods' => 0.5,
         'world' => true,
         'text' => 'Reduced global Buff and Curse effectivity',
     ],

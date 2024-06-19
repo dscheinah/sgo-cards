@@ -49,11 +49,11 @@ class Modifier
 
     public function calculateModifierChanges(array $modifiers): float
     {
-        $modifiers = array_filter($modifiers, static fn ($mod) => $mod && ($mod['modifiers'] ?? false));
+        $modifiers = array_filter($modifiers, static fn ($mod) => $mod && ($mod['mods'] ?? false));
 
         $total = 1;
         foreach ($modifiers as $modifier) {
-            $total *= $modifier['modifiers'];
+            $total *= $modifier['mods'];
         }
         return $total;
     }
@@ -64,7 +64,7 @@ class Modifier
 
         foreach ($modifiers as $modifier) {
             foreach ($modifier as $key => $value) {
-                if (is_numeric($value)) {
+                if ($key !== 'mods' && is_numeric($value)) {
                     $data[$key] += $value * $change;
                 }
             }
