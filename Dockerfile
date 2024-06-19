@@ -28,6 +28,7 @@ RUN docker-php-ext-install mysqli
 
 # Add the complete PHP sources.
 ADD ./src /var/www/html/src
+ADD ./data /var/www/html/data
 # Also use the default configuration. This already uses getenv to be compatible with docker.
 ADD ./config/config.local.php.dist /var/www/html/config/config.local.php
 # Copy the composer vendor files. The styles and js moved to public are not needed.
