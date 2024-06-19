@@ -7,6 +7,7 @@ use App\Helper\Player;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\SnapshotStorage;
+use App\Storage\UserStorage;
 use Sx\Container\FactoryInterface;
 use Sx\Container\Injector;
 
@@ -18,6 +19,7 @@ class LeagueRepositoryFactory implements FactoryInterface
             $injector->get(LeagueStorage::class),
             $injector->get(PlayerStorage::class),
             $injector->get(SnapshotStorage::class),
+            $injector->get(UserStorage::class),
             $injector->get(Modifier::class),
             $injector->get(Player::class),
             $options['max'],

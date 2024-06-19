@@ -47,6 +47,7 @@ class RoundRepository
                 'modifier' => $this->modifier->get($currentLeague['modifier']),
             ],
             'player' => $this->player->get($currentPlayer),
+            'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
             'cards' => $this->card->draw($currentPlayer['y'], $this->seed($currentPlayer)),
         ];
     }

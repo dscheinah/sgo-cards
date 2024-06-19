@@ -18,6 +18,24 @@ class PlayerStorage extends Storage
         return $this->fetch($statement, [$userId, $leagueId])->current();
     }
 
+    public function fetchCountForUserAndLeague(string $userId, int $leagueId): int
+    {
+        $statement = 'SELECT COUNT(*) AS `count` FROM `players` WHERE `user_id` = ? AND `league_id` = ?';
+        return $this->fetch($statement, [$userId, $leagueId])->current()['count'] ?? 0;
+    }
+
+    public function fetchCountForLeague(int $leagueId): array
+    {
+        $statement = 'SELECT 
+                COUNT(DISTINCT `user_id`) AS `users`, 
+                COUNT(*) AS `players`
+            FROM `players` WHERE `league_id` = ?';
+        return $this->fetch($statement, [$leagueId])->current() ?: [
+            'users' => 0,
+            'players' => 0,
+        ];
+    }
+
     public function insertOne(array $player): int
     {
         $statement = 'INSERT INTO players (`user_id`, `league_id`, `modifier`) VALUES (?, ?, ?)';

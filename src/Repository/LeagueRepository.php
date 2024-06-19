@@ -7,6 +7,7 @@ use App\Helper\Player;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\SnapshotStorage;
+use App\Storage\UserStorage;
 
 class LeagueRepository
 {
@@ -14,6 +15,7 @@ class LeagueRepository
         private readonly LeagueStorage $leagueStorage,
         private readonly PlayerStorage $playerStorage,
         private readonly SnapshotStorage $snapshotStorage,
+        private readonly UserStorage $userStorage,
         private readonly Modifier $modifier,
         private readonly Player $player,
         private readonly int $max,
@@ -31,6 +33,7 @@ class LeagueRepository
         if (!$league) {
             return null;
         }
+        $leagueId = $league['id'];
 
         $player = $this->playerStorage->fetchOneForLeagueAtY($id, $this->max);
 
@@ -42,11 +45,23 @@ class LeagueRepository
             $statistics[$snapshot['x']][$snapshot['y']]++;
         }
 
-        return [
+        $counts = $this->playerStorage->fetchCountForLeague($leagueId);
+
+        $information = [
             'id' => $id,
             'modifier' => $this->modifier->get($league['modifier']),
-            'winner' => $player ? $this->player->get($player) : null,
-            'statistics' => (object) array_map(static fn ($entry) => (object) $entry, $statistics),
+            'statistics' => (object) array_map(static fn($entry) => (object) $entry, $statistics),
+            'user_count' => $counts['users'],
+            'player_count' => $counts['players'],
         ];
+        if ($player) {
+            $userId = $player['user_id'];
+            $information['winner'] = [
+                'name' => $this->userStorage->fetchOne($userId)['name'] ?? '',
+                'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
+                'player' => $this->player->get($player),
+            ];
+        }
+        return $information;
     }
 }

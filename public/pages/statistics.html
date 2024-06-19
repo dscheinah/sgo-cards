@@ -11,6 +11,13 @@
     let league = {};
     let opened = {};
 
+    function createWinner(winner) {
+        if (!winner) {
+            return '';
+        }
+        return `<p><strong>${winner.name} at try #${winner['try']}</strong></p>` + helper.player(winner['player']);
+    }
+
     function createStatistics(stats) {
         let maxX = Math.max(0, ...Object.keys(stats).map((value) => parseInt(value)));
         let maxY = 0;
@@ -51,14 +58,18 @@
                     div.innerHTML = `
                         <div class="sx-card">
                             <div>
-                                <h3>Modifier</h3>
-                                <p>${current['modifier']?.text || 'Not yet activated'}</p>
+                                <h3>League</h3>
+                                <table>
+                                    <tr><th>Modifier</th><td>${current['modifier']?.text || 'Not yet activated'}</td></tr>
+                                    <tr><th>Users</th><td>${current['user_count']}</</td></tr>
+                                    <tr><th>Players</th><td>${current['player_count']}</</td></tr>
+                                </table>
                             </div>
                         </div>
                         <div class="sx-card">
                             <div>
                                 <h3>Winner</h3>
-                                ${current['winner'] ? helper.player(current['winner']) : 'League in progress'}
+                                ${createWinner(current['winner']) || '<p>League in progress</p>'}
                             </div>
                         </div>
                         <div class="sx-card">

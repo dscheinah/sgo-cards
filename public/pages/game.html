@@ -23,7 +23,7 @@
         <p class="sx-actions">
             <em id="game-result" class="sx-highlight"></em>
         </p>
-        <h2>Player</h2>
+        <h2>Player #<span id="game-player-number"></span></h2>
         <div id="game-player"></div>
     </div>
 </template>
@@ -48,6 +48,7 @@
             }
             helper.set('#game-league-number', 'innerHTML', round['league'].id);
             helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
+            helper.set('#game-player-number', 'innerHTML', round['try']);
             helper.set('#game-player', 'innerHTML', helper.player(round['player']));
             helper.list('#game-cards', round['cards'], (card, index) => {
                 const div = helper.create('div');
