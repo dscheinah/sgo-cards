@@ -93,17 +93,17 @@ class Player
     public function stats(array $player, array $enemy): array
     {
         return [
-            'health' => $player['data']['health'],
+            'health' => (int) $player['data']['health'],
             'damage' => max(
-                max($player['data']['damage'], 0) - max($enemy['data']['defense'], 0),
+                max((int) $player['data']['damage'], 0) - (int) max($enemy['data']['defense'], 0),
                 $this->damage
             ),
             'magic' => max(
-                max($player['data']['magic'], 0) - max($enemy['data']['magic'], 0),
+                max((int) $player['data']['magic'], 0) - (int) max($enemy['data']['magic'], 0),
                 0
             ),
             'speed' => max(
-                max($player['data']['speed'], 0) - max($enemy['data']['speed'], 0),
+                max((int) $player['data']['speed'], 0) - (int) max($enemy['data']['speed'], 0),
                 0
             ),
         ];
