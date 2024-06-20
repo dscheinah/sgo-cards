@@ -79,7 +79,7 @@ class RoundRepository
 
         if ($this->battle($player, $enemy, $this->modifier->get($currentLeague['modifier']))) {
             $this->playerStorage->updateY($player['id'], ++$player['y']);
-            if (!$currentLeague['modifier'] && $player['y'] >= $this->max / 2) {
+            if (!$currentLeague['modifier'] && $player['y'] >= $this->max * 0.75) {
                 $this->leagueStorage->updateModifier($leagueId, $this->modifier->pickWorld());
             }
             if ($player['y'] >= $this->max) {
