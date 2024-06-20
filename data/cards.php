@@ -23,7 +23,7 @@ return [
             ],
         ],
         [
-            'icon' => '🪄',
+            'icon' => '🪄️',
             'text' => 'Magic',
             'data' => [
                 'magic' => 1,
@@ -36,6 +36,8 @@ return [
                 'speed' => 1,
             ],
         ],
+    ],
+    [
         [
             'icon' => '💱⚔️',
             'text' => 'Trade Defense for Damage',
@@ -52,20 +54,29 @@ return [
                 'damage' => -1,
             ]
         ],
+        [
+            'icon' => '💱🪄️',
+            'text' => 'Trade Physical for Magic',
+            'data' => [
+                'magic' => 3,
+                'damage' => -1,
+                'defense' => -1,
+            ],
+        ],
     ],
     [
         [
-            'icon' => '️️⏫⚔️',
+            'icon' => '️️🔺⚔️',
             'text' => 'Buff Damage',
             'modifier' => 'add_damage',
         ],
         [
-            'icon' => '⏫🛡️',
+            'icon' => '🔺🛡️',
             'text' => 'Buff Defense',
             'modifier' => 'add_defense',
         ],
         [
-            'icon' => '⏫🪄',
+            'icon' => '️️🔺🪄️',
             'text' => 'Buff Magic',
             'modifier' => 'add_magic',
         ],
@@ -80,7 +91,7 @@ return [
             'modifier' => 'remove_defense',
         ],
         [
-            'icon' => '🪄🔻',
+            'icon' => '🪄️🔻',
             'text' => 'Curse Enemy Magic',
             'modifier' => 'remove_magic',
         ],
@@ -108,7 +119,7 @@ return [
             ],
         ],
         [
-            'icon' => '🪄🪄',
+            'icon' => '🪄️🪄️',
             'text' => 'Extra Magic',
             'data' => [
                 'magic' => 2,
@@ -121,13 +132,63 @@ return [
                 'speed' => 2,
             ],
         ],
+    ],
+    [
         [
-            'icon' => '💱🪄️',
-            'text' => 'Trade Physical for Magic',
+            'icon' => '💥🪄️❤️️',
+            'text' => 'Convert Magic to Health',
+            'modifier' => 'convert_magic_to_health',
+        ],
+        [
+            'icon' => '💥🥾❤️',
+            'text' => 'Convert Speed to Health',
+            'modifier' => 'convert_speed_to_health',
+        ],
+        [
+            'icon' => '️️⏫️️⚔️️',
+            'text' => 'Increase Damage',
+            'modifier' => 'more_damage',
+        ],
+        [
+            'icon' => '⏫️️🛡️',
+            'text' => 'Increase Defense',
+            'modifier' => 'more_defense',
+        ],
+    ],
+    [
+        [
+            'icon' => '❤️❤️❤️',
+            'text' => 'Super Health',
             'data' => [
-                'magic' => 4,
-                'damage' => -1,
-                'defense' => -1,
+                'health' => 9,
+            ],
+        ],
+        [
+            'icon' => '⚔️⚔️⚔️',
+            'text' => 'Super Damage',
+            'data' => [
+                'damage' => 4,
+            ],
+        ],
+        [
+            'icon' => '🛡️🛡️🛡️',
+            'text' => 'Super Defense',
+            'data' => [
+                'defense' => 4,
+            ],
+        ],
+        [
+            'icon' => '🪄️🪄️🪄️',
+            'text' => 'Super Magic',
+            'data' => [
+                'magic' => 3,
+            ],
+        ],
+        [
+            'icon' => '🥾🥾🥾',
+            'text' => 'Super Speed',
+            'data' => [
+                'speed' => 3,
             ],
         ],
     ],

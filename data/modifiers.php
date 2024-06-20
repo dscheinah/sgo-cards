@@ -1,36 +1,36 @@
 <?php
 return [
-    'increase_damage' => [
+    'more_player_damage' => [
         'data' => [
             'damage' => 1.5,
         ],
         'multiplicative' => true,
         'player' => true,
-        'text' => 'Increased global Damage',
+        'text' => 'More global Damage',
     ],
-    'increase_defense' => [
+    'more_player_defense' => [
         'data' => [
             'defense' => 1.5,
         ],
         'multiplicative' => true,
         'player' => true,
-        'text' => 'Increased global Defense',
+        'text' => 'More global Defense',
     ],
-    'increase_magic' => [
+    'more_player_magic' => [
         'data' => [
-            'magic' => 1.5,
+            'magic' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
-        'text' => 'Increased global Magic',
+        'text' => 'More global Magic',
     ],
-    'increase_speed' => [
+    'more_player_speed' => [
         'data' => [
-            'speed' => 1.5,
+            'speed' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
-        'text' => 'Increased global Speed',
+        'text' => 'More global Speed',
     ],
     'reduce_damage' => [
         'data' => [
@@ -38,7 +38,7 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
-        'text' => 'Reduced global Damage',
+        'text' => 'Less global Damage',
     ],
     'reduce_defense' => [
         'data' => [
@@ -46,7 +46,7 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
-        'text' => 'Reduced global Defense',
+        'text' => 'Less global Defense',
     ],
     'reduce_magic' => [
         'data' => [
@@ -54,7 +54,7 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
-        'text' => 'Reduced global Magic',
+        'text' => 'Less global Magic',
     ],
     'reduce_speed' => [
         'data' => [
@@ -62,15 +62,15 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
-        'text' => 'Reduced global Speed',
+        'text' => 'Less global Speed',
     ],
-    'increase_modifiers' => [
+    'more_modifiers' => [
         'data' => [
             'mods' => 2,
         ],
         'modifiers' => true,
         'world' => true,
-        'text' => 'Increased global Buff and Curse effectivity',
+        'text' => 'More global Buff and Curse effectivity',
     ],
     'reduce_modifiers' => [
         'data' => [
@@ -78,7 +78,7 @@ return [
         ],
         'modifiers' => true,
         'world' => true,
-        'text' => 'Reduced global Buff and Curse effectivity',
+        'text' => 'Less global Buff and Curse effectivity',
     ],
     'add_damage' => [
         'data' => [
@@ -121,5 +121,39 @@ return [
         ],
         'enemy' => true,
         'text' => 'Reduce Magic by 1',
+    ],
+    'convert_magic_to_health' => [
+        'data' => [
+            'magic' => 0.9,
+            'health' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'Convert Magic to Health',
+    ],
+    'convert_speed_to_health' => [
+        'data' => [
+            'speed' => 0.9,
+            'health' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'Convert Speed To Health',
+    ],
+    'more_damage' => [
+        'data' => [
+            'damage' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'More Damage',
+    ],
+    'more_defense' => [
+        'data' => [
+            'defense' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'More Defense',
     ],
 ];
