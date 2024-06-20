@@ -18,23 +18,22 @@ class Modifier
         if (!$data) {
             return null;
         }
-        unset($data['world'], $data['player']);
+        $data['count'] = 1;
         return $data;
     }
 
-    public function update(array $data, string $modifier): array
+    public function update(array $current, string $modifier): array
     {
         $card = $this->get($modifier);
-        foreach ($card as $key => $value) {
-            if (is_numeric($value)) {
-                if ($card['multiplicative'] ?? false) {
-                    $data[$key] *= $value;
-                } else {
-                    $data[$key] += $value;
-                }
+        foreach ($card['data'] as $key => $value) {
+            if ($card['multiplicative'] ?? false) {
+                $current['data'][$key] *= $value;
+            } else {
+                $current['data'][$key] += $value;
             }
         }
-        return $data;
+        $current['count']++;
+        return $current;
     }
 
     public function pickPlayer(): string
@@ -49,24 +48,28 @@ class Modifier
 
     public function calculateModifierChanges(array $modifiers): float
     {
-        $modifiers = array_filter($modifiers, static fn ($mod) => $mod && ($mod['mods'] ?? false));
+        $modifiers = array_filter(
+            $modifiers,
+            static fn ($mod) => $mod && ($mod['modifiers'] ?? false)
+        );
 
         $total = 1;
         foreach ($modifiers as $modifier) {
-            $total *= $modifier['mods'];
+            $total *= $modifier['data']['mods'];
         }
         return $total;
     }
 
     public function applyFlat(array $data, array $modifiers, float $change): array
     {
-        $modifiers = array_filter($modifiers, static fn ($mod) => $mod && !($mod['multiplicative'] ?? false));
+        $modifiers = array_filter(
+            $modifiers,
+            static fn ($mod) => $mod && !($mod['multiplicative'] ?? false) && !($mod['modifiers'] ?? false)
+        );
 
         foreach ($modifiers as $modifier) {
-            foreach ($modifier as $key => $value) {
-                if ($key !== 'mods' && is_numeric($value)) {
-                    $data[$key] += $value * $change;
-                }
+            foreach ($modifier['data'] as $key => $value) {
+                $data[$key] += $value * $change;
             }
         }
         return $data;
@@ -74,13 +77,14 @@ class Modifier
 
     public function applyMultiplicative(array $data, array $modifiers, float $change): array
     {
-        $modifiers = array_filter($modifiers, static fn ($mod) => $mod && ($mod['multiplicative'] ?? false));
+        $modifiers = array_filter(
+            $modifiers,
+            static fn ($mod) => $mod && ($mod['multiplicative'] ?? false) && !($mod['modifiers'] ?? false)
+        );
 
         foreach ($modifiers as $modifier) {
-            foreach ($modifier as $key => $value) {
-                if (is_numeric($value)) {
-                    $data[$key] *= $value * $change;
-                }
+            foreach ($modifier['data'] as $key => $value) {
+                $data[$key] *= $value * $change;
             }
         }
         return $data;

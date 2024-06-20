@@ -40,11 +40,11 @@ class CardStorage extends Storage
         $this->insert(
             $statement, [
                 $playerId,
-                $card['health'] ?? 0,
-                $card['damage'] ?? 0,
-                $card['defense'] ?? 0,
-                $card['magic'] ?? 0,
-                $card['speed'] ?? 0,
+                $card['data']['health'] ?? 0,
+                $card['data']['damage'] ?? 0,
+                $card['data']['defense'] ?? 0,
+                $card['data']['magic'] ?? 0,
+                $card['data']['speed'] ?? 0,
                 $card['modifier'] ?? null
             ]
         );

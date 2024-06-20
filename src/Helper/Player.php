@@ -51,10 +51,8 @@ class Player
 
         for ($i = 0; $i < $x + $y + 1; $i++) {
             $card = $this->card->pick($y);
-            foreach ($card as $key => $value) {
-                if (is_numeric($value)) {
-                    $data[$key] += $value;
-                }
+            foreach ($card['data'] ?? [] as $key => $value) {
+                $data[$key] += $value;
             }
             if ($card['modifier'] ?? null) {
                 $modifiers[$card['modifier']] = isset($modifiers[$card['modifier']])

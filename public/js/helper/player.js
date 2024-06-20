@@ -1,8 +1,7 @@
 export default function (player) {
     let modifiers = '';
     player.data.modifiers.forEach((modifier) => {
-        const numbers = Object.values(modifier).filter((value) => parseFloat(value));
-        modifiers += `<tr><th>${modifier.text}</th><td>${numbers.join(', ')}</td></tr>`;
+        modifiers += `<tr><th>${modifier.text}</th><td>${modifier.count}</td></tr>`;
     });
     const health = player['data']['health'];
     const damage = player['data']['damage'];

@@ -1,90 +1,124 @@
 <?php
 return [
     'increase_damage' => [
-        'damage' => 1.5,
+        'data' => [
+            'damage' => 1.5,
+        ],
         'multiplicative' => true,
         'player' => true,
         'text' => 'Increased global Damage',
     ],
     'increase_defense' => [
-        'defense' => 1.5,
+        'data' => [
+            'defense' => 1.5,
+        ],
         'multiplicative' => true,
         'player' => true,
         'text' => 'Increased global Defense',
     ],
     'increase_magic' => [
-        'magic' => 1.5,
+        'data' => [
+            'magic' => 1.5,
+        ],
         'multiplicative' => true,
         'player' => true,
         'text' => 'Increased global Magic',
     ],
     'increase_speed' => [
-        'speed' => 1.5,
+        'data' => [
+            'speed' => 1.5,
+        ],
         'multiplicative' => true,
         'player' => true,
         'text' => 'Increased global Speed',
     ],
     'reduce_damage' => [
-        'damage' => 0.5,
+        'data' => [
+            'damage' => 0.5,
+        ],
         'multiplicative' => true,
         'world' => true,
         'text' => 'Reduced global Damage',
     ],
     'reduce_defense' => [
-        'defense' => 0.5,
+        'data' => [
+            'defense' => 0.5,
+        ],
         'multiplicative' => true,
         'world' => true,
         'text' => 'Reduced global Defense',
     ],
     'reduce_magic' => [
-        'magic' => 0.5,
+        'data' => [
+            'magic' => 0.5,
+        ],
         'multiplicative' => true,
         'world' => true,
         'text' => 'Reduced global Magic',
     ],
     'reduce_speed' => [
-        'speed' => 0.5,
+        'data' => [
+            'speed' => 0.5,
+        ],
         'multiplicative' => true,
         'world' => true,
         'text' => 'Reduced global Speed',
     ],
     'increase_modifiers' => [
-        'mods' => 2,
+        'data' => [
+            'mods' => 2,
+        ],
+        'modifiers' => true,
         'world' => true,
         'text' => 'Increased global Buff and Curse effectivity',
     ],
     'reduce_modifiers' => [
-        'mods' => 0.5,
+        'data' => [
+            'mods' => 0.5,
+        ],
+        'modifiers' => true,
         'world' => true,
         'text' => 'Reduced global Buff and Curse effectivity',
     ],
     'add_damage' => [
-        'damage' => 1,
+        'data' => [
+            'damage' => 1,
+        ],
         'self' => true,
         'text' => 'Increase Damage by 1',
     ],
     'add_defense' => [
-        'defense' => 1,
+        'data' => [
+            'defense' => 1,
+        ],
         'self' => true,
         'text' => 'Increase Defense by 1',
     ],
     'add_magic' => [
-        'magic' => 1,
+        'data' => [
+            'magic' => 1,
+        ],
         'self' => true,
         'text' => 'Increase Magic by 1',
     ],
     'remove_damage' => [
-        'damage' => -1,
+        'data' => [
+            'damage' => -1,
+        ],
         'enemy' => true,
         'text' => 'Reduce Damage by 1',
     ],
     'remove_defense' => [
-        'defense' => -1,
+        'data' => [
+            'defense' => -1,
+        ],
         'enemy' => true,
         'text' => 'Reduce Defense by 1',
     ],
     'remove_magic' => [
-        'magic' => -1,
+        'data' => [
+            'magic' => -1,
+        ],
         'enemy' => true,
         'text' => 'Reduce Magic by 1',
     ],

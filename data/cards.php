@@ -4,39 +4,53 @@ return [
         [
             'icon' => '❤️',
             'text' => 'Health',
-            'health' => 2,
+            'data' => [
+                'health' => 2,
+            ],
         ],
         [
             'icon' => '⚔️',
             'text' => 'Damage',
-            'damage' => 1,
+            'data' => [
+                'damage' => 1,
+            ],
         ],
         [
             'icon' => '🛡️',
             'text' => 'Defense',
-            'defense' => 1,
+            'data' => [
+                'defense' => 1,
+            ],
         ],
         [
             'icon' => '🪄',
             'text' => 'Magic',
-            'magic' => 1,
+            'data' => [
+                'magic' => 1,
+            ],
         ],
         [
             'icon' => '🥾',
             'text' => 'Speed',
-            'speed' => 1,
+            'data' => [
+                'speed' => 1,
+            ],
         ],
         [
             'icon' => '💱⚔️',
             'text' => 'Trade Defense for Damage',
-            'damage' => 2,
-            'defense' => -1,
+            'data' => [
+                'damage' => 2,
+                'defense' => -1,
+            ],
         ],
         [
             'icon' => '💱🛡️',
             'text' => 'Trade Damage for Defense',
-            'defense' => 2,
-            'damage' => -1,
+            'data' => [
+                'defense' => 2,
+                'damage' => -1,
+            ]
         ],
     ],
     [
@@ -75,34 +89,46 @@ return [
         [
             'icon' => '❤️❤️',
             'text' => 'Extra Health',
-            'health' => 5,
+            'data' => [
+                'health' => 5,
+            ],
         ],
         [
             'icon' => '⚔️⚔️',
             'text' => 'Extra Damage',
-            'damage' => 2,
+            'data' => [
+                'damage' => 2,
+            ],
         ],
         [
             'icon' => '🛡️🛡️',
             'text' => 'Extra Defense',
-            'defense' => 2,
+            'data' => [
+                'defense' => 2,
+            ],
         ],
         [
             'icon' => '🪄🪄',
             'text' => 'Extra Magic',
-            'magic' => 2,
+            'data' => [
+                'magic' => 2,
+            ],
         ],
         [
             'icon' => '🥾🥾',
             'text' => 'Extra Speed',
-            'speed' => 2,
+            'data' => [
+                'speed' => 2,
+            ],
         ],
         [
             'icon' => '💱🪄️',
             'text' => 'Trade Physical for Magic',
-            'magic' => 4,
-            'damage' => -1,
-            'defense' => -1,
+            'data' => [
+                'magic' => 4,
+                'damage' => -1,
+                'defense' => -1,
+            ],
         ],
     ],
 ];
