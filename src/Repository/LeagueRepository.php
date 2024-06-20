@@ -39,10 +39,7 @@ class LeagueRepository
 
         $statistics = [];
         foreach ($this->snapshotStorage->fetchPositionsForLeague($id) as $snapshot) {
-            if (!isset($statistics[$snapshot['x']][$snapshot['y']])) {
-                $statistics[$snapshot['x']][$snapshot['y']] = 0;
-            }
-            $statistics[$snapshot['x']][$snapshot['y']]++;
+            $statistics[$snapshot['x']][$snapshot['y']] = $snapshot['z'];
         }
 
         $counts = $this->playerStorage->fetchCountForLeague($leagueId);

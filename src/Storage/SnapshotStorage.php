@@ -9,7 +9,8 @@ class SnapshotStorage extends Storage
 {
     public function fetchPositionsForLeague(int $leagueId): Generator
     {
-        yield from $this->fetch('SELECT `x`, `y` FROM `snapshots` WHERE `league_id` = ?', [$leagueId]);
+        $statement = 'SELECT `x`, `y`, COUNT(*) AS `z` FROM `snapshots` WHERE `league_id` = ? GROUP BY `x`, `y`';
+        yield from $this->fetch($statement, [$leagueId]);
     }
 
     public function insertForLeagueFromPlayer(int $leagueId, array $player, array $data): void
