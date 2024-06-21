@@ -40,14 +40,6 @@ return [
         'world' => true,
         'text' => 'Less global Damage',
     ],
-    'reduce_defense' => [
-        'data' => [
-            'defense' => 0.5,
-        ],
-        'multiplicative' => true,
-        'world' => true,
-        'text' => 'Less global Defense',
-    ],
     'reduce_magic' => [
         'data' => [
             'magic' => 0.5,
