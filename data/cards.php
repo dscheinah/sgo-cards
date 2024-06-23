@@ -5,7 +5,7 @@ return [
             'icon' => '❤️',
             'text' => 'Health',
             'data' => [
-                'health' => 2,
+                'health' => 3,
             ],
         ],
         [
@@ -66,42 +66,10 @@ return [
     ],
     [
         [
-            'icon' => '️️🔺⚔️',
-            'text' => 'Buff Damage',
-            'modifier' => 'add_damage',
-        ],
-        [
-            'icon' => '🔺🛡️',
-            'text' => 'Buff Defense',
-            'modifier' => 'add_defense',
-        ],
-        [
-            'icon' => '️️🔺🪄️',
-            'text' => 'Buff Magic',
-            'modifier' => 'add_magic',
-        ],
-        [
-            'icon' => '⚔️🔻',
-            'text' => 'Curse Enemy Damage',
-            'modifier' => 'remove_damage',
-        ],
-        [
-            'icon' => '🛡️🔻',
-            'text' => 'Curse Enemy Defense',
-            'modifier' => 'remove_defense',
-        ],
-        [
-            'icon' => '🪄️🔻',
-            'text' => 'Curse Enemy Magic',
-            'modifier' => 'remove_magic',
-        ],
-    ],
-    [
-        [
             'icon' => '❤️❤️',
             'text' => 'Extra Health',
             'data' => [
-                'health' => 5,
+                'health' => 6,
             ],
         ],
         [
@@ -135,24 +103,34 @@ return [
     ],
     [
         [
-            'icon' => '💥🪄️❤️️',
-            'text' => 'Convert Magic to Health',
-            'modifier' => 'convert_magic_to_health',
+            'icon' => '️️🔺⚔️',
+            'text' => 'Buff Damage',
+            'modifier' => 'add_damage',
         ],
         [
-            'icon' => '💥🥾❤️',
-            'text' => 'Convert Speed to Health',
-            'modifier' => 'convert_speed_to_health',
+            'icon' => '🔺🛡️',
+            'text' => 'Buff Defense',
+            'modifier' => 'add_defense',
         ],
         [
-            'icon' => '️️⏫️️⚔️️',
-            'text' => 'Increase Damage',
-            'modifier' => 'more_damage',
+            'icon' => '️️🔺🪄️',
+            'text' => 'Buff Magic',
+            'modifier' => 'add_magic',
         ],
         [
-            'icon' => '⏫️️🛡️',
-            'text' => 'Increase Defense',
-            'modifier' => 'more_defense',
+            'icon' => '⚔️🔻',
+            'text' => 'Curse Enemy Damage',
+            'modifier' => 'remove_damage',
+        ],
+        [
+            'icon' => '🛡️🔻',
+            'text' => 'Curse Enemy Defense',
+            'modifier' => 'remove_defense',
+        ],
+        [
+            'icon' => '🪄️🔻',
+            'text' => 'Curse Enemy Magic',
+            'modifier' => 'remove_magic',
         ],
     ],
     [
@@ -181,14 +159,66 @@ return [
             'icon' => '🪄️🪄️🪄️',
             'text' => 'Super Magic',
             'data' => [
-                'magic' => 3,
+                'magic' => 4,
             ],
         ],
         [
             'icon' => '🥾🥾🥾',
             'text' => 'Super Speed',
             'data' => [
-                'speed' => 3,
+                'speed' => 4,
+            ],
+        ],
+    ],
+    [
+        [
+            'icon' => '💥🪄️❤️️',
+            'text' => 'Convert Magic to Health',
+            'modifier' => 'convert_magic_to_health',
+        ],
+        [
+            'icon' => '💥🥾❤️',
+            'text' => 'Convert Speed to Health',
+            'modifier' => 'convert_speed_to_health',
+        ],
+        [
+            'icon' => '️️⏫️️⚔️️',
+            'text' => 'Increase Damage',
+            'modifier' => 'more_damage',
+        ],
+        [
+            'icon' => '⏫️️🛡️',
+            'text' => 'Increase Defense',
+            'modifier' => 'more_defense',
+        ],
+    ],
+    [
+        [
+            'icon' => '🪓',
+            'text' => 'Ultra Damage',
+            'data' => [
+                'damage' => 8,
+            ],
+        ],
+        [
+            'icon' => '🪬',
+            'text' => 'Ultra Defense',
+            'data' => [
+                'defense' => 8,
+            ],
+        ],
+        [
+            'icon' => '🦄',
+            'text' => 'Ultra Magic',
+            'data' => [
+                'magic' => 8,
+            ],
+        ],
+        [
+            'icon' => '👟',
+            'text' => 'Ultra Speed',
+            'data' => [
+                'speed' => 8,
             ],
         ],
     ],

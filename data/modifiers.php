@@ -2,7 +2,7 @@
 return [
     'more_player_damage' => [
         'data' => [
-            'damage' => 1.5,
+            'damage' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -77,42 +77,42 @@ return [
             'damage' => 1,
         ],
         'self' => true,
-        'text' => 'Increase Damage by 1',
+        'text' => 'Increase Damage',
     ],
     'add_defense' => [
         'data' => [
             'defense' => 1,
         ],
         'self' => true,
-        'text' => 'Increase Defense by 1',
+        'text' => 'Increase Defense',
     ],
     'add_magic' => [
         'data' => [
             'magic' => 1,
         ],
         'self' => true,
-        'text' => 'Increase Magic by 1',
+        'text' => 'Increase Magic',
     ],
     'remove_damage' => [
         'data' => [
-            'damage' => -1,
+            'damage' => -1.5,
         ],
         'enemy' => true,
-        'text' => 'Reduce Damage by 1',
+        'text' => 'Reduce Enemy Damage',
     ],
     'remove_defense' => [
         'data' => [
-            'defense' => -1,
+            'defense' => -1.5,
         ],
         'enemy' => true,
-        'text' => 'Reduce Defense by 1',
+        'text' => 'Reduce Enemy Defense',
     ],
     'remove_magic' => [
         'data' => [
-            'magic' => -1,
+            'magic' => -1.5,
         ],
         'enemy' => true,
-        'text' => 'Reduce Magic by 1',
+        'text' => 'Reduce Enemy Magic',
     ],
     'convert_magic_to_health' => [
         'data' => [

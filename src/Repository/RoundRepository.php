@@ -115,10 +115,10 @@ class RoundRepository
         $enemyStats = $this->player->stats($enemyModified, $playerModified);
 
         if ($playerStats['speed'] > 0) {
-            $enemyStats['health'] -= $playerStats['damage'];
+            $enemyStats['health'] -= $playerModified['data']['damage'] ?? 0;
         }
         if ($enemyStats['speed'] > 0) {
-            $playerStats['health'] -= $enemyStats['damage'];
+            $playerStats['health'] -= $enemyModified['data']['damage'] ?? 0;
         }
 
         while ($playerStats['health'] > 0 && $enemyStats['health'] > 0) {
