@@ -32,7 +32,7 @@
             table += '<tr>'
             for (let x = 0; x <= maxX; x++) {
                 let z = stats[x] && stats[x][y] || 0;
-                table += `<td style="opacity: ${(z || 0) / maxZ}"></td>`
+                table += `<td style="opacity: ${Math.ceil((z || 0) / maxZ * 25) / 25}"></td>`
             }
             table += '</tr>'
         }
