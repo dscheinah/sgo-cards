@@ -108,8 +108,11 @@ class RoundRepository
 
     private function battle(array $player, array $enemy, ?array $modifier): bool
     {
-        $playerStats = $this->player->stats($this->player->applyModifiers($player, $enemy, $modifier), $enemy);
-        $enemyStats = $this->player->stats($this->player->applyModifiers($enemy, $player, $modifier), $player);
+        $playerModified = $this->player->applyModifiers($player, $enemy, $modifier);
+        $enemyModified = $this->player->applyModifiers($enemy, $player, $modifier);
+
+        $playerStats = $this->player->stats($playerModified, $enemyModified);
+        $enemyStats = $this->player->stats($enemyModified, $playerModified);
 
         if ($playerStats['speed'] > 0) {
             $enemyStats['health'] -= $playerStats['damage'];
