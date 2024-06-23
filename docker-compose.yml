@@ -1,6 +1,8 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfile.xdebug
     ports:
       - "${PORT:-80}:80"
     volumes:
@@ -11,6 +13,8 @@ services:
       - MYSQL_DATABASE
       - MYSQL_USER
       - MYSQL_PASSWORD
+      - XDEBUG_MODE
+      - XDEBUG_CONFIG
   db:
     image: mysql
     volumes:
