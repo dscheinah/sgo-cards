@@ -50,6 +50,7 @@
             helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
             helper.set('#game-player-number', 'innerHTML', round['try']);
             helper.set('#game-player', 'innerHTML', helper.player(round['player']));
+            helper.style('#game-cards', 'opacity', loading ? '0' : '1');
             helper.list('#game-cards', round['cards'], (card, index) => {
                 const div = helper.create('div');
                 div.classList.add('sx-card');
@@ -113,6 +114,10 @@
     .game-icon {
         font-size: 42px;
         margin: 0;
+    }
+
+    #game-cards {
+        transition: opacity .5s;
     }
 
     #game-cards > * {
