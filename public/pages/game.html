@@ -1,10 +1,10 @@
 <template>
     <h1>Play Game</h1>
-    <div id="game-login" class="game-hidden">
+    <div id="game-login" hidden>
         <p>Please log in to start playing.</p>
         <button data-navigation value="overview"><span class="sx-button-icon">🪟</span> Login</button>
     </div>
-    <div id="game-round" class="game-hidden">
+    <div id="game-round" hidden>
         <details>
             <summary>Select a card to advance to the next round. Try to reach the limits.</summary>
             <ul>
@@ -41,8 +41,8 @@
             if (!user) {
                 return;
             }
-            helper.style('#game-round', 'display', user.id ? 'initial': null);
-            helper.style('#game-login', 'display', user.create ? 'initial' : null);
+            helper.set('#game-round', 'hidden', !user.id);
+            helper.set('#game-login', 'hidden', !user.create);
             if (!round) {
                 return;
             }
@@ -110,10 +110,6 @@
 </script>
 
 <style>
-    .game-hidden {
-        display: none;
-    }
-
     .game-icon {
         font-size: 42px;
         margin: 0;

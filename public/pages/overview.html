@@ -4,11 +4,11 @@
         This is a turn based browser RPG.
         It's made around character progression by choosing from a random set of cards each round.
     </p>
-    <div id="overview-user" class="overview-hidden">
+    <div id="overview-user" hidden>
         <p>You are currently logged in as "<span id="overview-name"></span>"</p>
         <button data-navigation value="game"><span class="sx-button-icon">▶️</span> Play</button>
     </div>
-    <div id="overview-create" class="overview-hidden">
+    <div id="overview-create" hidden>
         <p>
             Enter your name to register. Your login is only saved to your current browser.
             Once you change browser or clear storage, you are required to create a new user.
@@ -16,7 +16,7 @@
         <form id="overview-form">
             <input id="overview-form-name" type="text" name="name" required/>
             <label for="overview-form-name">Enter your name</label>
-            <p id="overview-error" class="sx-error overview-hidden">
+            <p id="overview-error" class="sx-error" hidden>
                 The chosen name is already taken. Please enter a new one.
             </p>
             <div class="sx-actions">
@@ -38,9 +38,9 @@
             if (!user) {
                 return;
             }
-            helper.style('#overview-user', 'display', user.id ? 'initial': null);
-            helper.style('#overview-create', 'display', user.create ? 'initial' : null);
-            helper.style('#overview-error', 'display', user.error ? 'initial': null);
+            helper.set('#overview-user', 'hidden', !user.id);
+            helper.set('#overview-create', 'hidden', !user.create);
+            helper.set('#overview-error', 'hidden', !user.error);
             helper.set('#overview-name', 'innerHTML', user.name);
         });
 
@@ -58,9 +58,3 @@
         });
     });
 </script>
-
-<style>
-    .overview-hidden {
-        display: none;
-    }
-</style>
