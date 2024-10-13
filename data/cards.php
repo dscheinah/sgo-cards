@@ -63,6 +63,24 @@ return [
                 'defense' => -1,
             ],
         ],
+        [
+            'icon' => '💨',
+            'text' => 'Evasion',
+            'modifier' => 'speed_as_defense',
+            'league' => true,
+        ],
+        [
+            'icon' => '🧚🛡️',
+            'text' => 'Magic Shield',
+            'modifier' => 'defense_as_magic',
+            'league' => true,
+        ],
+        [
+            'icon' => '🧚🥾',
+            'text' => 'Magic Boots',
+            'modifier' => 'speed_as_magic',
+            'league' => true,
+        ],
     ],
     [
         [
@@ -100,6 +118,33 @@ return [
                 'speed' => 2,
             ],
         ],
+        [
+            'icon' => '🛡️⚔️',
+            'text' => 'Defense and Damage',
+            'data' => [
+                'defense' => 1,
+                'damage' => 1,
+            ],
+            'league' => true,
+        ],
+        [
+            'icon' => '🛡️🪄️',
+            'text' => 'Defense and Magic',
+            'data' => [
+                'defense' => 1,
+                'magic' => 1,
+            ],
+            'league' => true,
+        ],
+        [
+            'icon' => '🛡️🥾️',
+            'text' => 'Defense and Speed',
+            'data' => [
+                'defense' => 1,
+                'speed' => 1,
+            ],
+            'league' => true,
+        ],
     ],
     [
         [
@@ -131,6 +176,33 @@ return [
             'icon' => '🪄️🔻',
             'text' => 'Curse Enemy Magic',
             'modifier' => 'remove_magic',
+        ],
+        [
+            'icon' => '⚔️🪄️',
+            'text' => 'Damage and Magic',
+            'data' => [
+                'damage' => 1,
+                'magic' => 1,
+            ],
+            'league' => true,
+        ],
+        [
+            'icon' => '⚔️🥾',
+            'text' => 'Damage and Speed',
+            'data' => [
+                'damage' => 1,
+                'speed' => 1,
+            ],
+            'league' => true,
+        ],
+        [
+            'icon' => '🪄️🥾',
+            'text' => 'Magic and Speed',
+            'data' => [
+                'magic' => 1,
+                'speed' => 1,
+            ],
+            'league' => true,
         ],
     ],
     [
@@ -169,6 +241,18 @@ return [
                 'speed' => 4,
             ],
         ],
+        [
+            'icon' => '🥀🛡️⚔️',
+            'text' => 'Thorns',
+            'modifier' => 'defense_as_damage',
+            'league' => true,
+        ],
+        [
+            'icon' => '🔫🪄️⚔️',
+            'text' => 'Enchanted Weapon',
+            'modifier' => 'magic_as_damage',
+            'league' => true,
+        ],
     ],
     [
         [
@@ -190,6 +274,18 @@ return [
             'icon' => '⏫️️🛡️',
             'text' => 'Increase Defense',
             'modifier' => 'more_defense',
+        ],
+        [
+            'icon' => '❣️⚔️',
+            'text' => 'Leech',
+            'modifier' => 'damage_as_health',
+            'league' => true,
+        ],
+        [
+            'icon' => '❤️‍🔥🪄️',
+            'text' => 'Healing Spell',
+            'modifier' => 'magic_as_health',
+            'league' => true,
         ],
     ],
     [
@@ -220,6 +316,20 @@ return [
             'data' => [
                 'speed' => 8,
             ],
+        ],
+        [
+            'icon' => '💖',
+            'text' => 'Ultra Health',
+            'data' => [
+                'health' => 12,
+            ],
+            'league' => true,
+        ],
+        [
+            'icon' => '💪',
+            'text' => 'Berserker',
+            'modifier' => 'convert_all_to_damage',
+            'league' => true,
         ],
     ],
 ];

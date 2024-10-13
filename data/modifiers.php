@@ -1,4 +1,7 @@
 <?php
+
+use App\Helper\Modifier\DependentModifier;
+
 return [
     'more_player_damage' => [
         'data' => [
@@ -130,7 +133,7 @@ return [
         ],
         'multiplicative' => true,
         'self' => true,
-        'text' => 'Convert Speed To Health',
+        'text' => 'Convert Speed to Health',
     ],
     'more_damage' => [
         'data' => [
@@ -147,5 +150,87 @@ return [
         'multiplicative' => true,
         'self' => true,
         'text' => 'More Defense',
+    ],
+    'convert_all_to_damage' => [
+        'data' => [
+            'damage' => 1.3,
+            'health' => 0.9,
+            'defense' => 0.9,
+            'magic' => 0.9,
+            'speed' => 0.9,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'Convert to Damage',
+    ],
+    'speed_as_defense' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'speed',
+        'target' => 'defense',
+        'self' => true,
+        'text' => 'Add Defense from Speed',
+    ],
+    'defense_as_magic' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'defense',
+        'target' => 'magic',
+        'self' => true,
+        'text' => 'Add Magic from Defense',
+    ],
+    'speed_as_magic' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'speed',
+        'target' => 'magic',
+        'self' => true,
+        'text' => 'Add Magic from Speed',
+    ],
+    'defense_as_damage' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'defense',
+        'target' => 'damage',
+        'self' => true,
+        'text' => 'Add Damage from Defense',
+    ],
+    'magic_as_damage' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'magic',
+        'target' => 'damage',
+        'self' => true,
+        'text' => 'Add Damage from Magic',
+    ],
+    'damage_as_health' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'damage',
+        'target' => 'health',
+        'self' => true,
+        'text' => 'Add Health from Damage',
+    ],
+    'magic_as_health' => [
+        'handler' => DependentModifier::class,
+        'data' => [
+            'value' => 0.1,
+        ],
+        'source' => 'magic',
+        'target' => 'health',
+        'self' => true,
+        'text' => 'Add Health from Magic',
     ],
 ];
