@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 
+use App\Helper\Modifier\DefaultModifier;
+
 class Modifier
 {
     public function __construct(
@@ -70,9 +72,8 @@ class Modifier
         );
 
         foreach ($modifiers as $modifier) {
-            foreach ($modifier['data'] as $key => $value) {
-                $data[$key] += $value * $change;
-            }
+            $handler = $modifier['handler'] ?? DefaultModifier::class;
+            $data = $handler::apply($data, $modifier, $change);
         }
         return $data;
     }
@@ -85,9 +86,8 @@ class Modifier
         );
 
         foreach ($modifiers as $modifier) {
-            foreach ($modifier['data'] as $key => $value) {
-                $data[$key] *= $value * $change;
-            }
+            $handler = $modifier['handler'] ?? DefaultModifier::class;
+            $data = $handler::multiply($data, $modifier, $change);
         }
         return $data;
     }
