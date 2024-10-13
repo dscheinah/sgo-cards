@@ -38,11 +38,13 @@ class Modifier
 
     public function pickPlayer(): string
     {
+        mt_srand();
         return array_rand(array_filter($this->modifiers, static fn ($modifier) => $modifier['player'] ?? false));
     }
 
     public function pickWorld(): string
     {
+        mt_srand();
         return array_rand(array_filter($this->modifiers, static fn ($modifier) => $modifier['world'] ?? false));
     }
 

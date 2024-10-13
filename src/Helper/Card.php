@@ -27,6 +27,8 @@ class Card
 
     public function pick(int $y): array
     {
+        mt_srand();
+
         $cards = $this->cardsForTier($y);
         return $cards[array_rand($cards)];
     }
