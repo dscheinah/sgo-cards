@@ -48,7 +48,7 @@ class RoundRepository
             ],
             'player' => $this->player->get($currentPlayer),
             'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
-            'cards' => $this->card->draw($currentPlayer['y'], $this->seed($currentPlayer)),
+            'cards' => $this->card->draw($currentPlayer),
         ];
     }
 
@@ -62,7 +62,7 @@ class RoundRepository
             return null;
         }
 
-        $cards = $this->card->draw($currentPlayer['y'], $this->seed($currentPlayer));
+        $cards = $this->card->draw($currentPlayer);
         if (!isset($cards[$card])) {
             return null;
         }
@@ -99,11 +99,6 @@ class RoundRepository
             return ['finished' => true];
         }
         return ['winner' => false];
-    }
-
-    private function seed(array $player): int
-    {
-        return $player['id'] + ($player['x'] * $this->max) + $player['y'];
     }
 
     private function battle(array $player, array $enemy, ?array $modifier): bool

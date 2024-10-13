@@ -11,11 +11,11 @@ class Card
     ) {
     }
 
-    public function draw(int $y, int $seed): array
+    public function draw(array $player): array
     {
-        mt_srand($seed);
+        mt_srand($player['id'] + ($player['x'] * $this->max) + $player['y']);
 
-        $cards = $this->cardsForTier($y);
+        $cards = $this->cardsForTier($player['y']);
         $count = count($cards);
 
         $draw = [];
