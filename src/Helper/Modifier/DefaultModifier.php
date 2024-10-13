@@ -15,7 +15,7 @@ class DefaultModifier implements ModifierInterface
     public static function multiply(array $data, array $modifier, float $change): array
     {
         foreach ($modifier['data'] as $key => $value) {
-            $data[$key] *= $value * $change;
+            $data[$key] *= $value < 1 ? $value / $change : $value * $change;
         }
         return $data;
     }
