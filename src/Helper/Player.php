@@ -38,7 +38,7 @@ class Player
         ];
     }
 
-    public function createRandomBot(int $x, int $y): array
+    public function createRandomBot(int $x, int $y, int $leagueId): array
     {
         $data = [
             'health' => $this->health,
@@ -50,7 +50,7 @@ class Player
         $modifiers = [];
 
         for ($i = 0; $i < $x + $y + 1; $i++) {
-            $card = $this->card->pick($y);
+            $card = $this->card->pick($y, $leagueId);
             foreach ($card['data'] ?? [] as $key => $value) {
                 $data[$key] += $value;
             }

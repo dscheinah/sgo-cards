@@ -11,30 +11,28 @@ class Card
     ) {
     }
 
-    public function draw(array $player): array
+    public function draw(array $player, int $leagueId): array
     {
+        $cards = $this->cardsForTier($player['y'], $leagueId);
         mt_srand($player['id'] + ($player['x'] * $this->max) + $player['y']);
-
-        $cards = $this->cardsForTier($player['y']);
-        $count = count($cards);
-
         $draw = [];
         for ($i = 0; $i < $this->amount; $i++) {
-            $draw[] = $cards[mt_rand() % $count];
+            $draw[] = $cards[array_rand($cards)];
         }
         return $draw;
     }
 
-    public function pick(int $y): array
+    public function pick(int $y, int $leagueId): array
     {
+        $cards = $this->cardsForTier($y, $leagueId);
         mt_srand();
-
-        $cards = $this->cardsForTier($y);
         return $cards[array_rand($cards)];
     }
 
-    private function cardsForTier(int $y): array
+    private function cardsForTier(int $y, int $leagueId): array
     {
+        mt_srand($leagueId);
+
         $levelsPerTier = $this->max / count($this->cards);
 
         $cards = [[]];
@@ -42,7 +40,15 @@ class Card
             if ($i * $levelsPerTier > $y) {
                 break;
             }
-            $cards[] = $tierCards;
+            $picked = array_filter($tierCards, static fn ($card) => !($card['league'] ?? false));
+            if ($leagueId > 1) {
+                $leagueCards = array_filter($tierCards, static fn ($card) => $card['league'] ?? false);
+                if ($leagueCards) {
+                    unset($picked[array_rand($picked)]);
+                    $picked[] = $leagueCards[array_rand($leagueCards)];
+                }
+            }
+            $cards[] = $picked;
         }
 
         return array_merge(...$cards);

@@ -48,7 +48,7 @@ class RoundRepository
             ],
             'player' => $this->player->get($currentPlayer),
             'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
-            'cards' => $this->card->draw($currentPlayer),
+            'cards' => $this->card->draw($currentPlayer, $leagueId),
         ];
     }
 
@@ -62,7 +62,7 @@ class RoundRepository
             return null;
         }
 
-        $cards = $this->card->draw($currentPlayer);
+        $cards = $this->card->draw($currentPlayer, $leagueId);
         if (!isset($cards[$card])) {
             return null;
         }
@@ -71,7 +71,7 @@ class RoundRepository
         $player = $this->player->get($currentPlayer);
         $enemy = $this->snapshotStorage->fetchRandomForLeagueAtPosition($leagueId, $player['x'], $player['y']);
         if (!$enemy) {
-            $enemy = $this->player->createRandomBot($player['x'], $player['y']);
+            $enemy = $this->player->createRandomBot($player['x'], $player['y'], $leagueId);
         }
         $enemy['modifier'] = $this->modifier->get($enemy['modifier']);
 
