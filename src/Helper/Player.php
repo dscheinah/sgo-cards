@@ -70,10 +70,12 @@ class Player
         ];
     }
 
-    public function applyModifiers(array $player, array $enemy, ?array $modifier): array
+    public function applyModifiers(array $player, ?array $enemy, ?array $modifier): array
     {
         $playerModifiers = array_filter($player['data']['modifiers'], static fn ($mod) => $mod['self'] ?? false);
-        $enemyModifiers = array_filter($enemy['data']['modifiers'],  static fn ($mod) => $mod['enemy'] ?? false);
+        $enemyModifiers = $enemy
+            ? array_filter($enemy['data']['modifiers'],  static fn ($mod) => $mod['enemy'] ?? false)
+            : [];
 
         $modifiers = [$modifier, $player['modifier'], ...$player['data']['modifiers']];
         $change = $this->modifier->calculateModifierChanges($modifiers);

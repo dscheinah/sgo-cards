@@ -35,7 +35,7 @@ class LeagueRepository
         }
         $leagueId = $league['id'];
 
-        $player = $this->playerStorage->fetchOneForLeagueAtY($id, $this->max);
+        $winner = $this->playerStorage->fetchOneForLeagueAtY($id, $this->max);
 
         $statistics = [];
         foreach ($this->snapshotStorage->fetchPositionsForLeague($id) as $snapshot) {
@@ -44,19 +44,23 @@ class LeagueRepository
 
         $counts = $this->playerStorage->fetchCountForLeague($leagueId);
 
+        $leagueModifier = $this->modifier->get($league['modifier']);
+
         $information = [
             'id' => $id,
-            'modifier' => $this->modifier->get($league['modifier']),
+            'modifier' => $leagueModifier,
             'statistics' => (object) array_map(static fn($entry) => (object) $entry, $statistics),
             'user_count' => $counts['users'],
             'player_count' => $counts['players'],
         ];
-        if ($player) {
-            $userId = $player['user_id'];
+        if ($winner) {
+            $userId = $winner['user_id'];
+            $player = $this->player->get($winner);
             $information['winner'] = [
                 'name' => $this->userStorage->fetchOne($userId)['name'] ?? '',
                 'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
-                'player' => $this->player->get($player),
+                'player' => $player,
+                'calculation' => $this->player->applyModifiers($player, null, $leagueModifier)['data'],
             ];
         }
         return $information;

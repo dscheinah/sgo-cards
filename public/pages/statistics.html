@@ -15,7 +15,8 @@
         if (!winner) {
             return '';
         }
-        return `<p><strong>${winner.name} at try #${winner['try']}</strong></p>` + helper.player(winner['player']);
+        return `<p><strong>${winner.name} at try #${winner['try']}</strong></p>`
+            + helper.player(winner['player'], winner['calculation']);
     }
 
     function createStatistics(stats) {

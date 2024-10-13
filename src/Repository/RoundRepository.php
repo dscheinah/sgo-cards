@@ -41,12 +41,16 @@ class RoundRepository
             $currentPlayer['id'] = $this->playerStorage->insertOne($currentPlayer);
         }
 
+        $leagueModifier = $this->modifier->get($currentLeague['modifier']);
+        $player = $this->player->get($currentPlayer);
+
         return [
             'league' => [
                 'id' => $leagueId,
-                'modifier' => $this->modifier->get($currentLeague['modifier']),
+                'modifier' => $leagueModifier,
             ],
-            'player' => $this->player->get($currentPlayer),
+            'player' => $player,
+            'calculation' => $this->player->applyModifiers($player, null, $leagueModifier)['data'],
             'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
             'cards' => $this->card->draw($currentPlayer, $leagueId),
         ];
