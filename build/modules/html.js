@@ -30,7 +30,7 @@ const plugins = [
     plugin(css.inline, 'style'),
     postHtmlMinifier({
         collapseBooleanAttributes: true,
-        collapseInlineTagWhitespace: true,
+        collapseInlineTagWhitespace: false,
         collapseWhitespace: true,
         removeComments: true,
         removeRedundantAttributes: true,
