@@ -25,4 +25,28 @@ class UserStorage extends Storage
             'name' => $name,
         ];
     }
+
+    public function updateToken(string $id, string $token): bool
+    {
+        try {
+            return (bool) $this->execute(
+                'UPDATE `users` SET `token` = ? WHERE `id` = ?',
+                [$token, $id]
+            );
+        } catch (BackendException) {
+            return false;
+        }
+    }
+
+    public function validateToken(string $id, string $token): bool
+    {
+        try {
+            return (bool) $this->execute(
+                'UPDATE `users` SET `token` = NULL WHERE `token` = ? AND `id` = ?',
+                [$token, $id]
+            );
+        } catch (BackendException) {
+            return false;
+        }
+    }
 }

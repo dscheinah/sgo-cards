@@ -26,6 +26,7 @@ class RoundLoadHandler implements RequestHandlerInterface
         if (!$round) {
             return $this->helper->create(404);
         }
+        $round['token'] = $request->getAttribute('token');
         return $this->helper->create(200, $round);
     }
 }

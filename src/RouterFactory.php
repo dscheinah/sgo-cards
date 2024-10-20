@@ -9,6 +9,8 @@ use App\Handler\RoundLoadHandler;
 use App\Handler\RoundNextHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
+use App\Middleware\UserTokenCreateMiddleware;
+use App\Middleware\UserTokenValidateMiddleware;
 use Sx\Container\FactoryInterface;
 use Sx\Container\Injector;
 use Sx\Server\MiddlewareHandlerInterface;
@@ -39,7 +41,10 @@ class RouterFactory implements FactoryInterface
         $router->get($prefix . 'league/list', LeagueListHandler::class);
         $router->get($prefix . 'league/information', LeagueInformationHandler::class);
 
+        $router->get($prefix . 'round/load', UserTokenCreateMiddleware::class);
         $router->get($prefix . 'round/load', RoundLoadHandler::class);
+
+        $router->post($prefix . 'round/next', UserTokenValidateMiddleware::class);
         $router->post($prefix . 'round/next', RoundNextHandler::class);
 
         $router->get($prefix . 'user/get', UserGetHandler::class);

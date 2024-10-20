@@ -20,6 +20,9 @@ use App\Helper\Modifier;
 use App\Helper\ModifierFactory;
 use App\Helper\Player;
 use App\Helper\PlayerFactory;
+use App\Middleware\UserMiddlewareFactory;
+use App\Middleware\UserTokenValidateMiddleware;
+use App\Middleware\UserTokenCreateMiddleware;
 use App\Repository\LeagueRepository;
 use App\Repository\LeagueRepositoryFactory;
 use App\Repository\RoundRepository;
@@ -74,6 +77,9 @@ class Provider implements ProviderInterface
         $injector->set(RoundNextHandler::class, RoundHandlerFactory::class);
         $injector->set(UserGetHandler::class, UserHandlerFactory::class);
         $injector->set(UserCreateHandler::class, UserHandlerFactory::class);
+
+        $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);
+        $injector->set(UserTokenValidateMiddleware::class, UserMiddlewareFactory::class);
 
         $injector->set(Card::class, CardFactory::class);
         $injector->set(Modifier::class, ModifierFactory::class);

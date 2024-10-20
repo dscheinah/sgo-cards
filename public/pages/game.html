@@ -87,7 +87,7 @@
 
         action('#game-cards button', 'click', (event, target) => {
             state.dispatch('loading', true);
-            state.dispatch('round-next', [user.id, target.value]);
+            state.dispatch('round-next', [user.id, target.value, round['token']]);
         });
 
         listen('user', (payload) => {

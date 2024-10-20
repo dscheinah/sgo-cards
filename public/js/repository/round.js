@@ -6,9 +6,10 @@ export async function load(userId) {
     throw new Error('An error occurred. Please reload and try again.');
 }
 
-export async function next(userId, card) {
+export async function next(userId, card, token) {
     const body = new FormData();
     body.set('card', card);
+    body.set('token', token);
     const result = await fetch('round/next?user_id=' + encodeURIComponent(userId), {method: 'POST', body});
     if (result.ok) {
         return result.json();

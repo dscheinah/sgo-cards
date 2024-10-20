@@ -20,4 +20,19 @@ class UserRepository
     {
         return $this->userStorage->createWithName($name);
     }
+
+    public function generateToken(string $userId): ?string
+    {
+        $token = bin2hex(random_bytes(42));
+        if (!$this->userStorage->updateToken($userId, $token)) {
+            return null;
+        }
+        return $token;
+
+    }
+
+    public function validateToken(string $userId, string $token): bool
+    {
+        return $this->userStorage->validateToken($userId, $token);
+    }
 }
