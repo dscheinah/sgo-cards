@@ -128,6 +128,6 @@ class RoundRepository
             $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'];
         }
 
-        return $playerStats['health'] > 0;
+        return $playerStats['health'] > $enemyStats['health'];
     }
 }

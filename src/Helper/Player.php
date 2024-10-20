@@ -95,15 +95,15 @@ class Player
         return [
             'health' => (int) $player['data']['health'],
             'damage' => max(
-                max((int) $player['data']['damage'], 0) - (int) max($enemy['data']['defense'], 0),
+                max((int) $player['data']['damage'], 0) - max((int) $enemy['data']['defense'], 0),
                 $this->damage
             ),
             'magic' => max(
-                max((int) $player['data']['magic'], 0) - (int) max($enemy['data']['magic'], 0),
+                max((int) $player['data']['magic'], 0) - max((int) $enemy['data']['magic'], 0),
                 0
             ),
             'speed' => max(
-                max((int) $player['data']['speed'], 0) - (int) max($enemy['data']['speed'], 0),
+                max((int) $player['data']['speed'], 0) - max((int) $enemy['data']['speed'], 0),
                 0
             ),
         ];
