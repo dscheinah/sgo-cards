@@ -49,7 +49,11 @@
             helper.set('#game-league-number', 'innerHTML', round['league'].id);
             helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
             helper.set('#game-player-number', 'innerHTML', round['try']);
-            helper.set('#game-player', 'innerHTML', helper.player(round['player'], round['calculation']));
+            if (result) {
+                helper.set('#game-player', 'innerHTML', helper.player(round['player'], round['calculation'], result['enemy']));
+            } else {
+                helper.set('#game-player', 'innerHTML', helper.player(round['player'], round['calculation']));
+            }
             helper.style('#game-cards', 'opacity', loading ? '0' : '1');
             helper.list('#game-cards', round['cards'], (card, index) => {
                 const div = helper.create('div');

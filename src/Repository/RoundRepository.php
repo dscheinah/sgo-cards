@@ -81,16 +81,19 @@ class RoundRepository
 
         $this->snapshotStorage->insertForLeagueFromPlayer($leagueId, $currentPlayer, $player['data']);
 
-        if ($this->battle($player, $enemy, $this->modifier->get($currentLeague['modifier']))) {
+        $leagueModifier = $this->modifier->get($currentLeague['modifier']);
+        $enemyCalculation = $this->player->applyModifiers($enemy, null, $leagueModifier)['data'];
+
+        if ($this->battle($player, $enemy, $leagueModifier)) {
             $this->playerStorage->updateY($player['id'], ++$player['y']);
             if (!$currentLeague['modifier'] && $player['y'] >= $this->max * 0.75) {
                 $this->leagueStorage->updateModifier($leagueId, $this->modifier->pickWorld());
             }
             if ($player['y'] >= $this->max) {
                 $this->leagueStorage->insertOne();
-                return ['league' => true];
+                return ['league' => true, 'enemy' => $enemyCalculation];
             }
-            return ['winner' => true];
+            return ['winner' => true, 'enemy' => $enemyCalculation];
         }
 
         $this->playerStorage->updateX($player['id'], ++$player['x']);
@@ -100,9 +103,9 @@ class RoundRepository
                 'league_id' => $leagueId,
                 'modifier' => $this->modifier->pickPlayer(),
             ]);
-            return ['finished' => true];
+            return ['finished' => true, 'enemy' => $enemyCalculation];
         }
-        return ['winner' => false];
+        return ['winner' => false, 'enemy' => $enemyCalculation];
     }
 
     private function battle(array $player, array $enemy, ?array $modifier): bool
