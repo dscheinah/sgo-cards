@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./Dockerfile.xdebug
+      dockerfile: Dockerfile.development
     ports:
       - "${PORT:-80}:80"
     volumes:
