@@ -29,4 +29,13 @@ class SnapshotStorage extends Storage
         }
         return $snapshot;
     }
+
+    public function fetchAllForLeague(int $leagueId): Generator
+    {
+        $statement = 'SELECT * FROM `snapshots` WHERE `league_id` = ?';
+        foreach ($this->fetch($statement, [$leagueId]) as $snapshot) {
+            $snapshot['data'] = json_decode($snapshot['data'], true, 512, JSON_THROW_ON_ERROR);
+            yield $snapshot;
+        }
+    }
 }
