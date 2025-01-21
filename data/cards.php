@@ -68,18 +68,27 @@ return [
             'text' => 'Evasion',
             'modifier' => 'speed_as_defense',
             'league' => true,
+            'data' => [
+                'defense' => 1.5,
+            ],
         ],
         [
             'icon' => '🧚🛡️',
             'text' => 'Magic Shield',
             'modifier' => 'defense_as_magic',
             'league' => true,
+            'data' => [
+                'magic' => 1.5,
+            ],
         ],
         [
             'icon' => '🧚🥾',
             'text' => 'Magic Boots',
             'modifier' => 'speed_as_magic',
             'league' => true,
+            'data' => [
+                'magic' => 1.5,
+            ],
         ],
     ],
     [
@@ -246,12 +255,18 @@ return [
             'text' => 'Thorns',
             'modifier' => 'defense_as_damage',
             'league' => true,
+            'data' => [
+                'damage' => 6,
+            ],
         ],
         [
             'icon' => '🔫🪄️⚔️',
             'text' => 'Enchanted Weapon',
             'modifier' => 'magic_as_damage',
             'league' => true,
+            'data' => [
+                'damage' => 6,
+            ],
         ],
     ],
     [
@@ -280,12 +295,18 @@ return [
             'text' => 'Leech',
             'modifier' => 'damage_as_health',
             'league' => true,
+            'data' => [
+                'health' => 6,
+            ],
         ],
         [
             'icon' => '❤️‍🔥🪄️',
             'text' => 'Healing Spell',
             'modifier' => 'magic_as_health',
             'league' => true,
+            'data' => [
+                'health' => 6,
+            ],
         ],
     ],
     [
