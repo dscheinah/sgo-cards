@@ -7,7 +7,8 @@ class DependentModifier implements ModifierInterface
     public static function apply(array $data, array $modifier, float $change): array
     {
         $source = max($data[$modifier['source']], 0);
-        $data[$modifier['target']] += $source * $modifier['data']['value'] * $change;
+        $limited = log($modifier['data']['value'] + 1);
+        $data[$modifier['target']] += $source * $limited * $change;
         return $data;
     }
 
