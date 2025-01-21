@@ -98,21 +98,21 @@ return [
     ],
     'remove_damage' => [
         'data' => [
-            'damage' => -1.5,
+            'damage' => -3,
         ],
         'enemy' => true,
         'text' => 'Reduce Enemy Damage',
     ],
     'remove_defense' => [
         'data' => [
-            'defense' => -1.5,
+            'defense' => -3,
         ],
         'enemy' => true,
         'text' => 'Reduce Enemy Defense',
     ],
     'remove_magic' => [
         'data' => [
-            'magic' => -1.5,
+            'magic' => -3,
         ],
         'enemy' => true,
         'text' => 'Reduce Enemy Magic',

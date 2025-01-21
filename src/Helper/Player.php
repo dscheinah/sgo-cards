@@ -81,11 +81,11 @@ class Player
         $change = $this->modifier->calculateModifierChanges($modifiers);
 
         $player['data'] = $this->modifier->applyFlat($player['data'], [$modifier, $player['modifier']], 1);
-        $player['data'] = $this->modifier->applyFlat($player['data'], $playerModifiers, $change);
         $player['data'] = $this->modifier->applyFlat($player['data'], $enemyModifiers, $change);
+        $player['data'] = $this->modifier->applyFlat($player['data'], $playerModifiers, $change);
         $player['data'] = $this->modifier->applyMultiplicative($player['data'], [$modifier, $player['modifier']], 1);
-        $player['data'] = $this->modifier->applyMultiplicative($player['data'], $playerModifiers, $change);
         $player['data'] = $this->modifier->applyMultiplicative($player['data'], $enemyModifiers, $change);
+        $player['data'] = $this->modifier->applyMultiplicative($player['data'], $playerModifiers, $change);
 
         return $player;
     }
