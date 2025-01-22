@@ -56,11 +56,14 @@ class LeagueRepository
         if ($winner) {
             $userId = $winner['user_id'];
             $player = $this->player->get($winner);
+            $data = $this->player->applyModifiers($player, null, $leagueModifier)['data'];
+            $player['data']['modifiers'] = array_values($player['data']['modifiers']);
+            unset($data['modifiers']);
             $information['winner'] = [
                 'name' => $this->userStorage->fetchOne($userId)['name'] ?? '',
                 'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
                 'player' => $player,
-                'calculation' => $this->player->applyModifiers($player, null, $leagueModifier)['data'],
+                'calculation' => $data,
             ];
         }
         return $information;

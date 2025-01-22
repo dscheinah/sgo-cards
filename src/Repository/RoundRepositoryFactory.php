@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Helper\Battle;
 use App\Helper\Card;
 use App\Helper\Modifier;
 use App\Helper\Player;
@@ -21,6 +22,7 @@ class RoundRepositoryFactory implements FactoryInterface
             $injector->get(LeagueStorage::class),
             $injector->get(PlayerStorage::class),
             $injector->get(SnapshotStorage::class),
+            $injector->get(Battle::class),
             $injector->get(Card::class),
             $injector->get(Modifier::class),
             $injector->get(Player::class),

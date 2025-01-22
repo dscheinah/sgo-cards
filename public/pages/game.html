@@ -15,6 +15,7 @@
                 <li>Magic is an extra attack mitigated by enemies magic</li>
                 <li>Speed adds extra physical attacks for the fastest</li>
                 <li>You loose when your health drops below zero while calculating damage</li>
+                <li>Each card shows a lying power level with respect to your current build</li>
             </ul>
         </details>
         <h2>League #<span id="game-league-number"></span></h2>
@@ -59,6 +60,7 @@
                 const div = helper.create('div');
                 div.classList.add('sx-card');
                 div.innerHTML = `
+                    <small class="game-value">⚡️ ${card.value || 0}</small>
                     <span class="game-icon">${card.icon}</span>
                     <p><strong>${card.text}</strong></p>
                     <button value="${index}" accesskey="${index + 1}" type="button">Select</button>
@@ -115,6 +117,13 @@
 </script>
 
 <style>
+    .game-value {
+        text-align: right;
+        margin: -.5em -1em 0 0;
+        filter: grayscale(1);
+        opacity: .5;
+    }
+
     .game-icon {
         font-size: 42px;
         margin: 0;

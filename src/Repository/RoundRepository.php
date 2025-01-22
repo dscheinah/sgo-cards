@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Helper\Battle;
 use App\Helper\Card;
 use App\Helper\Modifier;
 use App\Helper\Player;
@@ -17,6 +18,7 @@ class RoundRepository
         private readonly LeagueStorage $leagueStorage,
         private readonly PlayerStorage $playerStorage,
         private readonly SnapshotStorage $snapshotStorage,
+        private readonly Battle $battle,
         private readonly Card $card,
         private readonly Modifier $modifier,
         private readonly Player $player,
@@ -43,6 +45,9 @@ class RoundRepository
 
         $leagueModifier = $this->modifier->get($currentLeague['modifier']);
         $player = $this->player->get($currentPlayer);
+        $cards = $this->card->draw($currentPlayer, $leagueId);
+
+        $player['data']['modifiers'] = array_values($player['data']['modifiers']);
 
         return [
             'league' => [
@@ -52,7 +57,7 @@ class RoundRepository
             'player' => $player,
             'calculation' => $this->player->applyModifiers($player, null, $leagueModifier)['data'],
             'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
-            'cards' => $this->card->draw($currentPlayer, $leagueId),
+            'cards' => $this->battle->getCardValues($player, $cards, $leagueId, $leagueModifier),
         ];
     }
 
@@ -83,8 +88,9 @@ class RoundRepository
 
         $leagueModifier = $this->modifier->get($currentLeague['modifier']);
         $enemyCalculation = $this->player->applyModifiers($enemy, null, $leagueModifier)['data'];
+        unset($enemyCalculation['modifiers']);
 
-        if ($this->battle($player, $enemy, $leagueModifier)) {
+        if ($this->battle->isWinner($player, $enemy, $leagueModifier)) {
             $this->playerStorage->updateY($player['id'], ++$player['y']);
             if (!$currentLeague['modifier'] && $player['y'] >= $this->max * 0.75) {
                 $this->leagueStorage->updateModifier($leagueId, $this->modifier->pickWorld());
@@ -106,28 +112,5 @@ class RoundRepository
             return ['finished' => true, 'enemy' => $enemyCalculation];
         }
         return ['winner' => false, 'enemy' => $enemyCalculation];
-    }
-
-    private function battle(array $player, array $enemy, ?array $modifier): bool
-    {
-        $playerModified = $this->player->applyModifiers($player, $enemy, $modifier);
-        $enemyModified = $this->player->applyModifiers($enemy, $player, $modifier);
-
-        $playerStats = $this->player->stats($playerModified, $enemyModified);
-        $enemyStats = $this->player->stats($enemyModified, $playerModified);
-
-        if ($playerStats['speed'] > 0) {
-            $enemyStats['health'] -= $playerModified['data']['damage'] ?? 0;
-        }
-        if ($enemyStats['speed'] > 0) {
-            $playerStats['health'] -= $enemyModified['data']['damage'] ?? 0;
-        }
-
-        while ($playerStats['health'] > 0 && $enemyStats['health'] > 0) {
-            $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'];
-            $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'];
-        }
-
-        return $playerStats['health'] > $enemyStats['health'];
     }
 }

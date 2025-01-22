@@ -16,4 +16,5 @@ return [
     'draw' => 3,
     'health' => 10,
     'damage' => 1,
+    'power' => 23,
 ];

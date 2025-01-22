@@ -20,14 +20,13 @@ class Player
         $data = $this->cardStorage->fetchStatsForPlayer($player['id']);
         $data['health'] += $this->health;
         $data['damage'] += $this->damage;
+        $data['modifiers'] = [];
 
-        $modifiers = [];
         foreach ($this->cardStorage->fetchModifiersForPlayer($player['id']) as $card) {
-            $modifiers[$card['modifier']] = isset($modifiers[$card['modifier']])
-                ? $this->modifier->update($modifiers[$card['modifier']], $card['modifier'])
+            $data['modifiers'][$card['modifier']] = isset($data['modifiers'][$card['modifier']])
+                ? $this->modifier->update($data['modifiers'][$card['modifier']], $card['modifier'])
                 : $this->modifier->get($card['modifier']);
         }
-        $data['modifiers'] = array_values($modifiers);
 
         return [
             'id' => $player['id'],
@@ -38,36 +37,40 @@ class Player
         ];
     }
 
+    public function applyCard(array $player, array $card): array
+    {
+        foreach ($card['data'] ?? [] as $key => $value) {
+            $player['data'][$key] += $value;
+        }
+        if ($card['modifier'] ?? null) {
+            $player['data']['modifiers'][$card['modifier']] = isset($player['data']['modifiers'][$card['modifier']])
+                ? $this->modifier->update($player['data']['modifiers'][$card['modifier']], $card['modifier'])
+                : $this->modifier->get($card['modifier']);
+        }
+        return $player;
+    }
+
     public function createRandomBot(int $x, int $y, int $leagueId): array
     {
-        $data = [
-            'health' => $this->health,
-            'damage' => $this->damage,
-            'defense' => 0,
-            'magic' => 0,
-            'speed' => 0,
-        ];
-        $modifiers = [];
-
-        for ($i = 0; $i < $x + $y + 1; $i++) {
-            $card = $this->card->pick($y, $leagueId);
-            foreach ($card['data'] ?? [] as $key => $value) {
-                $data[$key] += $value;
-            }
-            if ($card['modifier'] ?? null) {
-                $modifiers[$card['modifier']] = isset($modifiers[$card['modifier']])
-                    ? $this->modifier->update($modifiers[$card['modifier']], $card['modifier'])
-                    : $this->modifier->get($card['modifier']);
-            }
-        }
-        $data['modifiers'] = array_values($modifiers);
-
-        return [
+        $bot = [
             'x' => $x,
             'y' => $y,
             'modifier' => $this->modifier->pickPlayer(),
-            'data' => $data,
+            'data' => [
+                'health' => $this->health,
+                'damage' => $this->damage,
+                'defense' => 0,
+                'magic' => 0,
+                'speed' => 0,
+                'modifiers' => [],
+            ],
         ];
+
+        for ($i = 0; $i < $x + $y + 1; $i++) {
+            $bot = $this->applyCard($bot, $this->card->pick($y, $leagueId));
+        }
+
+        return $bot;
     }
 
     public function applyModifiers(array $player, ?array $enemy, ?array $modifier): array

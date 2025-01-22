@@ -14,6 +14,8 @@ use App\Handler\RoundNextHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
 use App\Handler\UserHandlerFactory;
+use App\Helper\Battle;
+use App\Helper\BattleFactory;
 use App\Helper\Card;
 use App\Helper\CardFactory;
 use App\Helper\Modifier;
@@ -81,6 +83,7 @@ class Provider implements ProviderInterface
         $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);
         $injector->set(UserTokenValidateMiddleware::class, UserMiddlewareFactory::class);
 
+        $injector->set(Battle::class, BattleFactory::class);
         $injector->set(Card::class, CardFactory::class);
         $injector->set(Modifier::class, ModifierFactory::class);
         $injector->set(Player::class, PlayerFactory::class);
