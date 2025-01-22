@@ -21,7 +21,7 @@ return [
     ],
     'more_player_magic' => [
         'data' => [
-            'magic' => 1.3,
+            'magic' => 1.2,
         ],
         'multiplicative' => true,
         'player' => true,
