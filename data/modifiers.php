@@ -77,21 +77,21 @@ return [
     ],
     'add_damage' => [
         'data' => [
-            'damage' => 1,
+            'damage' => 1.5,
         ],
         'self' => true,
         'text' => 'Increase Damage',
     ],
     'add_defense' => [
         'data' => [
-            'defense' => 1,
+            'defense' => 1.5,
         ],
         'self' => true,
         'text' => 'Increase Defense',
     ],
     'add_magic' => [
         'data' => [
-            'magic' => 1,
+            'magic' => 1.5,
         ],
         'self' => true,
         'text' => 'Increase Magic',
