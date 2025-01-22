@@ -19,7 +19,7 @@
             + helper.player(winner['player'], winner['calculation']);
     }
 
-    function createStatistics(stats) {
+    function createStatistics(stats, shrines) {
         let maxX = Math.max(0, ...Object.keys(stats).map((value) => parseInt(value)));
         let maxY = 0;
         let maxZ = 0;
@@ -33,11 +33,27 @@
             table += '<tr>'
             for (let x = 0; x <= maxX; x++) {
                 let z = stats[x] && stats[x][y] || 0;
-                table += `<td style="opacity: ${Math.ceil((z || 0) / maxZ * 25) / 25}"></td>`
+                if (shrines[x] && shrines[x][y]) {
+                    table += `<td class="statistics-hit" style="background: ${shrines[x][y]}"></td>`;
+                } else if (z) {
+                    table += `<td style="opacity: ${Math.ceil((z || 0) / maxZ * 25) / 25}"></td>`
+                } else if (shrines[x] || Object.values(shrines).find((current) => current[y])) {
+                    table += `<td class="statistics-adjacent"></td>`
+                } else {
+                    table += `<td></td>`
+                }
             }
             table += '</tr>'
         }
         return table;
+    }
+
+    function createShrineDescriptions(data) {
+        if (!data.length) {
+            return '';
+        }
+        let list = data.map((item) => `${item.icon} <span style="color: ${item.color}">${item.description}</span>`);
+        return `<p>${list.join('<br/>')}</p>`;
     }
 
     page.register('statistics', ({render, show, listen}) => {
@@ -77,8 +93,9 @@
                             <div>
                                 <h3>Layout</h3>
                                 <table class="statistics-layout">
-                                    ${createStatistics(current.statistics) || '<tr><td></td></tr>'}
+                                    ${createStatistics(current['statistics'], current['shrines']['positions']) || '<tr><td></td></tr>'}
                                 </table>
+                                ${createShrineDescriptions(current['shrines']['data'])}
                             </div>
                         </div>
                     `;
@@ -142,11 +159,20 @@
     }
 
     .statistics-layout td {
-        width: 4px;
-        height: 4px;
+        width: 6px;
+        height: 6px;
         border: 1px solid lightgray;
         background: var(--primary-color);
         opacity: 0;
         font-size: 0;
+    }
+
+    .statistics-hit.statistics-hit {
+        opacity: 1;
+    }
+
+    .statistics-adjacent.statistics-adjacent {
+        opacity: .5;
+        background: lightgray;
     }
 </style>

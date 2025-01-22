@@ -6,6 +6,7 @@ use App\Helper\Battle;
 use App\Helper\Card;
 use App\Helper\Modifier;
 use App\Helper\Player;
+use App\Helper\Shrine;
 use App\Storage\CardStorage;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
@@ -26,6 +27,7 @@ class RoundRepositoryFactory implements FactoryInterface
             $injector->get(Card::class),
             $injector->get(Modifier::class),
             $injector->get(Player::class),
+            $injector->get(Shrine::class),
             $options['max'],
         );
     }

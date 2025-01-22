@@ -39,6 +39,9 @@ class Player
 
     public function applyCard(array $player, array $card): array
     {
+        if ($card['shrine'] ?? false) {
+            return $player;
+        }
         foreach ($card['data'] ?? [] as $key => $value) {
             $player['data'][$key] += $value;
         }
@@ -95,18 +98,20 @@ class Player
 
     public function stats(array $player, array $enemy): array
     {
+        $playerData = $player['data'];
+        $enemyData = $enemy['data'];
         return [
-            'health' => (int) $player['data']['health'],
+            'health' => (int) $playerData['health'],
             'damage' => max(
-                max((int) $player['data']['damage'], 0) - max((int) $enemy['data']['defense'], 0),
+                max((int) $playerData['damage'], 0) - max((int) $enemyData['defense'], 0),
                 $this->damage
             ),
             'magic' => max(
-                max((int) $player['data']['magic'], 0) - max((int) $enemy['data']['magic'], 0),
+                max((int) $playerData['magic_offense'], 0) - max((int) $enemyData['magic_defense'], 0),
                 0
             ),
             'speed' => max(
-                max((int) $player['data']['speed'], 0) - max((int) $enemy['data']['speed'], 0),
+                max((int) $playerData['speed'], 0) - max((int) $enemyData['speed'], 0),
                 0
             ),
         ];

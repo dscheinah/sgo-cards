@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Helper\Modifier;
 use App\Helper\Player;
+use App\Helper\Shrine;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\SnapshotStorage;
@@ -18,6 +19,7 @@ class LeagueRepository
         private readonly UserStorage $userStorage,
         private readonly Modifier $modifier,
         private readonly Player $player,
+        private readonly Shrine $shrine,
         private readonly int $max,
     ) {
     }
@@ -46,10 +48,14 @@ class LeagueRepository
 
         $leagueModifier = $this->modifier->get($league['modifier']);
 
+        $shrines = $this->shrine->getStatistics($leagueId);
+        $shrines['positions'] = (object) array_map(static fn($entry) => (object) $entry, $shrines['positions']);
+
         $information = [
             'id' => $id,
             'modifier' => $leagueModifier,
             'statistics' => (object) array_map(static fn($entry) => (object) $entry, $statistics),
+            'shrines' => $shrines,
             'user_count' => $counts['users'],
             'player_count' => $counts['players'],
         ];

@@ -5,6 +5,7 @@ namespace App\Helper;
 class Card
 {
     public function __construct(
+        private readonly Shrine $shrine,
         private readonly array $cards,
         private readonly int $amount,
         private readonly int $max,
@@ -13,10 +14,22 @@ class Card
 
     public function draw(array $player, int $leagueId): array
     {
-        $cards = $this->cardsForTier($player['y'], $leagueId);
-        mt_srand($player['id'] + ($player['x'] * $this->max) + $player['y']);
         $draw = [];
-        for ($i = 0; $i < $this->amount; $i++) {
+        $amount = $this->amount;
+
+        $cards = $this->cardsForTier($player['y'], $leagueId);
+
+        mt_srand($player['id'] + ($player['x'] * $this->max) + $player['y']);
+
+        if ($leagueId > 9 && !(mt_rand() % 5) && !$this->shrine->isActive()) {
+            $card = $this->shrine->getCard();
+            if ($card) {
+                $draw[] = $card;
+                $amount--;
+            }
+        }
+
+        for ($i = 0; $i < $amount; $i++) {
             $draw[] = $cards[array_rand($cards)];
         }
         return $draw;

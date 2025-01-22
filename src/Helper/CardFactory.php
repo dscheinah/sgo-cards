@@ -10,6 +10,7 @@ class CardFactory implements FactoryInterface
     public function create(Injector $injector, array $options, string $class): Card
     {
         return new Card(
+            $injector->get(Shrine::class),
             include __DIR__ . '/../../data/cards.php',
             $options['draw'],
             $options['max'],

@@ -7,6 +7,7 @@ class Battle
     public function __construct(
         private readonly Modifier $modifier,
         private readonly Player $player,
+        private readonly Shrine $shrine,
         private readonly int $power,
     ) {
     }
@@ -15,6 +16,7 @@ class Battle
     {
         $playerModified = $this->player->applyModifiers($player, $enemy, $modifier);
         $enemyModified = $this->player->applyModifiers($enemy, $player, $modifier);
+
         return $this->battle($playerModified, $enemyModified);
     }
 
@@ -42,17 +44,45 @@ class Battle
 
     private function battle(array $player, array $enemy): bool
     {
+        $shrines = $this->shrine->getInRange();
+
+        $player['data']['magic_offense'] = $player['data']['magic'];
+        $player['data']['magic_defense'] = $player['data']['magic'];
+        $enemy['data']['magic_offense'] = $enemy['data']['magic'];
+        $enemy['data']['magic_defense'] = $enemy['data']['magic'];
+        foreach ($shrines as $shrine) {
+            $player = $shrine->player($player);
+            $enemy = $shrine->player($enemy);
+        }
+
         $playerStats = $this->player->stats($player, $enemy);
         $enemyStats = $this->player->stats($enemy, $player);
 
+        foreach ($shrines as $shrine) {
+            $playerStats = $shrine->stats($playerStats);
+            $enemyStats = $shrine->stats($enemyStats);
+        }
+
         if ($playerStats['speed'] > 0) {
-            $enemyStats['health'] -= (int) ($player['data']['damage'] ?? 0);
+            $speedDamage = $playerStats['damage'];
+            foreach ($shrines as $shrine) {
+                $speedDamage = $shrine->speed($playerStats, $speedDamage);
+            }
+            $enemyStats['health'] -= $speedDamage;
         }
         if ($enemyStats['speed'] > 0) {
-            $playerStats['health'] -= (int) ($enemy['data']['damage'] ?? 0);
+            $speedDamage = $enemyStats['damage'];
+            foreach ($shrines as $shrine) {
+                $speedDamage = $shrine->speed($enemyStats, $speedDamage);
+            }
+            $playerStats['health'] -= $speedDamage;
         }
 
         while ($playerStats['health'] > 0 && $enemyStats['health'] > 0) {
+            foreach ($shrines as $shrine) {
+                $playerStats = $shrine->battle($playerStats);
+                $enemyStats = $shrine->battle($enemyStats);
+            }
             $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'];
             $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'];
         }

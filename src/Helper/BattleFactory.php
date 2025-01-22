@@ -12,6 +12,7 @@ class BattleFactory implements FactoryInterface
         return new Battle(
             $injector->get(Modifier::class),
             $injector->get(Player::class),
+            $injector->get(Shrine::class),
             $options['power'],
         );
     }

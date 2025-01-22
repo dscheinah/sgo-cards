@@ -21,11 +21,17 @@
         <h2>League #<span id="game-league-number"></span></h2>
         <p>League modifier: <span id="game-league"></span></p>
         <div id="game-cards" class="sx-cards"></div>
-        <p class="sx-actions">
+        <div class="sx-actions game-actions">
             <em id="game-result" class="sx-highlight"></em>
-        </p>
+            <p id="game-shrines-icons" class="game-shrines"></p>
+        </div>
         <h2>Player #<span id="game-player-number"></span></h2>
         <div id="game-player"></div>
+        <div class="game-shrines">
+            <h2>Shrines in range</h2>
+            <p>Shrines within straight line of sight are in range and activated:</p>
+            <p id="game-shrines-descriptions"></p>
+        </div>
     </div>
 </template>
 
@@ -39,6 +45,7 @@
 
     page.register('game', ({render, show, action, listen}) => {
         render(() => {
+            helper.set('.game-shrines', 'hidden', true);
             if (!user) {
                 return;
             }
@@ -57,13 +64,15 @@
             }
             helper.style('#game-cards', 'opacity', loading ? '0' : '1');
             helper.list('#game-cards', round['cards'], (card, index) => {
+                const value = card['shrine'] ? 542123 : index;
+
                 const div = helper.create('div');
                 div.classList.add('sx-card');
                 div.innerHTML = `
                     <small class="game-value">⚡️ ${card.value || 0}</small>
                     <span class="game-icon">${card.icon}</span>
                     <p><strong>${card.text}</strong></p>
-                    <button value="${index}" accesskey="${index + 1}" type="button">Select</button>
+                    <button value="${value}" accesskey="${index + 1}" type="button">Select</button>
                 `;
                 return div;
             });
@@ -81,6 +90,19 @@
                 }
             }
             helper.set('#game-result', 'innerHTML', text);
+            if (round['shrines'].length) {
+                helper.set('.game-shrines', 'hidden', false);
+                helper.set(
+                    '#game-shrines-icons',
+                    'innerHTML',
+                    round['shrines'].map(shrine => shrine.icon).join(' ')
+                );
+                helper.set(
+                    '#game-shrines-descriptions',
+                    'innerHTML',
+                    round['shrines'].map(shrine => `${shrine.icon} ${shrine.description}`).join('<br/>')
+                );
+            }
         });
 
         show(() => {
@@ -127,6 +149,15 @@
     .game-icon {
         font-size: 42px;
         margin: 0;
+    }
+
+    .game-actions {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .game-actions > * {
+        margin-right: 0 !important;
     }
 
     #game-cards {

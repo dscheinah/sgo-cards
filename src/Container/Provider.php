@@ -22,6 +22,8 @@ use App\Helper\Modifier;
 use App\Helper\ModifierFactory;
 use App\Helper\Player;
 use App\Helper\PlayerFactory;
+use App\Helper\Shrine;
+use App\Helper\ShrineFactory;
 use App\Middleware\UserMiddlewareFactory;
 use App\Middleware\UserTokenValidateMiddleware;
 use App\Middleware\UserTokenCreateMiddleware;
@@ -35,6 +37,7 @@ use App\RouterFactory;
 use App\Storage\CardStorage;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
+use App\Storage\ShrineStorage;
 use App\Storage\SnapshotStorage;
 use App\Storage\UserStorage;
 use Sx\Application\Container\ApplicationProvider;
@@ -87,6 +90,7 @@ class Provider implements ProviderInterface
         $injector->set(Card::class, CardFactory::class);
         $injector->set(Modifier::class, ModifierFactory::class);
         $injector->set(Player::class, PlayerFactory::class);
+        $injector->set(Shrine::class, ShrineFactory::class);
 
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);
@@ -95,6 +99,7 @@ class Provider implements ProviderInterface
         $injector->set(CardStorage::class, StorageFactory::class);
         $injector->set(LeagueStorage::class, StorageFactory::class);
         $injector->set(PlayerStorage::class, StorageFactory::class);
+        $injector->set(ShrineStorage::class, StorageFactory::class);
         $injector->set(SnapshotStorage::class, StorageFactory::class);
         $injector->set(UserStorage::class, StorageFactory::class);
     }

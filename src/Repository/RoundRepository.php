@@ -6,6 +6,7 @@ use App\Helper\Battle;
 use App\Helper\Card;
 use App\Helper\Modifier;
 use App\Helper\Player;
+use App\Helper\Shrine;
 use App\Storage\CardStorage;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
@@ -22,6 +23,7 @@ class RoundRepository
         private readonly Card $card,
         private readonly Modifier $modifier,
         private readonly Player $player,
+        private readonly Shrine $shrine,
         private readonly int $max,
     ) {
     }
@@ -42,6 +44,7 @@ class RoundRepository
             ];
             $currentPlayer['id'] = $this->playerStorage->insertOne($currentPlayer);
         }
+        $this->shrine->initialize($leagueId, $currentPlayer);
 
         $leagueModifier = $this->modifier->get($currentLeague['modifier']);
         $player = $this->player->get($currentPlayer);
@@ -58,6 +61,7 @@ class RoundRepository
             'calculation' => $this->player->applyModifiers($player, null, $leagueModifier)['data'],
             'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
             'cards' => $this->battle->getCardValues($player, $cards, $leagueId, $leagueModifier),
+            'shrines' => $this->shrine->getDataInRange(),
         ];
     }
 
@@ -70,12 +74,17 @@ class RoundRepository
         if (!$currentPlayer) {
             return null;
         }
+        $this->shrine->initialize($leagueId, $currentPlayer);
 
-        $cards = $this->card->draw($currentPlayer, $leagueId);
-        if (!isset($cards[$card])) {
-            return null;
+        if ($card === 542123) {
+            $this->shrine->activate();
+        } else {
+            $cards = $this->card->draw($currentPlayer, $leagueId);
+            if (!isset($cards[$card])) {
+                return null;
+            }
+            $this->cardStorage->insertForPlayer($currentPlayer['id'], $cards[$card]);
         }
-        $this->cardStorage->insertForPlayer($currentPlayer['id'], $cards[$card]);
 
         $player = $this->player->get($currentPlayer);
         $enemy = $this->snapshotStorage->fetchRandomForLeagueAtPosition($leagueId, $player['x'], $player['y']);
