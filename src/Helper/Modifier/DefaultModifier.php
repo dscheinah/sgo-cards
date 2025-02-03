@@ -16,11 +16,11 @@ class DefaultModifier implements ModifierInterface
     {
         foreach ($modifier['data'] as $key => $value) {
             if ($value < 1) {
-                $limited = max($value, .25);
-                $data[$key] *= $limited / $change;
+                $target = $data[$key] * (1 - max($value, .25));
+                $data[$key] -= $target * $change;
             } else {
-                $limited = log($value) + 1;
-                $data[$key] *= $limited * $change;
+                $target = $data[$key] * log($value);
+                $data[$key] += $target * $change;
             }
         }
         return $data;
