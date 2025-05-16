@@ -78,13 +78,16 @@ class Battle
             $playerStats['health'] -= $speedDamage;
         }
 
+        $round = 0;
         while ($playerStats['health'] > 0 && $enemyStats['health'] > 0) {
             foreach ($shrines as $shrine) {
                 $playerStats = $shrine->battle($playerStats);
                 $enemyStats = $shrine->battle($enemyStats);
             }
-            $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'];
-            $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'];
+            $drain = 1.1 ** $round;
+            $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
+            $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'] + (int) $drain;
+            $round++;
         }
 
         return $playerStats['health'] > $enemyStats['health'];
