@@ -53,7 +53,7 @@ class Player
         return $player;
     }
 
-    public function createRandomBot(int $x, int $y, int $leagueId): array
+    public function createRandomBot(int $x, int $y, int $leagueId, ?array $modifier): array
     {
         $bot = [
             'x' => $x,
@@ -70,10 +70,43 @@ class Player
         ];
 
         for ($i = 0; $i < $x + $y + 1; $i++) {
-            $bot = $this->applyCard($bot, $this->card->pick($y, $leagueId));
+            $picks = [];
+            for ($j = 0; $j < 3; $j++) {
+                $pick = $this->applyCard($bot, $this->card->pick($y, $leagueId));
+                $picks[$this->powerLevel($pick, $bot, $modifier)] = $pick;
+            }
+            ksort($picks);
+            $bot = array_pop($picks);
         }
 
         return $bot;
+    }
+
+    private function powerLevel(array $player, array $base, ?array $modifier): int
+    {
+        $player['modifier'] = $this->modifier->get($player['modifier']);
+        $player = $this->applyModifiers($player, $base, $modifier);
+
+        $base['modifier'] = $this->modifier->get($base['modifier']);
+        $base = $this->applyModifiers($base, $player, $modifier);
+
+        $rel = static function ($a, $b) {
+            if ($a > 0 && $b > 0) {
+                return $a / $b;
+            }
+            if ($a > 0) {
+                return 1;
+            }
+            return 0;
+        };
+
+        $lv = $rel($player['data']['health'],  $base['data']['health'])
+            + $rel($player['data']['damage'],  $base['data']['damage'])
+            + $rel($player['data']['defense'], $base['data']['defense'])
+            + $rel($player['data']['magic'],   $base['data']['magic'])
+            + $rel($player['data']['speed'],   $base['data']['speed']);
+
+        return (int) ($lv * 100);
     }
 
     public function applyModifiers(array $player, ?array $enemy, ?array $modifier): array

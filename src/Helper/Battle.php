@@ -24,7 +24,7 @@ class Battle
     {
         $enemies = [];
         for ($i = 0; $i < $this->power; $i++) {
-            $randomBot = $this->player->createRandomBot($player['x'], $player['y'], $leagueId);
+            $randomBot = $this->player->createRandomBot($player['x'], $player['y'], $leagueId, $modifier);
             $randomBot['modifier'] = $this->modifier->get($randomBot['modifier']);
             $enemies[] = $randomBot;
         }

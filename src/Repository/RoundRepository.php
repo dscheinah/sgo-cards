@@ -86,16 +86,17 @@ class RoundRepository
             $this->cardStorage->insertForPlayer($currentPlayer['id'], $cards[$card]);
         }
 
+        $leagueModifier = $this->modifier->get($currentLeague['modifier']);
+
         $player = $this->player->get($currentPlayer);
         $enemy = $this->snapshotStorage->fetchRandomForLeagueAtPosition($leagueId, $player['x'], $player['y']);
         if (!$enemy) {
-            $enemy = $this->player->createRandomBot($player['x'], $player['y'], $leagueId);
+            $enemy = $this->player->createRandomBot($player['x'], $player['y'], $leagueId, $leagueModifier);
         }
         $enemy['modifier'] = $this->modifier->get($enemy['modifier']);
 
         $this->snapshotStorage->insertForLeagueFromPlayer($leagueId, $currentPlayer, $player['data']);
 
-        $leagueModifier = $this->modifier->get($currentLeague['modifier']);
         $enemyCalculation = $this->player->applyModifiers($enemy, null, $leagueModifier)['data'];
         unset($enemyCalculation['modifiers']);
 
