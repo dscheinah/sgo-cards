@@ -10,5 +10,5 @@ interface ShrineInterface
 
     public static function speed(array $stats, float $damage): float;
 
-    public static function battle(array $stats): array;
+    public static function battle(array $stats, int $duration): array;
 }

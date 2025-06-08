@@ -14,6 +14,8 @@ use App\Handler\RoundNextHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
 use App\Handler\UserHandlerFactory;
+use App\Helper\AreaHelper;
+use App\Helper\AreaHelperFactory;
 use App\Helper\CardHelper;
 use App\Helper\CardHelperFactory;
 use App\Helper\ModifierHelper;
@@ -33,6 +35,8 @@ use App\Provider\PlayerProvider;
 use App\Provider\PlayerProviderFactory;
 use App\Provider\ShrineProvider;
 use App\Provider\ShrineProviderFactory;
+use App\Provider\StatisticProvider;
+use App\Provider\StatisticProviderFactory;
 use App\Repository\LeagueRepository;
 use App\Repository\LeagueRepositoryFactory;
 use App\Repository\RoundRepository;
@@ -92,6 +96,7 @@ class Provider implements ProviderInterface
         $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);
         $injector->set(UserTokenValidateMiddleware::class, UserMiddlewareFactory::class);
 
+        $injector->set(AreaHelper::class, AreaHelperFactory::class);
         $injector->set(CardHelper::class, CardHelperFactory::class);
         $injector->set(ModifierHelper::class, ModifierHelperFactory::class);
         $injector->set(ShrineHelper::class, ShrineHelperFactory::class);
@@ -101,6 +106,7 @@ class Provider implements ProviderInterface
         $injector->set(LeagueProvider::class, LeagueProviderFactory::class);
         $injector->set(PlayerProvider::class, PlayerProviderFactory::class);
         $injector->set(ShrineProvider::class, ShrineProviderFactory::class);
+        $injector->set(StatisticProvider::class, StatisticProviderFactory::class);
 
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);

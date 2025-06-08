@@ -71,6 +71,10 @@ class BattleProvider
             $player = $shrine->handler::player($player);
             $enemy = $shrine->handler::player($enemy);
         }
+        if ($battlefield->area) {
+            $player = $battlefield->area->handler::player($player);
+            $enemy = $battlefield->area->handler::player($enemy);
+        }
 
         $playerStats = $this->stats($player, $enemy);
         $enemyStats = $this->stats($enemy, $player);
@@ -97,8 +101,12 @@ class BattleProvider
 
         while ($playerStats['health'] > 0 && $enemyStats['health'] > 0) {
             foreach ($battlefield->shrines as $shrine) {
-                $playerStats = $shrine->handler::battle($playerStats);
-                $enemyStats = $shrine->handler::battle($enemyStats);
+                $playerStats = $shrine->handler::battle($playerStats, $battle->duration);
+                $enemyStats = $shrine->handler::battle($enemyStats, $battle->duration);
+            }
+            if ($battlefield->area) {
+                $playerStats = $battlefield->area->handler::battle($playerStats, $battle->duration);
+                $enemyStats = $battlefield->area->handler::battle($enemyStats, $battle->duration);
             }
             $drain = 1.1 ** $battle->duration;
             $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
@@ -118,10 +126,12 @@ class BattleProvider
                 max($player['damage'], 0) - max($enemy['defense'], 0),
                 1
             ),
+            'defense' => $player['defense'],
             'magic' => max(
                 max($player['magic_offense'], 0) - max($enemy['magic_defense'], 0),
                 0
             ),
+            'magic_defense' => $player['magic_defense'],
             'speed' => max(
                 max($player['speed'], 0) - max($enemy['speed'], 0),
                 0

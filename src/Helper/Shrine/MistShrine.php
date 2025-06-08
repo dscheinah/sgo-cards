@@ -4,7 +4,7 @@ namespace App\Helper\Shrine;
 
 class MistShrine extends NoopShrine
 {
-    public static function battle(array $stats): array
+    public static function battle(array $stats, int $duration): array
     {
         mt_srand();
         if (!(mt_rand() % 5)) {

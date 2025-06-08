@@ -19,7 +19,7 @@
             + helper.player(winner);
     }
 
-    function createStatistics(stats, shrines) {
+    function createStatistics(stats, shrines, areas) {
         let maxX = Math.max(0, ...Object.keys(stats).map((value) => parseInt(value)));
         let maxY = 0;
         let maxZ = 0;
@@ -36,11 +36,13 @@
                 if (shrines[x] && shrines[x][y]) {
                     table += `<td class="statistics-hit" style="background: ${shrines[x][y]}"></td>`;
                 } else if (z) {
-                    table += `<td style="opacity: ${Math.ceil((z || 0) / maxZ * 25) / 25}"></td>`
+                    table += `<td style="opacity: ${Math.ceil((z || 0) / maxZ * 25) / 25}"></td>`;
                 } else if (shrines[x] || Object.values(shrines).find((current) => current[y])) {
                     table += `<td class="statistics-adjacent"></td>`
+                } else if (areas.find((area) => y >= area['y'] && y <= area['h'] )) {
+                    table += `<td class="statistics-area"></td>`;
                 } else {
-                    table += `<td></td>`
+                    table += `<td></td>`;
                 }
             }
             table += '</tr>'
@@ -93,7 +95,7 @@
                             <div>
                                 <h3>Layout</h3>
                                 <table class="statistics-layout">
-                                    ${createStatistics(current['statistics'], current['shrines']['positions']) || '<tr><td></td></tr>'}
+                                    ${createStatistics(current['statistics'], current['shrines']['positions'], current['areas']) || '<tr><td></td></tr>'}
                                 </table>
                                 ${createShrineDescriptions(current['shrines']['data'])}
                             </div>
@@ -174,5 +176,10 @@
     .statistics-adjacent.statistics-adjacent {
         opacity: .5;
         background: lightgray;
+    }
+
+    .statistics-area.statistics-area {
+        opacity: .1;
+        background: lightcoral;
     }
 </style>

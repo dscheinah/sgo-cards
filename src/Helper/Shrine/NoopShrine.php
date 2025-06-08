@@ -19,7 +19,7 @@ class NoopShrine implements ShrineInterface
         return $damage;
     }
 
-    public static function battle(array $stats): array
+    public static function battle(array $stats, int $duration): array
     {
         return $stats;
     }

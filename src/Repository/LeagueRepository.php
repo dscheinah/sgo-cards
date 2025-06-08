@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Model\Modifier;
+use App\Model\Area;
 use App\Model\Shrine;
 use App\Provider\LeagueProvider;
 use App\Provider\PlayerProvider;
+use App\Provider\StatisticProvider;
 use App\Storage\LeagueStorage;
 
 class LeagueRepository
@@ -14,6 +15,7 @@ class LeagueRepository
         private readonly LeagueStorage $leagueStorage,
         private readonly LeagueProvider $leagueProvider,
         private readonly PlayerProvider $playerProvider,
+        private readonly StatisticProvider $statisticProvider,
     ) {
     }
 
@@ -28,11 +30,12 @@ class LeagueRepository
         if (!$league) {
             return null;
         }
-        $statistics = $this->leagueProvider->createStatistics($id);
+        $statistics = $this->statisticProvider->create($id);
 
         return [
             'id' => $league->id,
             'modifier' => $league->modifier?->output(),
+            'areas' => array_map(static fn (Area $area) => $area->output(), $league->areas),
             'statistics' => (object) array_map(static fn($entry) => (object) $entry, $statistics->statistics),
             'shrines' => [
                 'positions' => (object) array_map(static fn($entry) => (object) $entry, $statistics->shrines['positions']),

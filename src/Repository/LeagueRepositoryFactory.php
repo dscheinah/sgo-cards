@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Provider\LeagueProvider;
 use App\Provider\PlayerProvider;
+use App\Provider\StatisticProvider;
 use App\Storage\LeagueStorage;
 use Sx\Container\FactoryInterface;
 use Sx\Container\Injector;
@@ -16,6 +17,7 @@ class LeagueRepositoryFactory implements FactoryInterface
             $injector->get(LeagueStorage::class),
             $injector->get(LeagueProvider::class),
             $injector->get(PlayerProvider::class),
+            $injector->get(StatisticProvider::class),
         );
     }
 }

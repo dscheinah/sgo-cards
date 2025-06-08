@@ -27,6 +27,7 @@ class RoundRepository
             'league' => [
                 'id' => $battlefield->league->id,
                 'modifier' => $battlefield->league->modifier?->output(),
+                'area' => $battlefield->area?->output(),
             ],
             'player' => $battlefield->player->output($battlefield->league),
             'cards' => $cards,

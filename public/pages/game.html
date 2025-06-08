@@ -20,6 +20,7 @@
         </details>
         <h2>League #<span id="game-league-number"></span></h2>
         <p>League modifier: <span id="game-league"></span></p>
+        <p id="game-area">Area: <span id="game-area-text"></span></p>
         <div id="game-cards" class="sx-cards"></div>
         <div class="sx-actions game-actions">
             <em id="game-result" class="sx-highlight"></em>
@@ -56,6 +57,12 @@
             }
             helper.set('#game-league-number', 'innerHTML', round['league'].id);
             helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
+            if (round['league']['area']) {
+                helper.set('#game-area-text', 'innerHTML', `${round['league']['area'].name}`);
+                helper.set('#game-area', 'hidden', false);
+            } else {
+                helper.set('#game-area', 'hidden', true);
+            }
             helper.set('#game-player-number', 'innerHTML', round['player']['try']);
             helper.set('#game-player', 'innerHTML', helper.player(round['player'], result && result['enemy'] && result['enemy']['calculation']));
             helper.style('#game-cards', 'opacity', loading ? '0' : '1');

@@ -31,6 +31,13 @@ class BattlefieldBuilder
         $battlefield->shrines = $this->shrineProvider->createInRange();
         $battlefield->cards = $this->cardHelper->draw($league, $player);
 
+        foreach ($league->areas as $area) {
+            if ($player->y >= $area->y && $player->y <= $area->h) {
+                $battlefield->area = $area;
+                break;
+            }
+        }
+
         return $battlefield;
     }
 

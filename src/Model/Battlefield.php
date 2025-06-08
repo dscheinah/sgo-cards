@@ -8,6 +8,8 @@ class Battlefield
 
     public Player $player;
 
+    public ?Area $area = null;
+
     /** @var array<Card> */
     public array $cards = [];
 
