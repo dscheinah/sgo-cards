@@ -18,10 +18,14 @@ use App\Helper\AreaHelper;
 use App\Helper\AreaHelperFactory;
 use App\Helper\CardHelper;
 use App\Helper\CardHelperFactory;
+use App\Helper\SpecializationHelper;
+use App\Helper\SpecializationHelperFactory;
 use App\Helper\ModifierHelper;
 use App\Helper\ModifierHelperFactory;
 use App\Helper\ShrineHelper;
 use App\Helper\ShrineHelperFactory;
+use App\Middleware\SpecializationMiddleware;
+use App\Middleware\SpecializationMiddlewareFactory;
 use App\Middleware\UserMiddlewareFactory;
 use App\Middleware\UserTokenCreateMiddleware;
 use App\Middleware\UserTokenValidateMiddleware;
@@ -41,6 +45,8 @@ use App\Repository\LeagueRepository;
 use App\Repository\LeagueRepositoryFactory;
 use App\Repository\RoundRepository;
 use App\Repository\RoundRepositoryFactory;
+use App\Repository\SpecializationRepository;
+use App\Repository\SpecializationRepositoryFactory;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryFactory;
 use App\RouterFactory;
@@ -93,6 +99,7 @@ class Provider implements ProviderInterface
         $injector->set(UserGetHandler::class, UserHandlerFactory::class);
         $injector->set(UserCreateHandler::class, UserHandlerFactory::class);
 
+        $injector->set(SpecializationMiddleware::class, SpecializationMiddlewareFactory::class);
         $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);
         $injector->set(UserTokenValidateMiddleware::class, UserMiddlewareFactory::class);
 
@@ -100,6 +107,7 @@ class Provider implements ProviderInterface
         $injector->set(CardHelper::class, CardHelperFactory::class);
         $injector->set(ModifierHelper::class, ModifierHelperFactory::class);
         $injector->set(ShrineHelper::class, ShrineHelperFactory::class);
+        $injector->set(SpecializationHelper::class, SpecializationHelperFactory::class);
 
         $injector->set(BattlefieldBuilder::class, BattlefieldBuilderFactory::class);
         $injector->set(BattleProvider::class, BattleProviderFactory::class);
@@ -110,6 +118,7 @@ class Provider implements ProviderInterface
 
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);
+        $injector->set(SpecializationRepository::class, SpecializationRepositoryFactory::class);
         $injector->set(UserRepository::class, UserRepositoryFactory::class);
 
         $injector->set(CardStorage::class, StorageFactory::class);

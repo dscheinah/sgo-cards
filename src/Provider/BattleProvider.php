@@ -75,6 +75,9 @@ class BattleProvider
             $player = $battlefield->area->handler::player($player);
             $enemy = $battlefield->area->handler::player($enemy);
         }
+        if ($battlefield->player->specialization?->handler) {
+            $enemy = $battlefield->player->specialization?->handler::enemy($enemy);
+        }
 
         $playerStats = $this->stats($player, $enemy);
         $enemyStats = $this->stats($enemy, $player);
@@ -107,6 +110,9 @@ class BattleProvider
             if ($battlefield->area) {
                 $playerStats = $battlefield->area->handler::battle($playerStats, $battle->duration);
                 $enemyStats = $battlefield->area->handler::battle($enemyStats, $battle->duration);
+            }
+            if ($battlefield->player->specialization?->handler) {
+                $playerStats = $battlefield->player->specialization?->handler::battle($playerStats, $battle->duration);
             }
             $drain = 1.1 ** $battle->duration;
             $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;

@@ -17,3 +17,14 @@ export async function next(userId, card, token, league) {
     }
     throw new Error('An error occurred. Please reload and try again.');
 }
+
+export async function specialization(userId, identifier, league) {
+    const body = new FormData();
+    body.set('identifier', identifier);
+    body.set('league', league);
+    const result = await fetch('round/load?user_id=' + encodeURIComponent(userId), {method: 'POST', body});
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
+}

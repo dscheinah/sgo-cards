@@ -4,6 +4,7 @@ namespace App\Provider;
 
 use App\Helper\CardHelper;
 use App\Helper\ModifierHelper;
+use App\Helper\SpecializationHelper;
 use App\Model\League;
 use App\Model\Player;
 use App\Storage\CardStorage;
@@ -20,6 +21,7 @@ class PlayerProvider
         private readonly UserStorage $userStorage,
         private readonly CardHelper $cardHelper,
         private readonly ModifierHelper $modifierHelper,
+        private readonly SpecializationHelper $specializationHelper,
         private readonly int $max,
         private readonly int $health,
         private readonly int $damage,
@@ -40,7 +42,13 @@ class PlayerProvider
             ];
             $input['id'] = $this->playerStorage->insertOne($input);
         }
-        return $this->createPlayerFromCards($input);
+        $player = $this->createPlayerFromCards($input);
+        $player->specialization = $this->specializationHelper->get($input['specialization'] ?? null);
+        $player->specializations = $this->specializationHelper->list(
+            $player->data,
+            $this->playerStorage->fetchMaxYForUserAndLeague($userId, $league->id),
+        );
+        return $player;
     }
 
     public function createEnemy(League $league, Player $player): Player

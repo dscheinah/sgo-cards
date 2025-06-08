@@ -21,12 +21,17 @@ class Player
     /** @var array<string, Modifier>  */
     public array $modifiers = [];
 
+    public ?Specialization $specialization = null;
+
+    /** @var array<Specialization> */
+    public array $specializations = [];
+
     public array $data;
 
     public function calculation(League $league, ?Player $enemy = null): array
     {
         $modifiers = [
-            ...array_filter([$league->modifier, $this->modifier]),
+            ...array_filter([$league->modifier, $this->modifier, ...($this->specialization?->modifiers ?: [])]),
             ...array_filter($enemy?->modifiers ?: [], static fn (Modifier $modifier) => $modifier->enemy),
             ...array_filter($this->modifiers, static fn (Modifier $modifier) => $modifier->self),
         ];
@@ -78,6 +83,11 @@ class Player
             'modifiers' => array_map(
                 static fn (Modifier $modifier) => $modifier->output(),
                 array_values($this->modifiers)
+            ),
+            'specialization' => $this->specialization?->output(),
+            'specializations' => array_map(
+                static fn (Specialization $specialization) => $specialization->output(),
+                $this->specializations
             ),
             'data' => array_map(static fn ($value) => (int) $value, $this->data),
             'calculation' => $this->calculation($league, $enemy),

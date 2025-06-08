@@ -4,6 +4,7 @@ namespace App\Provider;
 
 use App\Helper\CardHelper;
 use App\Helper\ModifierHelper;
+use App\Helper\SpecializationHelper;
 use App\Storage\CardStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\SnapshotStorage;
@@ -22,6 +23,7 @@ class PlayerProviderFactory implements FactoryInterface
             $injector->get(UserStorage::class),
             $injector->get(CardHelper::class),
             $injector->get(ModifierHelper::class),
+            $injector->get(SpecializationHelper::class),
             $options['max'],
             $options['health'],
             $options['damage'],

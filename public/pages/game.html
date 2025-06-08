@@ -6,7 +6,7 @@
     </div>
     <div id="game-round" hidden>
         <details>
-            <summary>Select a card to advance to the next round. Try to reach the limits.</summary>
+            <summary>Select a card to advance to the next round. Try to reach the limits and remember to adjust your specialization.</summary>
             <ul>
                 <li>Battles are calculated in the background against a random enemy at your position</li>
                 <li>The position also shows your current loose:win ratio</li>
@@ -16,6 +16,7 @@
                 <li>Speed adds extra physical attacks for the fastest</li>
                 <li>You lose when your health drops below zero while calculating damage</li>
                 <li>Each card shows a lying power level with respect to your current build</li>
+                <li>Available specializations depend on previous progress and current stats</li>
             </ul>
         </details>
         <h2>League #<span id="game-league-number"></span></h2>
@@ -27,6 +28,8 @@
             <p id="game-shrines-icons" class="game-shrines"></p>
         </div>
         <h2>Player #<span id="game-player-number"></span></h2>
+        <select id="game-player-specialization"></select>
+        <label for="game-player-specialization">Specialization <span id="game-player-specialization-count"></span></label>
         <div id="game-player"></div>
         <div class="game-shrines">
             <h2>Shrines in range</h2>
@@ -65,6 +68,22 @@
             }
             helper.set('#game-player-number', 'innerHTML', round['player']['try']);
             helper.set('#game-player', 'innerHTML', helper.player(round['player'], result && result['enemy'] && result['enemy']['calculation']));
+            helper.list('#game-player-specialization', [null, ...round['player']['specializations']], (specialization) => {
+                const option = helper.create('option');
+                if (!specialization) {
+                    if (!round['player']['specialization']) {
+                        option.selected = true;
+                    }
+                    return option;
+                }
+                option.value = specialization.identifier || '';
+                option.innerText = specialization.name || 'none';
+                if (round['player']['specialization']?.identifier === specialization.identifier) {
+                    option.selected = true;
+                }
+                return option;
+            });
+            helper.set('#game-player-specialization-count', 'innerHTML', `(${round['player']['specializations'].length})`);
             helper.style('#game-cards', 'opacity', loading ? '0' : '1');
             helper.list('#game-cards', round['cards'], (card, index) => {
                 const value = card['shrine'] ? 542123 : index;
@@ -121,6 +140,11 @@
             state.dispatch('round-next', [user.id, target.value, round['token'], round['league'].id]);
         });
 
+        action('#game-round select', 'change', (event, target) => {
+            state.dispatch('loading', true);
+            state.dispatch('round-specialization', [user.id, target.value, round['league'].id]);
+        });
+
         listen('user', (payload) => {
             user = payload;
         });
@@ -137,7 +161,12 @@
         listen('round-next', (payload) => {
             result = payload;
             state.dispatch('round', user.id);
-        })
+        });
+
+        listen('round-specialization', (payload) => {
+            round = payload;
+            state.dispatch('loading', false);
+        });
     });
 </script>
 

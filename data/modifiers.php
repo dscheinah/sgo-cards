@@ -3,9 +3,17 @@
 use App\Helper\Modifier\DependentModifier;
 
 return [
+    'more_player_health' => [
+        'data' => [
+            'health' => 1.3,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'More global Health',
+    ],
     'more_player_damage' => [
         'data' => [
-            'damage' => 1.5,
+            'damage' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -13,7 +21,7 @@ return [
     ],
     'more_player_defense' => [
         'data' => [
-            'defense' => 1.5,
+            'defense' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -21,7 +29,7 @@ return [
     ],
     'more_player_magic' => [
         'data' => [
-            'magic' => 1.5,
+            'magic' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -29,7 +37,7 @@ return [
     ],
     'more_player_speed' => [
         'data' => [
-            'speed' => 1.5,
+            'speed' => 1.3,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -75,6 +83,13 @@ return [
         'world' => true,
         'text' => 'Less global Buff and Curse effectivity',
     ],
+    'add_health' => [
+        'data' => [
+            'health' => 4.5,
+        ],
+        'self' => true,
+        'text' => 'Increase Health',
+    ],
     'add_damage' => [
         'data' => [
             'damage' => 1.5,
@@ -95,6 +110,13 @@ return [
         ],
         'self' => true,
         'text' => 'Increase Magic',
+    ],
+    'add_speed' => [
+        'data' => [
+            'speed' => 1.5,
+        ],
+        'self' => true,
+        'text' => 'Increase Speed',
     ],
     'remove_damage' => [
         'data' => [

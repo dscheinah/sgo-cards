@@ -9,6 +9,7 @@ use App\Handler\RoundLoadHandler;
 use App\Handler\RoundNextHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
+use App\Middleware\SpecializationMiddleware;
 use App\Middleware\UserTokenCreateMiddleware;
 use App\Middleware\UserTokenValidateMiddleware;
 use Sx\Container\FactoryInterface;
@@ -43,6 +44,10 @@ class RouterFactory implements FactoryInterface
 
         $router->get($prefix . 'round/load', UserTokenCreateMiddleware::class);
         $router->get($prefix . 'round/load', RoundLoadHandler::class);
+
+        $router->post($prefix . 'round/load', UserTokenCreateMiddleware::class);
+        $router->post($prefix . 'round/load', SpecializationMiddleware::class);
+        $router->post($prefix . 'round/load', RoundLoadHandler::class);
 
         $router->post($prefix . 'round/next', UserTokenValidateMiddleware::class);
         $router->post($prefix . 'round/next', RoundNextHandler::class);

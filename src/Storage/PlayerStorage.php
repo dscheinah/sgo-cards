@@ -24,6 +24,12 @@ class PlayerStorage extends Storage
         return $this->fetch($statement, [$userId, $leagueId])->current()['count'] ?? 0;
     }
 
+    public function fetchMaxYForUserAndLeague(string $userId, int $leagueId): int
+    {
+        $statement = 'SELECT MAX(`y`) AS `y` FROM `players` WHERE `user_id` = ? AND `league_id` = ?';
+        return $this->fetch($statement, [$userId, $leagueId])->current()['y'] ?? 0;
+    }
+
     public function fetchCountForLeague(int $leagueId): array
     {
         $statement = 'SELECT 
@@ -53,5 +59,15 @@ class PlayerStorage extends Storage
     public function updateY(int $id, int $y): void
     {
         $this->execute('UPDATE `players` SET `y` = ? WHERE `id` = ?', [$y, $id]);
+    }
+
+    public function updateSpecialization(int $id, string $specialization): void
+    {
+        $this->execute('UPDATE `players` SET `specialization` = ? WHERE `id` = ?', [$specialization, $id]);
+    }
+
+    public function removeSpecialization(int $id): void
+    {
+        $this->execute('UPDATE `players` SET `specialization` = NULL WHERE `id` = ?', [$id]);
     }
 }

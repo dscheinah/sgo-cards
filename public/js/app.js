@@ -54,6 +54,7 @@ state.handle('leagues', () => leagues.list());
 state.handle('league', (payload) => leagues.information(payload));
 state.handle('round', (payload) => round.load(payload));
 state.handle('round-next', (payload) => round.next(...payload));
+state.handle('round-specialization', (payload) => round.specialization(...payload));
 
 // Define all pages and load the main page. The ID defined here is globally used for:
 //  - handling navigation by href or value (see above)
