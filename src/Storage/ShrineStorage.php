@@ -29,15 +29,17 @@ class ShrineStorage extends Storage
 
     public function fetchAllActive(int $leagueId): Generator
     {
-        return $this->fetch('SELECT * FROM `shrines` WHERE `league_id`= ? AND `active` = TRUE', [$leagueId]);
+        return $this->fetch(
+            'SELECT * FROM `shrines` WHERE `league_id`= ? AND `active` = TRUE',
+            [$leagueId]
+        );
     }
 
     public function fetchActiveForPosition(int $leagueId, int $x, int $y): Generator
     {
         return $this->fetch(
-            'SELECT * FROM `shrines` WHERE `league_id`= ? AND `active` = TRUE
-                AND ((`x` = ? AND `y` <> ?) OR (`x` <> ? AND `y` = ?))',
-            [$leagueId, $x, $y, $x, $y]
+            'SELECT * FROM `shrines` WHERE `league_id`= ? AND `active` = TRUE AND (`x` = ? OR `y` = ?)',
+            [$leagueId, $x, $y]
         );
     }
 }

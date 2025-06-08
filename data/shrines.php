@@ -40,7 +40,7 @@ return [
         'handler' => PowerShrine::class,
         'text' => 'Shrine of Power',
         'icon' => '⚡️⛩️⚡️',
-        'color' => 'Gold',
+        'color' => 'gold',
         'description' => 'Speed applies to Magic',
     ],
     'water' => [

@@ -22,11 +22,15 @@ class RoundNextHandler implements RequestHandlerInterface
         if (!$userId) {
             return $this->helper->create(400);
         }
+        $league = $request->getParsedBody()['league'] ?? null;
+        if (!is_numeric($league)) {
+            return $this->helper->create(400);
+        }
         $card = $request->getParsedBody()['card'] ?? null;
         if (!is_numeric($card)) {
             return $this->helper->create(400);
         }
-        $result = $this->roundRepository->run($userId, $card);
+        $result = $this->roundRepository->run($userId, $league, $card);
         if (!$result) {
             return $this->helper->create(500);
         }

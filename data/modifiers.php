@@ -5,7 +5,7 @@ use App\Helper\Modifier\DependentModifier;
 return [
     'more_player_damage' => [
         'data' => [
-            'damage' => 1.3,
+            'damage' => 1.5,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -21,7 +21,7 @@ return [
     ],
     'more_player_magic' => [
         'data' => [
-            'magic' => 1.2,
+            'magic' => 1.5,
         ],
         'multiplicative' => true,
         'player' => true,
@@ -29,7 +29,7 @@ return [
     ],
     'more_player_speed' => [
         'data' => [
-            'speed' => 1.3,
+            'speed' => 1.5,
         ],
         'multiplicative' => true,
         'player' => true,

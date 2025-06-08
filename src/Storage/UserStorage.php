@@ -7,8 +7,11 @@ use Sx\Data\Storage;
 
 class UserStorage extends Storage
 {
-    public function fetchOne(string $id): ?array
+    public function fetchOne(?string $id): ?array
     {
+        if (!$id) {
+            return null;
+        }
         return $this->fetch('SELECT * FROM `users` WHERE `id` = ?', [$id])->current();
     }
 

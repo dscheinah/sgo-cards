@@ -38,8 +38,11 @@ class PlayerStorage extends Storage
 
     public function insertOne(array $player): int
     {
-        $statement = 'INSERT INTO players (`user_id`, `league_id`, `modifier`) VALUES (?, ?, ?)';
-        return $this->insert($statement, [$player['user_id'], $player['league_id'], $player['modifier']]);
+        $statement = 'INSERT INTO players (`user_id`, `league_id`, `modifier`, `try`) VALUES (?, ?, ?, ?)';
+        return $this->insert(
+            $statement,
+            [$player['user_id'], $player['league_id'], $player['modifier'], $player['try']]
+        );
     }
 
     public function updateX(int $id, int $x): void

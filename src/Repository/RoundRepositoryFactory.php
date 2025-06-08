@@ -2,15 +2,7 @@
 
 namespace App\Repository;
 
-use App\Helper\Battle;
-use App\Helper\Card;
-use App\Helper\Modifier;
-use App\Helper\Player;
-use App\Helper\Shrine;
-use App\Storage\CardStorage;
-use App\Storage\LeagueStorage;
-use App\Storage\PlayerStorage;
-use App\Storage\SnapshotStorage;
+use App\Provider\BattlefieldBuilder;
 use Sx\Container\FactoryInterface;
 use Sx\Container\Injector;
 
@@ -19,16 +11,7 @@ class RoundRepositoryFactory implements FactoryInterface
     public function create(Injector $injector, array $options, string $class): RoundRepository
     {
         return new RoundRepository(
-            $injector->get(CardStorage::class),
-            $injector->get(LeagueStorage::class),
-            $injector->get(PlayerStorage::class),
-            $injector->get(SnapshotStorage::class),
-            $injector->get(Battle::class),
-            $injector->get(Card::class),
-            $injector->get(Modifier::class),
-            $injector->get(Player::class),
-            $injector->get(Shrine::class),
-            $options['max'],
+            $injector->get(BattlefieldBuilder::class),
         );
     }
 }

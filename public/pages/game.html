@@ -8,13 +8,13 @@
         <details>
             <summary>Select a card to advance to the next round. Try to reach the limits.</summary>
             <ul>
-                <li>Battles are calculated in background against a random enemy at your position</li>
+                <li>Battles are calculated in the background against a random enemy at your position</li>
                 <li>The position also shows your current loose:win ratio</li>
                 <li>Modifier values are invisible and only apply at battle time</li>
                 <li>Damage is reduced by enemies defense and vice versa</li>
                 <li>Magic is an extra attack mitigated by enemies magic</li>
                 <li>Speed adds extra physical attacks for the fastest</li>
-                <li>You loose when your health drops below zero while calculating damage</li>
+                <li>You lose when your health drops below zero while calculating damage</li>
                 <li>Each card shows a lying power level with respect to your current build</li>
             </ul>
         </details>
@@ -56,12 +56,8 @@
             }
             helper.set('#game-league-number', 'innerHTML', round['league'].id);
             helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
-            helper.set('#game-player-number', 'innerHTML', round['try']);
-            if (result) {
-                helper.set('#game-player', 'innerHTML', helper.player(round['player'], round['calculation'], result['enemy']));
-            } else {
-                helper.set('#game-player', 'innerHTML', helper.player(round['player'], round['calculation']));
-            }
+            helper.set('#game-player-number', 'innerHTML', round['player']['try']);
+            helper.set('#game-player', 'innerHTML', helper.player(round['player'], result && result['enemy'] && result['enemy']['calculation']));
             helper.style('#game-cards', 'opacity', loading ? '0' : '1');
             helper.list('#game-cards', round['cards'], (card, index) => {
                 const value = card['shrine'] ? 542123 : index;
@@ -83,10 +79,10 @@
                     text = '🏆️ Won current League 🏆️';
                 } else if (result['finished']) {
                     text = '☠️ Lost current try ☠️';
-                } else if (result['winner']) {
-                    text = 'Victory'
                 } else {
-                    text = 'Defeat';
+                    text = `${result['winner'] ? 'Victory' : 'Defeat'}
+                        in ${result['duration']} ${result['duration'] === 1 ? 'round' : 'rounds'}
+                        vs ${result['enemy']['name']} #${result['enemy']['try']}`
                 }
             }
             helper.set('#game-result', 'innerHTML', text);
@@ -115,7 +111,7 @@
 
         action('#game-cards button', 'click', (event, target) => {
             state.dispatch('loading', true);
-            state.dispatch('round-next', [user.id, target.value, round['token']]);
+            state.dispatch('round-next', [user.id, target.value, round['token'], round['league'].id]);
         });
 
         listen('user', (payload) => {

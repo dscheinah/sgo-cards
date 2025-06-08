@@ -2,6 +2,7 @@
 
 namespace App\Storage;
 
+use App\Model\Card;
 use Generator;
 use Sx\Data\Storage;
 
@@ -31,21 +32,22 @@ class CardStorage extends Storage
         yield from $this->fetch($statement, [$playerId]);
     }
 
-    public function insertForPlayer(int $playerId, array $card): void
+    public function insertForPlayer(int $playerId, Card $card): void
     {
         $statement = 'INSERT INTO `player_cards` 
             (`player_id`, `health`, `damage`, `defense`, `magic`, `speed`, `modifier`) 
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ';
         $this->insert(
-            $statement, [
+            $statement,
+            [
                 $playerId,
-                $card['data']['health'] ?? 0,
-                $card['data']['damage'] ?? 0,
-                $card['data']['defense'] ?? 0,
-                $card['data']['magic'] ?? 0,
-                $card['data']['speed'] ?? 0,
-                $card['modifier'] ?? null
+                $card->data['health'] ?? 0,
+                $card->data['damage'] ?? 0,
+                $card->data['defense'] ?? 0,
+                $card->data['magic'] ?? 0,
+                $card->data['speed'] ?? 0,
+                $card->modifier?->identifier
             ]
         );
     }

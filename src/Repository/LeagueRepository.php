@@ -2,25 +2,18 @@
 
 namespace App\Repository;
 
-use App\Helper\Modifier;
-use App\Helper\Player;
-use App\Helper\Shrine;
+use App\Model\Modifier;
+use App\Model\Shrine;
+use App\Provider\LeagueProvider;
+use App\Provider\PlayerProvider;
 use App\Storage\LeagueStorage;
-use App\Storage\PlayerStorage;
-use App\Storage\SnapshotStorage;
-use App\Storage\UserStorage;
 
 class LeagueRepository
 {
     public function __construct(
         private readonly LeagueStorage $leagueStorage,
-        private readonly PlayerStorage $playerStorage,
-        private readonly SnapshotStorage $snapshotStorage,
-        private readonly UserStorage $userStorage,
-        private readonly Modifier $modifier,
-        private readonly Player $player,
-        private readonly Shrine $shrine,
-        private readonly int $max,
+        private readonly LeagueProvider $leagueProvider,
+        private readonly PlayerProvider $playerProvider,
     ) {
     }
 
@@ -31,47 +24,26 @@ class LeagueRepository
 
     public function getInformation(int $id): ?array
     {
-        $league = $this->leagueStorage->fetchOne($id);
+        $league = $this->leagueProvider->create($id);
         if (!$league) {
             return null;
         }
-        $leagueId = $league['id'];
+        $statistics = $this->leagueProvider->createStatistics($id);
 
-        $winner = $this->playerStorage->fetchOneForLeagueAtY($id, $this->max);
-
-        $statistics = [];
-        foreach ($this->snapshotStorage->fetchPositionsForLeague($id) as $snapshot) {
-            $statistics[$snapshot['x']][$snapshot['y']] = $snapshot['z'];
-        }
-
-        $counts = $this->playerStorage->fetchCountForLeague($leagueId);
-
-        $leagueModifier = $this->modifier->get($league['modifier']);
-
-        $shrines = $this->shrine->getStatistics($leagueId);
-        $shrines['positions'] = (object) array_map(static fn($entry) => (object) $entry, $shrines['positions']);
-
-        $information = [
-            'id' => $id,
-            'modifier' => $leagueModifier,
-            'statistics' => (object) array_map(static fn($entry) => (object) $entry, $statistics),
-            'shrines' => $shrines,
-            'user_count' => $counts['users'],
-            'player_count' => $counts['players'],
+        return [
+            'id' => $league->id,
+            'modifier' => $league->modifier?->output(),
+            'statistics' => (object) array_map(static fn($entry) => (object) $entry, $statistics->statistics),
+            'shrines' => [
+                'positions' => (object) array_map(static fn($entry) => (object) $entry, $statistics->shrines['positions']),
+                'data' => array_map(
+                    static fn (Shrine $shrine) => $shrine->output(),
+                    array_values($statistics->shrines['data']),
+                ),
+            ],
+            'user_count' => $statistics->user_count,
+            'player_count' => $statistics->player_count,
+            'winner' => $this->playerProvider->createWinner($league)?->output($league),
         ];
-        if ($winner) {
-            $userId = $winner['user_id'];
-            $player = $this->player->get($winner);
-            $data = $this->player->applyModifiers($player, null, $leagueModifier)['data'];
-            $player['data']['modifiers'] = array_values($player['data']['modifiers']);
-            unset($data['modifiers']);
-            $information['winner'] = [
-                'name' => $this->userStorage->fetchOne($userId)['name'] ?? '',
-                'try' => $this->playerStorage->fetchCountForUserAndLeague($userId, $leagueId),
-                'player' => $player,
-                'calculation' => $data,
-            ];
-        }
-        return $information;
     }
 }

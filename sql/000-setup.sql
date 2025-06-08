@@ -17,6 +17,7 @@ CREATE TABLE `players`
     `id`        INT UNSIGNED AUTO_INCREMENT,
     `user_id`   VARCHAR(32),
     `league_id` INT UNSIGNED,
+    `try`       INT UNSIGNED NOT NULL DEFAULT 0,
     `x`         INT UNSIGNED NOT NULL DEFAULT 0,
     `y`         INT UNSIGNED NOT NULL DEFAULT 0,
     `modifier`  VARCHAR(128),
@@ -38,11 +39,11 @@ CREATE TABLE `player_cards`
 (
     `id`        INT UNSIGNED AUTO_INCREMENT,
     `player_id` INT UNSIGNED,
-    `health`    INT,
-    `damage`    INT,
-    `defense`   INT,
-    `magic`     INT,
-    `speed`     INT,
+    `health`    FLOAT,
+    `damage`    FLOAT,
+    `defense`   FLOAT,
+    `magic`     FLOAT,
+    `speed`     FLOAT,
     `modifier`  VARCHAR(128) NULL,
 
     FOREIGN KEY (`player_id`)
@@ -60,12 +61,19 @@ CREATE TABLE snapshots
     `y`         INT UNSIGNED NOT NULL DEFAULT 0,
     `modifier`  VARCHAR(128),
     `data`      JSON,
+    `modifiers` JSON,
+    `user_id`   VARCHAR(32) NULL,
+    `try`       INT UNSIGNED NOT NULL DEFAULT 0,
 
     INDEX (`league_id`, `x`, `y`),
 
     FOREIGN KEY (`league_id`)
         REFERENCES `leagues` (`id`)
         ON DELETE CASCADE,
+
+    FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`)
+        ON DELETE SET NULL,
 
     PRIMARY KEY (`id`)
 );

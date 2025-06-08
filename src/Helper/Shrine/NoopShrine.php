@@ -4,22 +4,22 @@ namespace App\Helper\Shrine;
 
 class NoopShrine implements ShrineInterface
 {
-    public function player(array $player): array
+    public static function player(array $player): array
     {
         return $player;
     }
 
-    public function stats(array $stats): array
+    public static function stats(array $stats): array
     {
         return $stats;
     }
 
-    public function speed(array $stats, int $damage): int
+    public static function speed(array $stats, float $damage): float
     {
         return $damage;
     }
 
-    public function battle(array $stats): array
+    public static function battle(array $stats): array
     {
         return $stats;
     }

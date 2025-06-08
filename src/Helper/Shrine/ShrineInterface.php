@@ -4,11 +4,11 @@ namespace App\Helper\Shrine;
 
 interface ShrineInterface
 {
-    public function player(array $player): array;
+    public static function player(array $player): array;
 
-    public function stats(array $stats): array;
+    public static function stats(array $stats): array;
 
-    public function speed(array $stats, int $damage): int;
+    public static function speed(array $stats, float $damage): float;
 
-    public function battle(array $stats): array;
+    public static function battle(array $stats): array;
 }

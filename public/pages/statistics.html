@@ -16,7 +16,7 @@
             return '';
         }
         return `<p><strong>${winner.name} at try #${winner['try']}</strong></p>`
-            + helper.player(winner['player'], winner['calculation']);
+            + helper.player(winner);
     }
 
     function createStatistics(stats, shrines) {
