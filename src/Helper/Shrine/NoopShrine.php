@@ -14,7 +14,7 @@ class NoopShrine implements ShrineInterface
         return $stats;
     }
 
-    public static function speed(array $stats, float $damage): float
+    public static function speed(array $player, float $damage): float
     {
         return $damage;
     }

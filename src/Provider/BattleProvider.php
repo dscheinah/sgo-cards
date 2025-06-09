@@ -88,16 +88,16 @@ class BattleProvider
         }
 
         if ($playerStats['speed'] > 0) {
-            $speedDamage = $playerStats['damage'];
+            $speedDamage = $player['damage'];
             foreach ($battlefield->shrines as $shrine) {
-                $speedDamage = $shrine->handler::speed($playerStats, $speedDamage);
+                $speedDamage = $shrine->handler::speed($player, $speedDamage);
             }
             $enemyStats['health'] -= $speedDamage;
         }
         if ($enemyStats['speed'] > 0) {
-            $speedDamage = $enemyStats['damage'];
+            $speedDamage = $enemy['damage'];
             foreach ($battlefield->shrines as $shrine) {
-                $speedDamage = $shrine->handler::speed($enemyStats, $speedDamage);
+                $speedDamage = $shrine->handler::speed($enemy, $speedDamage);
             }
             $playerStats['health'] -= $speedDamage;
         }
@@ -127,7 +127,7 @@ class BattleProvider
     private function stats(array $player, array $enemy): array
     {
         return [
-            'health' => $player['health'],
+            'health' => $player['health'] * 10,
             'damage' => max(
                 max($player['damage'], 0) - max($enemy['defense'], 0),
                 1

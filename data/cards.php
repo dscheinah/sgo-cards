@@ -3,28 +3,28 @@ $healthTier1 = [
     'icon' => '❤️',
     'text' => 'Health',
     'data' => [
-        'health' => 3,
+        'health' => 1,
     ],
 ];
 $healthTier2 = [
     'icon' => '❤️❤️',
     'text' => 'Extra Health',
     'data' => [
-        'health' => 6,
+        'health' => 2,
     ],
 ];
 $healthTier3 = [
     'icon' => '❤️❤️❤️',
     'text' => 'Super Health',
     'data' => [
-        'health' => 9,
+        'health' => 6,
     ],
 ];
 $healthTier4 = [
     'icon' => '💖',
     'text' => 'Ultra Health',
     'data' => [
-        'health' => 12,
+        'health' => 9,
     ],
 ];
 $damageTier1 = [

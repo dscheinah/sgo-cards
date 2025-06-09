@@ -18,7 +18,7 @@ return [
     'cleric' => [
         'name' => 'Cleric: Increase Health',
         'data' => [
-            'health' => 25,
+            'health' => 20,
         ],
         'modifiers' => [
             'add_health',
@@ -28,7 +28,7 @@ return [
     'priest' => [
         'name' => 'Priest: Increase Health and Regeneration',
         'data' => [
-            'health' => 50,
+            'health' => 40,
         ],
         'modifiers' => [
             'add_health',
@@ -39,7 +39,7 @@ return [
     'healer' => [
         'name' => 'Healer: More Health and Regeneration',
         'data' => [
-            'health' => 100,
+            'health' => 80,
         ],
         'modifiers' => [
             'add_health',
