@@ -27,7 +27,6 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN docker-php-ext-install mysqli
 
 # Add the complete PHP sources.
-ADD ./bin /var/www/html/bin
 ADD ./src /var/www/html/src
 ADD ./data /var/www/html/data
 # Also use the default configuration. This already uses getenv to be compatible with docker.
