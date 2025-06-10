@@ -11,12 +11,14 @@ use App\Helper\Specialization\SpeedSpecialization;
 
 return [
     'rogue' => [
+        'icon' => '🗡️️',
         'name' => 'Rogue',
         'description' => 'You never know what he does',
         'handler' => RandomSpecialization::class,
     ],
 
     'cleric' => [
+        'icon' => '📿',
         'name' => 'Cleric',
         'description' => 'Increase Health',
         'data' => [
@@ -28,6 +30,7 @@ return [
         ]
     ],
     'priest' => [
+        'icon' => '📿',
         'name' => 'Priest',
         'description' => 'Increase Health and Regeneration',
         'data' => [
@@ -40,6 +43,7 @@ return [
         'handler' => HealthSpecialization::class
     ],
     'healer' => [
+        'icon' => '📿',
         'name' => 'Healer',
                 'description' => 'More Health and Regeneration',
         'data' => [
@@ -54,6 +58,7 @@ return [
     ],
 
     'fighter' => [
+        'icon' => '🤺',
         'name' => 'Fighter',
         'description' => 'Increase Damage',
         'data' => [
@@ -65,6 +70,7 @@ return [
         ],
     ],
     'warrior' => [
+        'icon' => '🤺',
         'name' => 'Warrior',
         'description' => 'Increase Damage and Defense',
         'data' => [
@@ -77,6 +83,7 @@ return [
         'handler' => DefenseSpecialization::class
     ],
     'barbarian' => [
+        'icon' => '🤺',
         'name' => 'Barbarian',
         'description' => 'More Damage and Defense',
         'data' => [
@@ -91,6 +98,7 @@ return [
     ],
 
     'knight' => [
+        'icon' => '💂',
         'name' => 'Knight',
         'description' => 'Increase Defense',
         'data' => [
@@ -102,6 +110,7 @@ return [
         ],
     ],
     'warden' => [
+        'icon' => '💂',
         'name' => 'Warden',
         'description' => 'Increase Defense and defensive Magic',
         'data' => [
@@ -114,6 +123,7 @@ return [
         'handler' => DefensiveMagicSpecialization::class
     ],
     'paladin' => [
+        'icon' => '💂',
         'name' => 'Paladin',
         'description' => 'More Defense and defensive Magic',
         'data' => [
@@ -128,6 +138,7 @@ return [
     ],
 
     'wizard' => [
+        'icon' => '🧙',
         'name' => 'Wizard',
         'description' => 'Increase Magic',
         'data' => [
@@ -139,6 +150,7 @@ return [
         ],
     ],
     'mage' => [
+        'icon' => '🧙',
         'name' => 'Mage',
         'description' => 'Increase Magic and offensive Magic',
         'data' => [
@@ -151,6 +163,7 @@ return [
         'handler' => OffensiveMagicSpecialization::class,
     ],
     'sorcerer' => [
+        'icon' => '🧙',
         'name' => 'Sorcerer',
         'description' => 'More Magic and offensive Magic',
         'data' => [
@@ -165,6 +178,7 @@ return [
     ],
 
     'archer' => [
+        'icon' => '🏹',
         'name' => 'Archer',
         'description' => 'Increase Speed',
         'data' => [
@@ -176,6 +190,7 @@ return [
         ],
     ],
     'hunter' => [
+        'icon' => '🏹',
         'name' => 'Hunter',
         'description' => 'Increase Speed and Hits',
         'data' => [
@@ -188,6 +203,7 @@ return [
         'handler' => SpeedSpecialization::class,
     ],
     'ranger' => [
+        'icon' => '🏹',
         'name' => 'Ranger',
         'description' => 'More Speed and Hits',
         'data' => [
@@ -202,6 +218,7 @@ return [
     ],
 
     'assassin' => [
+        'icon' => '🥷',
         'name' => 'Assassin',
         'description' => 'Faster and deadlier than average',
         'y' => 60,
@@ -211,6 +228,7 @@ return [
         ],
     ],
     'necromancer' => [
+        'icon' => '💀',
         'name' => 'Necromancer',
         'description' => 'Comes with an army of undead',
         'y' => 70,
@@ -220,6 +238,7 @@ return [
         'handler' => DamageSpecialization::class,
     ],
     'monk' => [
+        'icon' => '🐒',
         'name' => 'Monk',
         'description' => 'Specialized in all arts',
         'y' => 80,
@@ -229,6 +248,7 @@ return [
         'handler' => DebuffSpecialization::class
     ],
     'bard' => [
+        'icon' => '🎶',
         'name' => 'Bard',
         'description' => 'Music affects everything',
         'y' => 90,

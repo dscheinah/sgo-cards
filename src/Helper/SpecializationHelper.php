@@ -22,6 +22,7 @@ class SpecializationHelper
 
         $specialization = new Specialization();
         $specialization->identifier = $identifier;
+        $specialization->icon = $input['icon'];
         $specialization->name = $input['name'];
         $specialization->description = $input['description'];
         foreach ($input['modifiers'] ?? [] as $modifier) {

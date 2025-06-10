@@ -6,6 +6,8 @@ use App\Helper\Specialization\SpecializationInterface;
 
 class Specialization
 {
+    public string $icon;
+
     public string $identifier;
 
     public string $name;
@@ -22,6 +24,7 @@ class Specialization
     {
         return [
             'identifier' => $this->identifier,
+            'icon' => $this->icon,
             'name' => $this->name,
             'description' => $this->description,
         ];

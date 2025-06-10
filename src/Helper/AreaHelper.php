@@ -35,6 +35,7 @@ class AreaHelper
             $input = array_pop($pool);
 
             $area = new Area();
+            $area->icon = $input['icon'];
             $area->name = $input['name'];
             $area->handler = $input['handler'];
             $area->y = $y;
