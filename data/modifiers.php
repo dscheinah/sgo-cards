@@ -69,7 +69,7 @@ return [
     ],
     'more_modifiers' => [
         'data' => [
-            'mods' => 2,
+            'mods' => 1.8,
         ],
         'modifiers' => true,
         'world' => true,

@@ -72,14 +72,16 @@
                 const option = helper.create('option');
                 if (!specialization) {
                     if (!round['player']['specialization']) {
-                        option.selected = true;
+                        option.setAttribute('selected', 'selected');
+                        option.innerHTML = " ";
                     }
                     return option;
                 }
                 option.value = specialization.identifier || '';
                 option.innerText = specialization.name || 'none';
                 if (round['player']['specialization']?.identifier === specialization.identifier) {
-                    option.selected = true;
+                    option.setAttribute('selected', 'selected');
+                    option.innerHTML += " ";
                 }
                 return option;
             });

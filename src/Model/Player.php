@@ -30,6 +30,7 @@ class Player
 
     public function calculation(League $league, ?Player $enemy = null): array
     {
+        /* @var array<Modifier> $modifiers */
         $modifiers = [
             ...array_filter([$league->modifier, $this->modifier, ...($this->specialization?->modifiers ?: [])]),
             ...array_filter($enemy?->modifiers ?: [], static fn (Modifier $modifier) => $modifier->enemy),

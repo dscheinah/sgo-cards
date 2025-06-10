@@ -17,12 +17,13 @@ class DefaultModifier implements ModifierInterface
     public static function multiply(array $data, Modifier $modifier, float $change): array
     {
         foreach ($modifier->data as $key => $value) {
+            if ($data[$key] <= 0) {
+                continue;
+            }
             if ($value < 1) {
-                $target = $data[$key] * (1 - max($value, .25));
-                $data[$key] -= $target * $change;
+                $data[$key] -= $data[$key] * (1 - max($value / $change, .25));
             } else {
-                $target = $data[$key] * log($value);
-                $data[$key] += $target * $change;
+                $data[$key] += $data[$key] * log($value * $change);
             }
         }
         return $data;

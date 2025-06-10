@@ -8,9 +8,10 @@ class DependentModifier implements ModifierInterface
 {
     public static function apply(array $data, Modifier $modifier, float $change): array
     {
-        $source = max($data[$modifier->source], 0);
-        $limited = log($modifier->data['value'] + 1);
-        $data[$modifier->target] += $source * $limited * $change;
+        if ($data[$modifier->source] <= 0) {
+            return $data;
+        }
+        $data[$modifier->target] += $data[$modifier->source] * log($modifier->data['value'] + 1) * $change;
         return $data;
     }
 
