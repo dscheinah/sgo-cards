@@ -10,6 +10,8 @@ class Specialization
 
     public string $name;
 
+    public string $description;
+
     /** @var array<Modifier> */
     public array $modifiers = [];
 
@@ -21,6 +23,7 @@ class Specialization
         return [
             'identifier' => $this->identifier,
             'name' => $this->name,
+            'description' => $this->description,
         ];
     }
 }

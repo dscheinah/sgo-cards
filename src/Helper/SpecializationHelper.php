@@ -23,6 +23,7 @@ class SpecializationHelper
         $specialization = new Specialization();
         $specialization->identifier = $identifier;
         $specialization->name = $input['name'];
+        $specialization->description = $input['description'];
         foreach ($input['modifiers'] ?? [] as $modifier) {
             $specialization->modifiers[] = $this->modifierHelper->get($modifier);
         }
@@ -54,5 +55,16 @@ class SpecializationHelper
             $specializations[] = $this->get($identifier);
         }
         return $specializations;
+    }
+
+    public function random(array $data, int $y): ?Specialization
+    {
+        $specializations = $this->list($data, $y);
+        if (!$specializations) {
+            return null;
+        }
+        $specializations[] = null;
+        mt_srand();
+        return $specializations[array_rand($specializations)];
     }
 }

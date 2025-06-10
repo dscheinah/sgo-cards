@@ -11,12 +11,14 @@ use App\Helper\Specialization\SpeedSpecialization;
 
 return [
     'rogue' => [
-        'name' => 'Rogue: You never know what he does',
+        'name' => 'Rogue',
+        'description' => 'You never know what he does',
         'handler' => RandomSpecialization::class,
     ],
 
     'cleric' => [
-        'name' => 'Cleric: Increase Health',
+        'name' => 'Cleric',
+        'description' => 'Increase Health',
         'data' => [
             'health' => 20,
         ],
@@ -26,7 +28,8 @@ return [
         ]
     ],
     'priest' => [
-        'name' => 'Priest: Increase Health and Regeneration',
+        'name' => 'Priest',
+        'description' => 'Increase Health and Regeneration',
         'data' => [
             'health' => 40,
         ],
@@ -37,7 +40,8 @@ return [
         'handler' => HealthSpecialization::class
     ],
     'healer' => [
-        'name' => 'Healer: More Health and Regeneration',
+        'name' => 'Healer',
+                'description' => 'More Health and Regeneration',
         'data' => [
             'health' => 80,
         ],
@@ -50,7 +54,8 @@ return [
     ],
 
     'fighter' => [
-        'name' => 'Fighter: Increase Damage',
+        'name' => 'Fighter',
+        'description' => 'Increase Damage',
         'data' => [
             'damage' => 10,
         ],
@@ -60,7 +65,8 @@ return [
         ],
     ],
     'warrior' => [
-        'name' => 'Warrior: Increase Damage and Defense',
+        'name' => 'Warrior',
+        'description' => 'Increase Damage and Defense',
         'data' => [
             'damage' => 30,
         ],
@@ -71,7 +77,8 @@ return [
         'handler' => DefenseSpecialization::class
     ],
     'barbarian' => [
-        'name' => 'Barbarian: More Damage and Defense',
+        'name' => 'Barbarian',
+        'description' => 'More Damage and Defense',
         'data' => [
             'damage' => 90,
         ],
@@ -84,7 +91,8 @@ return [
     ],
 
     'knight' => [
-        'name' => 'Knight: Increase Defense',
+        'name' => 'Knight',
+        'description' => 'Increase Defense',
         'data' => [
             'defense' => 5,
         ],
@@ -94,7 +102,8 @@ return [
         ],
     ],
     'warden' => [
-        'name' => 'Warden: Increase Defense and defensive Magic',
+        'name' => 'Warden',
+        'description' => 'Increase Defense and defensive Magic',
         'data' => [
             'defense' => 15,
         ],
@@ -105,7 +114,8 @@ return [
         'handler' => DefensiveMagicSpecialization::class
     ],
     'paladin' => [
-        'name' => 'Paladin: More Defense and defensive Magic',
+        'name' => 'Paladin',
+        'description' => 'More Defense and defensive Magic',
         'data' => [
             'defense' => 45,
         ],
@@ -118,7 +128,8 @@ return [
     ],
 
     'wizard' => [
-        'name' => 'Wizard: Increase Magic',
+        'name' => 'Wizard',
+        'description' => 'Increase Magic',
         'data' => [
             'magic' => 10,
         ],
@@ -128,7 +139,8 @@ return [
         ],
     ],
     'mage' => [
-        'name' => 'Mage: Increase Magic and offensive Magic',
+        'name' => 'Mage',
+        'description' => 'Increase Magic and offensive Magic',
         'data' => [
             'magic' => 30,
         ],
@@ -139,7 +151,8 @@ return [
         'handler' => OffensiveMagicSpecialization::class,
     ],
     'sorcerer' => [
-        'name' => 'Sorcerer: More Magic and offensive Magic',
+        'name' => 'Sorcerer',
+        'description' => 'More Magic and offensive Magic',
         'data' => [
             'magic' => 90,
         ],
@@ -152,7 +165,8 @@ return [
     ],
 
     'archer' => [
-        'name' => 'Archer: Increase Speed',
+        'name' => 'Archer',
+        'description' => 'Increase Speed',
         'data' => [
             'speed' => 5,
         ],
@@ -162,7 +176,8 @@ return [
         ],
     ],
     'hunter' => [
-        'name' => 'Hunter: Increase Speed and Hits',
+        'name' => 'Hunter',
+        'description' => 'Increase Speed and Hits',
         'data' => [
             'speed' => 15,
         ],
@@ -173,7 +188,8 @@ return [
         'handler' => SpeedSpecialization::class,
     ],
     'ranger' => [
-        'name' => 'Ranger: More Speed and Hits',
+        'name' => 'Ranger',
+        'description' => 'More Speed and Hits',
         'data' => [
             'speed' => 45,
         ],
@@ -186,7 +202,8 @@ return [
     ],
 
     'assassin' => [
-        'name' => 'Assassin: Faster and deadlier than average',
+        'name' => 'Assassin',
+        'description' => 'Faster and deadlier than average',
         'y' => 60,
         'modifiers' => [
             'more_player_damage',
@@ -194,7 +211,8 @@ return [
         ],
     ],
     'necromancer' => [
-        'name' => 'Necromancer: Comes with an army of undead',
+        'name' => 'Necromancer',
+        'description' => 'Comes with an army of undead',
         'y' => 70,
         'modifiers' => [
             'more_player_magic',
@@ -202,7 +220,8 @@ return [
         'handler' => DamageSpecialization::class,
     ],
     'monk' => [
-        'name' => 'Monk: Specialized in all arts',
+        'name' => 'Monk',
+        'description' => 'Specialized in all arts',
         'y' => 80,
         'modifiers' => [
             'more_player_health',
@@ -210,7 +229,8 @@ return [
         'handler' => DebuffSpecialization::class
     ],
     'bard' => [
-        'name' => 'Bard: Music affects everything',
+        'name' => 'Bard',
+        'description' => 'Music affects everything',
         'y' => 90,
         'modifiers' => [
             'more_modifiers',

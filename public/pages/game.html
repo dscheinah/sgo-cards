@@ -78,7 +78,7 @@
                     return option;
                 }
                 option.value = specialization.identifier || '';
-                option.innerText = specialization.name || 'none';
+                option.innerText = `${specialization.name}: ${specialization.description}`;
                 if (round['player']['specialization']?.identifier === specialization.identifier) {
                     option.setAttribute('selected', 'selected');
                     option.innerHTML += " ";
@@ -110,7 +110,7 @@
                 } else {
                     text = `${result['winner'] ? 'Victory' : 'Defeat'}
                         in ${result['duration']} ${result['duration'] === 1 ? 'round' : 'rounds'}
-                        vs ${result['enemy']['name']} #${result['enemy']['try']}`
+                        vs ${result['enemy']['name'] || ''} #${result['enemy']['try']}`
                 }
             }
             helper.set('#game-result', 'innerHTML', text);

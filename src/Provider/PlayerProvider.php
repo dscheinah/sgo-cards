@@ -65,24 +65,27 @@ class PlayerProvider
                 $modifier->count = $data['count'];
                 $enemy->modifiers[$identifier] = $modifier;
             }
-            return $enemy;
+        } else {
+            $enemy = $this->createPlayer([
+                'x' => $player->x,
+                'y' => $player->y,
+                'modifier' => $this->modifierHelper->pickPlayer(),
+                'data' => [
+                    'health' => $this->health,
+                    'damage' => $this->damage,
+                    'defense' => 0,
+                    'magic' => 0,
+                    'speed' => 0,
+                ],
+            ]);
+            $level = $player->x + $player->y + 1;
+            for ($i = 0; $i < $level; $i++) {
+                $enemy = $enemy->withCard($this->cardHelper->pick($league, $enemy));
+            }
         }
-
-        $enemy = $this->createPlayer([
-            'x' => $player->x,
-            'y' => $player->y,
-            'modifier' => $this->modifierHelper->pickPlayer(),
-            'data' => [
-                'health' => $this->health,
-                'damage' => $this->damage,
-                'defense' => 0,
-                'magic' => 0,
-                'speed' => 0,
-            ],
-        ]);
-        $level = $player->x + $player->y + 1;
-        for ($i = 0; $i < $level; $i++) {
-            $enemy = $enemy->withCard($this->cardHelper->pick($league, $enemy));
+        $enemy->specialization = $this->specializationHelper->random($enemy->data, $enemy->y);
+        if (!$enemy->name) {
+            $enemy->name = $enemy->specialization?->name;
         }
         return $enemy;
     }
