@@ -14,8 +14,8 @@
             Once you change browser or clear storage, you are required to create a new user.
         </p>
         <form id="overview-form">
-            <input id="overview-form-name" type="text" name="name" required/>
-            <label for="overview-form-name">Enter your name</label>
+            <input id="overview-form-name" type="text" name="name" maxlength="23" required/>
+            <label for="overview-form-name">Enter your name <span>max. 23 characters</span></label>
             <p id="overview-error" class="sx-error" hidden>
                 The chosen name is already taken. Please enter a new one.
             </p>

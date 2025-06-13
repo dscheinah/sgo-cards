@@ -107,12 +107,10 @@
                 } else if (result['finished']) {
                     text = '☠️ Lost current try ☠️';
                 } else {
-                    text = `${result['winner'] ? 'Victory' : 'Defeat'}
-                        in ${result['duration']} ${result['duration'] === 1 ? 'round' : 'rounds'}
-                        vs ${result['enemy']['name'] || ''} #${result['enemy']['try']}`
+                    text = `${result['winner'] ? 'Victory' : 'Defeat'} in ${result['duration']} ${result['duration'] === 1 ? 'round' : 'rounds'} vs ${result['enemy']['name'] || ''} #${result['enemy']['try']}`
                 }
             }
-            helper.set('#game-result', 'innerHTML', text);
+            helper.set('#game-result', 'innerText', text);
             if (round['shrines'].length) {
                 helper.set('.game-shrines', 'hidden', false);
                 helper.set(
@@ -207,6 +205,7 @@
 
     #game-result {
         font-size: 1.2em;
+        word-wrap: anywhere;
     }
 
     @media only screen and (min-width: 700px) {

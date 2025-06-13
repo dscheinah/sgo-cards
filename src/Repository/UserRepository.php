@@ -18,7 +18,7 @@ class UserRepository
 
     public function create(string $name): ?array
     {
-        return $this->userStorage->createWithName($name);
+        return $this->userStorage->createWithName(substr(strip_tags($name), 0, 23));
     }
 
     public function generateToken(string $userId): ?string
