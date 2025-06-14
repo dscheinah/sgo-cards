@@ -96,7 +96,7 @@ class CardHelper
         $baseCalculation = $player->calculation($league, $nextPlayer);
 
         $rel = static function ($a, $b) {
-            if ($a === $b) {
+            if ($a <= $b) {
                 return 0;
             }
             if ($a > 0 && $b > 0) {
