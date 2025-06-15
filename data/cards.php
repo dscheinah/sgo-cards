@@ -17,7 +17,7 @@ $healthTier3 = [
     'icon' => '❤️❤️❤️',
     'text' => 'Super Health',
     'data' => [
-        'health' => 6,
+        'health' => 5,
     ],
 ];
 $healthTier4 = [
@@ -45,7 +45,7 @@ $damageTier3 = [
     'icon' => '⚔️⚔️⚔️',
     'text' => 'Super Damage',
     'data' => [
-        'damage' => 6,
+        'damage' => 5,
     ],
 ];
 $damageTier4 = [
@@ -73,7 +73,7 @@ $defenseTier3 = [
     'icon' => '🛡️🛡️🛡️',
     'text' => 'Super Defense',
     'data' => [
-        'defense' => 6,
+        'defense' => 5,
     ],
 ];
 $defenseTier4 = [
@@ -101,7 +101,7 @@ $magicTier3 = [
     'icon' => '🪄️🪄️🪄️',
     'text' => 'Super Magic',
     'data' => [
-        'magic' => 6,
+        'magic' => 5,
     ],
 ];
 $magicTier4 = [
@@ -129,7 +129,7 @@ $speedTier3 = [
     'icon' => '🥾🥾🥾',
     'text' => 'Super Speed',
     'data' => [
-        'speed' => 6,
+        'speed' => 5,
     ],
 ];
 $speedTier4 = [
@@ -144,8 +144,8 @@ $defenseAndDamage = [
     'icon' => '🛡️⚔️',
     'text' => 'Defense and Damage',
     'data' => [
-        'defense' => 1.5,
-        'damage' => 1.5,
+        'defense' => 2,
+        'damage' => 2,
     ],
     'league' => true,
 ];
@@ -153,7 +153,7 @@ $defenseAndMagic = [
     'icon' => '🛡️🪄️',
     'text' => 'Defense and Magic',
     'data' => [
-        'defense' => 1.5,
+        'defense' => 2,
         'magic' => 1,
     ],
     'league' => true,
@@ -162,7 +162,7 @@ $defenseAndSpeed = [
     'icon' => '🛡️🥾️',
     'text' => 'Defense and Speed',
     'data' => [
-        'defense' => 1.5,
+        'defense' => 2,
         'speed' => 1,
     ],
     'league' => true,
@@ -171,7 +171,7 @@ $damageAndMagic = [
     'icon' => '⚔️🪄️',
     'text' => 'Damage and Magic',
     'data' => [
-        'damage' => 1.5,
+        'damage' => 2,
         'magic' => 1,
     ],
     'league' => true,
@@ -180,7 +180,7 @@ $damageAndSpeed = [
     'icon' => '⚔️🥾',
     'text' => 'Damage and Speed',
     'data' => [
-        'damage' => 1.5,
+        'damage' => 2,
         'speed' => 1,
     ],
     'league' => true,
@@ -316,6 +316,18 @@ $curseMagic = [
     'modifier' => 'remove_magic',
 ];
 
+$convertDamageToHealth = [
+    'icon' => '💥⚔️❤️️',
+    'text' => 'Convert Damage to Health',
+    'modifier' => 'convert_damage_to_health',
+    'league' => true,
+];
+$convertDefenseToHealth = [
+    'icon' => '💥🛡️️❤️️',
+    'text' => 'Convert Defense to Health',
+    'modifier' => 'convert_defense_to_health',
+    'league' => true,
+];
 $convertMagicToHealth = [
     'icon' => '💥🪄️❤️️',
     'text' => 'Convert Magic to Health',
@@ -342,6 +354,16 @@ $increaseDefense = [
     'icon' => '⏫️️🛡️',
     'text' => 'Increase Defense',
     'modifier' => 'more_defense',
+];
+$increaseMagic = [
+    'icon' => '⏫️️🪄️️',
+    'text' => 'Increase Magic',
+    'modifier' => 'more_magic',
+];
+$increaseSpeed = [
+    'icon' => '⏫️️🥾️',
+    'text' => 'Increase Speed',
+    'modifier' => 'more_speed',
 ];
 
 return [
@@ -381,6 +403,13 @@ return [
         $defenseAndSpeed,
     ],
     [
+        $increaseDamage,
+        $increaseDefense,
+        $increaseSpeed,
+        $convertDamageToHealth,
+        $convertDefenseToHealth,
+    ],
+    [
         $healthTier3,
         $damageTier3,
         $defenseTier3,
@@ -392,8 +421,7 @@ return [
     [
         $convertMagicToHealth,
         $convertSpeedToHealth,
-        $increaseDamage,
-        $increaseDefense,
+        $increaseMagic,
         $boostDamageFromMagic,
         $convertAllToDamage,
     ],

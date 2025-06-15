@@ -85,35 +85,35 @@ return [
     ],
     'add_health' => [
         'data' => [
-            'health' => 1.5,
+            'health' => 1.7,
         ],
         'self' => true,
         'text' => 'Increase Health',
     ],
     'add_damage' => [
         'data' => [
-            'damage' => 1.5,
+            'damage' => 1.7,
         ],
         'self' => true,
         'text' => 'Increase Damage',
     ],
     'add_defense' => [
         'data' => [
-            'defense' => 1.5,
+            'defense' => 1.7,
         ],
         'self' => true,
         'text' => 'Increase Defense',
     ],
     'add_magic' => [
         'data' => [
-            'magic' => 1.5,
+            'magic' => 1.7,
         ],
         'self' => true,
         'text' => 'Increase Magic',
     ],
     'add_speed' => [
         'data' => [
-            'speed' => 1.5,
+            'speed' => 1.7,
         ],
         'self' => true,
         'text' => 'Increase Speed',
@@ -138,6 +138,24 @@ return [
         ],
         'enemy' => true,
         'text' => 'Reduce Enemy Magic',
+    ],
+    'convert_damage_to_health' => [
+        'data' => [
+            'damage' => 0.9,
+            'health' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'Convert Damage to Health',
+    ],
+    'convert_defense_to_health' => [
+        'data' => [
+            'defense' => 0.9,
+            'health' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'Convert Defense to Health',
     ],
     'convert_magic_to_health' => [
         'data' => [
@@ -172,6 +190,22 @@ return [
         'multiplicative' => true,
         'self' => true,
         'text' => 'More Defense',
+    ],
+    'more_magic' => [
+        'data' => [
+            'magic' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'More Magic',
+    ],
+    'more_speed' => [
+        'data' => [
+            'speed' => 1.1,
+        ],
+        'multiplicative' => true,
+        'self' => true,
+        'text' => 'More Speed',
     ],
     'convert_all_to_damage' => [
         'data' => [
