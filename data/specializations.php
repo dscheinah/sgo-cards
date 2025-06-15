@@ -72,7 +72,7 @@ return [
     'warrior' => [
         'icon' => '🤺',
         'name' => 'Warrior',
-        'description' => 'Increase Damage and Defense',
+        'description' => 'Increase Damage and special Defense',
         'data' => [
             'damage' => 30,
         ],
@@ -85,7 +85,7 @@ return [
     'barbarian' => [
         'icon' => '🤺',
         'name' => 'Barbarian',
-        'description' => 'More Damage and Defense',
+        'description' => 'More Damage and special Defense',
         'data' => [
             'damage' => 90,
         ],
@@ -230,7 +230,7 @@ return [
     'necromancer' => [
         'icon' => '💀',
         'name' => 'Necromancer',
-        'description' => 'Comes with an army of undead',
+        'description' => 'Comes with an army of damaging undead',
         'y' => 70,
         'modifiers' => [
             'more_player_magic',
