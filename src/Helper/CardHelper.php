@@ -95,25 +95,6 @@ class CardHelper
         $nextCalculation = $nextPlayer->calculation($league, $player);
         $baseCalculation = $player->calculation($league, $nextPlayer);
 
-        $rel = static function ($a, $b) {
-            if ($a <= $b) {
-                return 0;
-            }
-            if ($a > 0 && $b > 0) {
-                return $a / $b;
-            }
-            if ($a > 0) {
-                return 1;
-            }
-            return 0;
-        };
-
-        $lv = $rel($nextCalculation['health'],  $baseCalculation['health'])
-            + $rel($nextCalculation['damage'],  $baseCalculation['damage'])
-            + $rel($nextCalculation['defense'], $baseCalculation['defense'])
-            + $rel($nextCalculation['magic'],   $baseCalculation['magic'])
-            + $rel($nextCalculation['speed'],   $baseCalculation['speed']);
-
-        return (int) ($lv * 100);
+        return max(array_sum($nextCalculation) - array_sum($baseCalculation), 0);
     }
 }
