@@ -14,14 +14,14 @@ $healthTier2 = [
     ],
 ];
 $healthTier3 = [
-    'icon' => '❤️❤️❤️',
+    'icon' => '💖️',
     'text' => 'Super Health',
     'data' => [
         'health' => 5,
     ],
 ];
 $healthTier4 = [
-    'icon' => '💖',
+    'icon' => '💖💖',
     'text' => 'Ultra Health',
     'data' => [
         'health' => 9,
@@ -42,14 +42,14 @@ $damageTier2 = [
     ],
 ];
 $damageTier3 = [
-    'icon' => '⚔️⚔️⚔️',
+    'icon' => '🪓',
     'text' => 'Super Damage',
     'data' => [
         'damage' => 5,
     ],
 ];
 $damageTier4 = [
-    'icon' => '🪓',
+    'icon' => '🪓🪓',
     'text' => 'Ultra Damage',
     'data' => [
         'damage' => 9,
@@ -70,14 +70,14 @@ $defenseTier2 = [
     ],
 ];
 $defenseTier3 = [
-    'icon' => '🛡️🛡️🛡️',
+    'icon' => '🪬',
     'text' => 'Super Defense',
     'data' => [
         'defense' => 5,
     ],
 ];
 $defenseTier4 = [
-    'icon' => '🪬',
+    'icon' => '🪬🪬',
     'text' => 'Ultra Defense',
     'data' => [
         'defense' => 9,
@@ -98,14 +98,14 @@ $magicTier2 = [
     ],
 ];
 $magicTier3 = [
-    'icon' => '🪄️🪄️🪄️',
+    'icon' => '🦄',
     'text' => 'Super Magic',
     'data' => [
         'magic' => 5,
     ],
 ];
 $magicTier4 = [
-    'icon' => '🦄',
+    'icon' => '🦄🦄',
     'text' => 'Ultra Magic',
     'data' => [
         'magic' => 9,
@@ -126,14 +126,14 @@ $speedTier2 = [
     ],
 ];
 $speedTier3 = [
-    'icon' => '🥾🥾🥾',
+    'icon' => '👟',
     'text' => 'Super Speed',
     'data' => [
         'speed' => 5,
     ],
 ];
 $speedTier4 = [
-    'icon' => '👟',
+    'icon' => '👟👟',
     'text' => 'Ultra Speed',
     'data' => [
         'speed' => 9,
@@ -317,29 +317,29 @@ $curseMagic = [
 ];
 
 $convertDamageToHealth = [
-    'icon' => '💥⚔️❤️️',
+    'icon' => '⚔️💥',
     'text' => 'Convert Damage to Health',
     'modifier' => 'convert_damage_to_health',
     'league' => true,
 ];
 $convertDefenseToHealth = [
-    'icon' => '💥🛡️️❤️️',
+    'icon' => '🛡️💥️️',
     'text' => 'Convert Defense to Health',
     'modifier' => 'convert_defense_to_health',
     'league' => true,
 ];
 $convertMagicToHealth = [
-    'icon' => '💥🪄️❤️️',
+    'icon' => '🪄️💥️️',
     'text' => 'Convert Magic to Health',
     'modifier' => 'convert_magic_to_health',
 ];
 $convertSpeedToHealth = [
-    'icon' => '💥🥾❤️',
+    'icon' => '🥾💥️',
     'text' => 'Convert Speed to Health',
     'modifier' => 'convert_speed_to_health',
 ];
 $convertAllToDamage = [
-    'icon' => '💥💪️️⚔️',
+    'icon' => '💪️️',
     'text' => 'Berserker',
     'modifier' => 'convert_all_to_damage',
     'league' => true,

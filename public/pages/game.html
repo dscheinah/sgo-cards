@@ -63,7 +63,7 @@
             if (round['league']['area']) {
                 helper.set('#game-area', 'innerHTML', `Area: ${round['league']['area'].icon} ${round['league']['area'].name}`);
             } else {
-                helper.set('#game-area', 'innerHTML', '&nbsp;');
+                helper.set('#game-area', 'innerHTML', '');
             }
             helper.set('#game-player-number', 'innerHTML', round['player']['try']);
             helper.set('#game-player', 'innerHTML', helper.player(round['player'], result && result['enemy'] && result['enemy']['calculation']));
@@ -170,15 +170,43 @@
 </script>
 
 <style>
+    #game-area {
+        line-height: 1.1;
+        min-height: 2.2em;
+    }
+
+    #game-cards {
+        transition: opacity .5s;
+        flex-wrap: nowrap;
+        gap: 1em;
+    }
+
+    #game-cards > * {
+        width: 100%;
+        padding: .5em;
+    }
+
     .game-value {
         text-align: right;
-        margin: -.5em -1em 0 0;
+        margin: -.5em 0 .5em;
         filter: grayscale(1);
         opacity: .5;
     }
 
     .game-icon {
-        font-size: 40px;
+        font-size: 8vw;
+        margin: 0 0 auto;
+    }
+
+    #game-cards p {
+        line-height: 1.1;
+        min-height: 3.3em;
+        display: grid;
+        align-items: center;
+        margin: 1em 0;
+    }
+
+    #game-cards button {
         margin: 0;
     }
 
@@ -191,26 +219,22 @@
         margin-right: 0 !important;
     }
 
-    #game-cards {
-        transition: opacity .5s;
-    }
-
-    #game-cards > * {
-        width: 100%;
-    }
-
-    #game-cards p {
-        margin: 1em 0;
-    }
-
     #game-result {
-        font-size: 1.2em;
+        font-size: 1.1em;
         word-wrap: anywhere;
     }
 
-    @media only screen and (min-width: 700px) {
+    @media only screen and (min-width: 525px) {
         #game-cards {
-            flex-wrap: nowrap;
+            gap: 2em;
+        }
+
+        #game-cards > * {
+            padding: 1em;
+        }
+
+        .game-icon {
+            font-size: 40px;
         }
     }
 </style>
