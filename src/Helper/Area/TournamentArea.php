@@ -7,7 +7,7 @@ class TournamentArea implements AreaInterface
     public static function player(array $player): array
     {
         return [
-            'health' => array_sum($player),
+            'health' => $player['health'] + $player['damage'] + $player['defense'] + $player['magic'] + $player['speed'],
             'damage' => 0,
             'defense' => 0,
             'magic' => 0,

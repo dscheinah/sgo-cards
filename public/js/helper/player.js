@@ -1,3 +1,7 @@
+function totals(stats) {
+    return stats['health'] + stats['damage'] + stats['defense'] + stats['magic'] + stats['speed'];
+}
+
 function compareForClassString(key, reference, data) {
     if (!reference || reference[key] === data[key]) {
         return '';
@@ -6,6 +10,12 @@ function compareForClassString(key, reference, data) {
 }
 
 export default function (player, reference) {
+    player['data'].total = totals(player['data']);
+    player['calculation'].total = totals(player['calculation']);
+    if (reference) {
+        reference.total = totals(reference);
+    }
+
     let modifiers = '';
     player.modifiers.forEach((modifier) => {
         modifiers += `<tr><th>${modifier.text}</th><td>${modifier.value}</td></tr>`;
@@ -14,6 +24,12 @@ export default function (player, reference) {
         <table>
             <tr><th>Position</th><td>${player.x}:${player.y}</td></tr>
             <tr><th>Modifier</th><td>${player['modifier'].text}</td></tr>
+            <tr>
+                <th>Total</th>
+                <td class="${compareForClassString('total', reference, player['calculation'])}">
+                    ${Math.max(player['calculation']['total'], 0)} (${player['data']['total']})
+                </td>
+            </tr>
             <tr>
                 <th>Health</th>
                 <td class="${compareForClassString('health', reference, player['calculation'])}">
