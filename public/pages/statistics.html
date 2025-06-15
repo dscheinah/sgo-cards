@@ -121,7 +121,8 @@
 
         show(() => {
             state.dispatch('loading', true);
-            state.dispatch('leagues', leagues);
+            state.dispatch('leagues', null);
+            league = {};
         });
 
         listen('leagues', (payload) => {
