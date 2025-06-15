@@ -20,7 +20,7 @@ class TournamentArea implements AreaInterface
     public static function battle(array $stats, int $duration): array
     {
         return [
-            'health' => $stats['health'] - 10000,
+            'health' => $stats['health'] - 1000000,
             'damage' => 0,
             'defense' => 0,
             'magic' => 0,
