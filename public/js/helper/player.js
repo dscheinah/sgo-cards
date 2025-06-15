@@ -8,7 +8,7 @@ function compareForClassString(key, reference, data) {
 export default function (player, reference) {
     let modifiers = '';
     player.modifiers.forEach((modifier) => {
-        modifiers += `<tr><th>${modifier.text}</th><td>${modifier.count}</td></tr>`;
+        modifiers += `<tr><th>${modifier.text}</th><td>${modifier.value}</td></tr>`;
     });
     return `
         <table>

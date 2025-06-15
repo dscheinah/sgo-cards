@@ -50,7 +50,7 @@ class Modifier
     {
         return [
             'text' => $this->text,
-            'count' => $this->count,
+            'value' => $this->enemy ? array_sum($this->data) : $this->count,
         ];
     }
 }
