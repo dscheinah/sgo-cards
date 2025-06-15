@@ -58,6 +58,15 @@
         return `<p>${list.join('<br/>')}</p>`;
     }
 
+    function createActiveAreaIcons(data, stats) {
+        let maxY = 0;
+        Object.values(stats).forEach((layer) => {
+            maxY = Math.max(maxY, ...Object.keys(layer).map((value) => parseInt(value)));
+        });
+        const areas = data.filter((area) => area.y <= maxY).map((area) => area.icon)
+        return `<p>${areas.join(' ')}</p>`
+    }
+
     page.register('statistics', ({render, show, listen}) => {
         render(() => {
             helper.list('#statistics-list', leagues, (item) => {
@@ -97,6 +106,7 @@
                                 <table class="statistics-layout">
                                     ${createStatistics(current['statistics'], current['shrines']['positions'], current['areas']) || '<tr><td></td></tr>'}
                                 </table>
+                                ${createActiveAreaIcons(current['areas'], current['statistics'])}
                                 ${createShrineDescriptions(current['shrines']['data'])}
                             </div>
                         </div>
