@@ -33,13 +33,17 @@
             table += '<tr>'
             for (let x = 0; x <= maxX; x++) {
                 let z = stats[x] && stats[x][y] || 0;
+                let hasShrine = shrines[x] || Object.values(shrines).find((current) => current[y]);
+                let hasArea = areas.find((area) => y >= area['y'] && y <= area['h'] )
                 if (shrines[x] && shrines[x][y]) {
                     table += `<td class="statistics-hit" style="background: ${shrines[x][y]}"></td>`;
                 } else if (z) {
                     table += `<td style="opacity: ${Math.ceil((z || 0) / maxZ * 25) / 25}"></td>`;
-                } else if (shrines[x] || Object.values(shrines).find((current) => current[y])) {
+                } else if (hasArea && hasShrine) {
+                    table += `<td class="statistics-adjacent-area"></td>`
+                } else if (hasShrine) {
                     table += `<td class="statistics-adjacent"></td>`
-                } else if (areas.find((area) => y >= area['y'] && y <= area['h'] )) {
+                } else if (hasArea) {
                     table += `<td class="statistics-area"></td>`;
                 } else {
                     table += `<td></td>`;
@@ -184,8 +188,13 @@
         opacity: 1;
     }
 
+    .statistics-adjacent-area.statistics-adjacent-area {
+        opacity: .2;
+        background: lightcoral;
+    }
+
     .statistics-adjacent.statistics-adjacent {
-        opacity: .5;
+        opacity: .2;
         background: lightgray;
     }
 
