@@ -54,7 +54,7 @@
         if (!data.length) {
             return '';
         }
-        let list = data.map((item) => `${item.icon} <span style="color: ${item.color}">${item.description}</span>`);
+        let list = data.map((item) => `${item.icon} <strong style="color: ${item.color}">${item.description}</strong>`);
         return `<p>${list.join('<br/>')}</p>`;
     }
 
