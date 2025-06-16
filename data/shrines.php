@@ -22,7 +22,7 @@ return [
         'text' => 'Shrine of Ice',
         'icon' => '️❄️⛩️️',
         'color' => 'aqua',
-        'description' => 'Require more Speed',
+        'description' => 'Require additional Speed',
     ],
     'mist' => [
         'handler' => MistShrine::class,
