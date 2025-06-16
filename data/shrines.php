@@ -1,5 +1,7 @@
 <?php
 
+use App\Helper\Shrine\AirShrine;
+use App\Helper\Shrine\EarthShrine;
 use App\Helper\Shrine\FireShrine;
 use App\Helper\Shrine\IceShrine;
 use App\Helper\Shrine\MistShrine;
@@ -49,5 +51,19 @@ return [
         'icon' => '💧⛩️',
         'color' => 'blue',
         'description' => 'Increase defensive Magic',
+    ],
+    'earth' => [
+        'handler' => EarthShrine::class,
+        'text' => 'Shrine of Earth',
+        'icon' => '⛰️⛩️',
+        'color' => 'brown',
+        'description' => 'Deal Damage with Defense',
+    ],
+    'air' => [
+        'handler' => AirShrine::class,
+        'text' => 'Shrine of Air',
+        'icon' => '🌪️⛩️',
+        'color' => 'magenta',
+        'description' => 'Break Defense with Speed',
     ],
 ];
