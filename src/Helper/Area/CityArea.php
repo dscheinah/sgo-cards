@@ -11,7 +11,7 @@ class CityArea implements AreaInterface
 
     public static function battle(array $stats, int $duration): array
     {
-        $stats['magic'] *= .9;
+        $stats['magic'] *= .85;
         return $stats;
     }
 }

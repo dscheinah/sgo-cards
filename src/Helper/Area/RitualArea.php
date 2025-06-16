@@ -6,7 +6,9 @@ class RitualArea implements AreaInterface
 {
     public static function player(array $player): array
     {
-        $player['magic_offense'] += $player['health'];
+        $value = $player['health'] * 0.5;
+        $player['magic_offense'] += $value;
+        $player['health'] -= $value;
         return $player;
     }
 

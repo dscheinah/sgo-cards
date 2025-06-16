@@ -30,12 +30,12 @@ return [
     ],
     [
         'icon' => '🏚️',
-        'name' => 'Ancient City has a barrier to prevent all Magic',
+        'name' => 'Ancient City has a barrier to prevent offensive Magic',
         'handler' => CityArea::class,
     ],
     [
         'icon' => '🦟',
-        'name' => 'Muddy Swamp makes it difficult to move and reduces Speed',
+        'name' => 'Muddy Swamp makes it difficult to move and removes Speed',
         'handler' => SwampArea::class,
     ],
     [
@@ -45,7 +45,7 @@ return [
     ],
     [
         'icon' => '🩸',
-        'name' => 'Bloody Ritual allows the use of Health as offensive Magic',
+        'name' => 'Bloody Ritual sacrifices Health for offensive Magic',
         'handler' => RitualArea::class,
     ],
     [

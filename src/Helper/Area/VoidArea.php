@@ -6,14 +6,19 @@ class VoidArea implements AreaInterface
 {
     public static function player(array $player): array
     {
+        $values = array_values($player);
+
         mt_srand();
-        $player['health'] = mt_rand() % (int) $player['health'];
-        $player['damage'] = mt_rand() % (int) $player['damage'];
-        $player['defense'] = mt_rand() % (int) $player['defense'];
-        $player['magic'] = mt_rand() % (int) $player['magic'];
-        $player['magic_offense'] = mt_rand() % (int) $player['magic_offense'];
-        $player['magic_defense'] = mt_rand() % (int) $player['magic_defense'];
-        $player['speed'] = mt_rand() % (int) $player['speed'];
+        shuffle($values);
+
+        $player['health'] = $values[0];
+        $player['damage'] = $values[1];
+        $player['defense'] = $values[2];
+        $player['magic'] = $values[3];
+        $player['magic_offense'] = $values[4];
+        $player['magic_defense'] = $values[5];
+        $player['speed'] = $values[6];
+
         return $player;
     }
 
