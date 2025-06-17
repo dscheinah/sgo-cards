@@ -19,13 +19,15 @@
             + helper.player(winner);
     }
 
-    function createStatistics(stats, shrines, areas) {
+    function createStatistics(stats, players, shrines, areas) {
+        const max = Math.max(1, players / 3);
+
         let maxX = Math.max(0, ...Object.keys(stats).map((value) => parseInt(value)));
         let maxY = 0;
         let maxZ = 0;
         Object.values(stats).forEach((layer) => {
             maxY = Math.max(maxY, ...Object.keys(layer).map((value) => parseInt(value)));
-            maxZ = Math.max(maxZ, ...Object.values(layer));
+            maxZ = Math.max(maxZ, ...Object.values(layer).filter((value) => value <= max));
         });
 
         let table = '';
@@ -51,7 +53,7 @@
             }
             table += '</tr>'
         }
-        return table;
+        return table || '<tr><td></td></tr>';
     }
 
     function createShrineDescriptions(data) {
@@ -108,7 +110,7 @@
                             <div>
                                 <h3>Layout</h3>
                                 <table class="statistics-layout">
-                                    ${createStatistics(current['statistics'], current['shrines']['positions'], current['areas']) || '<tr><td></td></tr>'}
+                                    ${createStatistics(current['statistics'], current['player_count'], current['shrines']['positions'], current['areas'])}
                                 </table>
                                 ${createActiveAreaIcons(current['areas'], current['statistics'])}
                                 ${createShrineDescriptions(current['shrines']['data'])}
