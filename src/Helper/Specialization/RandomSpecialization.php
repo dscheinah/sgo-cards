@@ -11,7 +11,6 @@ class RandomSpecialization implements SpecializationInterface
 
     public static function battle(array $stats, int $duration): array
     {
-        mt_srand();
         $mods = ['health', 'damage', 'magic'];
         shuffle($mods);
         $stats[$mods[0]]++;

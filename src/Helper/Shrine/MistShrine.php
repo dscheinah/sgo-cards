@@ -6,7 +6,6 @@ class MistShrine extends NoopShrine
 {
     public static function battle(array $stats, int $duration): array
     {
-        mt_srand();
         if (!(mt_rand() % 5)) {
             $stats['mist_shrine'] = $stats['damage'];
             $stats['damage'] = 0;

@@ -7,8 +7,6 @@ class VoidArea implements AreaInterface
     public static function player(array $player): array
     {
         $values = array_values($player);
-
-        mt_srand();
         shuffle($values);
 
         $player['health'] = $values[0];

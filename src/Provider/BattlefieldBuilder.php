@@ -60,6 +60,7 @@ class BattlefieldBuilder
             $battlefield->card = $battlefield->cards[$card] ?? null;
         }
 
+        mt_srand();
         $battlefield->battle = $this->battleProvider->create($battlefield);
 
         return $battlefield;
