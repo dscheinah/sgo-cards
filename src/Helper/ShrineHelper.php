@@ -39,7 +39,7 @@ class ShrineHelper
     public function random(League $league, Player $player): ?string
     {
         mt_srand($league->id + ($player->x * $this->max) + $player->y);
-        if (!(mt_rand() % 3)) {
+        if (mt_rand() % 5) {
             return null;
         }
         return array_rand($this->shrines);

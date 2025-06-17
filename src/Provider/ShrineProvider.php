@@ -38,7 +38,7 @@ class ShrineProvider
         }
 
         $limit = $this->max / 10;
-        if (($x < $limit || $x > $this->max - $limit) && ($y < $limit || $y > $this->max - $limit)) {
+        if ($x < $limit || $x > $this->max - $limit || $y < $limit || $y > $this->max - $limit) {
             return;
         }
 
