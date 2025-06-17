@@ -43,7 +43,6 @@ class PlayerProvider
             $input['id'] = $this->playerStorage->insertOne($input);
         }
         $player = $this->createPlayerFromCards($input);
-        $player->specialization = $this->specializationHelper->get($input['specialization'] ?? null);
         $player->specializations = $this->specializationHelper->list(
             $player->data,
             $this->playerStorage->fetchMaxYForUserAndLeague($userId, $league->id),
@@ -129,6 +128,7 @@ class PlayerProvider
             $player = $player->withModifier($modifier);
         }
 
+        $player->specialization = $this->specializationHelper->get($input['specialization'] ?? null);
         return $player;
     }
 }
