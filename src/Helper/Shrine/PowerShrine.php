@@ -6,6 +6,6 @@ class PowerShrine extends NoopShrine
 {
     public static function speed(array $player, float $damage): float
     {
-        return $player['magic'];
+        return ($damage + $player['magic']) / 2;
     }
 }
