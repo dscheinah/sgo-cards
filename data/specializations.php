@@ -229,8 +229,8 @@ return [
     ],
     'necromancer' => [
         'icon' => '💀',
-        'name' => 'Necromancer',
-        'description' => 'Comes with an army of damaging undead',
+        'name' => 'Necro',
+        'description' => 'Summons damaging undead every round',
         'y' => 70,
         'modifiers' => [
             'more_player_magic',
@@ -240,7 +240,7 @@ return [
     'monk' => [
         'icon' => '🐒',
         'name' => 'Monk',
-        'description' => 'Specialized in all arts',
+        'description' => 'Specialized in all kinds of Debuffs',
         'y' => 80,
         'modifiers' => [
             'more_player_health',
