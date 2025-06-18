@@ -255,6 +255,5 @@ return [
         'modifiers' => [
             'more_modifiers',
         ],
-        'handler' => DebuffSpecialization::class,
     ],
 ];
