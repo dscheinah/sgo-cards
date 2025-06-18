@@ -11,7 +11,7 @@ class DependentModifier implements ModifierInterface
         if ($data[$modifier->source] <= 0) {
             return $data;
         }
-        $data[$modifier->target] += $data[$modifier->source] * log($modifier->data['value'] + 1) * $change;
+        $data[$modifier->target] += $data[$modifier->source] * log($modifier->data['value'] * $change + 1);
         return $data;
     }
 
