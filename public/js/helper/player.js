@@ -27,37 +27,37 @@ export default function (player, reference) {
             <tr>
                 <th>Total</th>
                 <td class="${compareForClassString('total', reference, player['calculation'])}">
-                    ${Math.max(player['calculation']['total'], 0)} (${player['data']['total']})
+                    ${player['calculation']['total']} (${player['data']['total']})
                 </td>
             </tr>
             <tr>
                 <th>Health</th>
                 <td class="${compareForClassString('health', reference, player['calculation'])}">
-                    ${Math.max(player['calculation']['health'], 0)} (${player['data']['health']})
+                    ${player['calculation']['health']} (${player['data']['health']})
                 </td>
             </tr>
             <tr>
                 <th>Damage</th>
                 <td class="${compareForClassString('damage', reference, player['calculation'])}">
-                    ${Math.max(player['calculation']['damage'], 0)} (${player['data']['damage']})
+                    ${player['calculation']['damage']} (${player['data']['damage']})
                 </td>
             </tr>
             <tr>
                 <th>Defense</th>
                 <td class="${compareForClassString('defense', reference, player['calculation'])}">
-                    ${Math.max(player['calculation']['defense'], 0)} (${player['data']['defense']})
+                    ${player['calculation']['defense']} (${player['data']['defense']})
                 </td>
             </tr>
             <tr>
                 <th>Magic</th>
                 <td class="${compareForClassString('magic', reference, player['calculation'])}">
-                    ${Math.max(player['calculation']['magic'], 0)} (${player['data']['magic']})
+                    ${player['calculation']['magic']} (${player['data']['magic']})
                 </td>
             </tr>
             <tr>
                 <th>Speed</th>
                 <td class="${compareForClassString('speed', reference, player['calculation'])}">
-                    ${Math.max(player['calculation']['speed'], 0)} (${player['data']['speed']})
+                    ${player['calculation']['speed']} (${player['data']['speed']})
                 </td>
             </tr>
             ${modifiers}

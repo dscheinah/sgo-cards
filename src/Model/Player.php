@@ -51,7 +51,7 @@ class Player
         foreach (array_filter($modifiers, static fn (Modifier $modifier) => $modifier->multiplicative) as $modifier) {
             $data = $modifier->handler::multiply($data, $modifier, $change);
         }
-        return array_map(static fn ($value) => (int) round($value), $data);
+        return array_map(static fn ($value) => max((int) round($value), 0), $data);
     }
 
     public function withModifier(Modifier $modifier): Player

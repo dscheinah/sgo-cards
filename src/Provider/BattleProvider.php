@@ -58,6 +58,9 @@ class BattleProvider
 
     public function battle(Battlefield $battlefield): Battle
     {
+        $area = $battlefield->area?->handler;
+        $specialization = $battlefield->player->specialization?->handler;
+
         $battle = new Battle();
 
         $player = $battlefield->player->calculation($battlefield->league, $battlefield->enemy);
@@ -67,16 +70,17 @@ class BattleProvider
         $player['magic_defense'] = $player['magic'];
         $enemy['magic_offense'] = $enemy['magic'];
         $enemy['magic_defense'] = $enemy['magic'];
+
         foreach ($battlefield->shrines as $shrine) {
             $player = $shrine->handler::player($player);
             $enemy = $shrine->handler::player($enemy);
         }
-        if ($battlefield->area) {
-            $player = $battlefield->area->handler::player($player);
-            $enemy = $battlefield->area->handler::player($enemy);
+        if ($area) {
+            $player = $area::player($player);
+            $enemy = $area::player($enemy);
         }
-        if ($battlefield->player->specialization?->handler) {
-            $enemy = $battlefield->player->specialization?->handler::enemy($enemy);
+        if ($specialization) {
+            $enemy = $specialization::enemy($enemy);
         }
 
         $playerStats = $this->stats($player, $enemy);
@@ -107,13 +111,14 @@ class BattleProvider
                 $playerStats = $shrine->handler::battle($playerStats, $battle->duration);
                 $enemyStats = $shrine->handler::battle($enemyStats, $battle->duration);
             }
-            if ($battlefield->area) {
-                $playerStats = $battlefield->area->handler::battle($playerStats, $battle->duration);
-                $enemyStats = $battlefield->area->handler::battle($enemyStats, $battle->duration);
+            if ($area) {
+                $playerStats = $area::battle($playerStats, $battle->duration);
+                $enemyStats = $area::battle($enemyStats, $battle->duration);
             }
-            if ($battlefield->player->specialization?->handler) {
-                $playerStats = $battlefield->player->specialization?->handler::battle($playerStats, $battle->duration);
+            if ($specialization) {
+                $playerStats = $specialization::battle($playerStats, $battle->duration);
             }
+
             $drain = 1.1 ** $battle->duration;
             $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
             $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'] + (int) $drain;
@@ -130,7 +135,7 @@ class BattleProvider
             'health' => $player['health'] * 10,
             'damage' => max(
                 max($player['damage'], 0) - max($enemy['defense'], 0),
-                1
+                0
             ),
             'defense' => $player['defense'],
             'magic' => max(
