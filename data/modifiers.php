@@ -139,6 +139,13 @@ return [
         'enemy' => true,
         'text' => 'Reduce Enemy Magic',
     ],
+    'remove_speed' => [
+        'data' => [
+            'speed' => -3,
+        ],
+        'enemy' => true,
+        'text' => 'Reduce Enemy Speed',
+    ],
     'convert_damage_to_health' => [
         'data' => [
             'damage' => 0.9,

@@ -7,11 +7,7 @@ class AirShrine extends NoopShrine
     public static function player(array $player): array
     {
         $player['damage'] += $player['speed'] / 3;
+        $player['speed_damage'] /= 2;
         return $player;
-    }
-
-    public static function speed(array $player, float $damage): float
-    {
-        return $damage / 2;
     }
 }

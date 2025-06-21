@@ -4,17 +4,14 @@ namespace App\Helper\Specialization;
 
 class RandomSpecialization implements SpecializationInterface
 {
-    public static function enemy(array $enemy): array
+    public static function battle(array $player, int $duration): array
     {
-        return $enemy;
-    }
-
-    public static function battle(array $stats, int $duration): array
-    {
-        $mods = ['health', 'damage', 'magic'];
-        shuffle($mods);
-        $stats[$mods[0]]++;
-        $stats[$mods[1]]--;
-        return $stats;
+        foreach ($player as $key => $value) {
+            $player[$key] += (mt_srand() % 3) - 1;
+            if ($player[$key] < 0) {
+                $player[$key] = 0;
+            }
+        }
+        return $player;
     }
 }

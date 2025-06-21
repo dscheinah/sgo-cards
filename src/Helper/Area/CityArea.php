@@ -9,9 +9,9 @@ class CityArea implements AreaInterface
         return $player;
     }
 
-    public static function battle(array $stats, int $duration): array
+    public static function battle(array $player, array $enemy, int $duration): array
     {
-        $stats['magic'] *= .85;
-        return $stats;
+        $player['magic_offense'] *= .85;
+        return $player;
     }
 }

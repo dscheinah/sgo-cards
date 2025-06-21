@@ -58,95 +58,79 @@ class BattleProvider
 
     public function battle(Battlefield $battlefield): Battle
     {
-        $area = $battlefield->area?->handler;
-        $specialization = $battlefield->player->specialization?->handler;
-
         $battle = new Battle();
 
-        $player = $battlefield->player->calculation($battlefield->league, $battlefield->enemy);
-        $enemy = $battlefield->enemy->calculation($battlefield->league, $battlefield->player);
+        $playerCalculation = $battlefield->player->calculation($battlefield->league, $battlefield->enemy);
+        $enemyCalculation = $battlefield->enemy->calculation($battlefield->league, $battlefield->player);
 
-        $player['magic_offense'] = $player['magic'];
-        $player['magic_defense'] = $player['magic'];
-        $enemy['magic_offense'] = $enemy['magic'];
-        $enemy['magic_defense'] = $enemy['magic'];
+        $player = $this->prepare($playerCalculation, $enemyCalculation);
+        $enemy = $this->prepare($enemyCalculation, $playerCalculation);
 
         foreach ($battlefield->shrines as $shrine) {
             $player = $shrine->handler::player($player);
             $enemy = $shrine->handler::player($enemy);
         }
-        if ($area) {
-            $player = $area::player($player);
-            $enemy = $area::player($enemy);
-        }
-        if ($specialization) {
-            $enemy = $specialization::enemy($enemy);
+        if ($battlefield->area?->handler) {
+            $player = $battlefield->area->handler::player($player);
+            $enemy = $battlefield->area->handler::player($enemy);
         }
 
-        $playerStats = $this->stats($player, $enemy);
-        $enemyStats = $this->stats($enemy, $player);
+        $player['health'] -= $enemy['speed_damage'];
+        $enemy['health'] -= $player['speed_damage'];
 
-        foreach ($battlefield->shrines as $shrine) {
-            $playerStats = $shrine->handler::stats($playerStats);
-            $enemyStats = $shrine->handler::stats($enemyStats);
-        }
-
-        if ($playerStats['speed'] > 0) {
-            $speedDamage = $player['damage'];
+        while ($player['health'] > 0 && $enemy['health'] > 0) {
             foreach ($battlefield->shrines as $shrine) {
-                $speedDamage = $shrine->handler::speed($player, $speedDamage);
+                $player = $shrine->handler::battle($player, $enemy);
+                $enemy = $shrine->handler::battle($enemy, $player);
             }
-            $enemyStats['health'] -= $speedDamage;
-        }
-        if ($enemyStats['speed'] > 0) {
-            $speedDamage = $enemy['damage'];
-            foreach ($battlefield->shrines as $shrine) {
-                $speedDamage = $shrine->handler::speed($enemy, $speedDamage);
+            if ($battlefield->area?->handler) {
+                $player = $battlefield->area->handler::battle($player, $enemy, $battle->duration);
+                $enemy = $battlefield->area->handler::battle($enemy, $player, $battle->duration);
             }
-            $playerStats['health'] -= $speedDamage;
-        }
+            if ($battlefield->player->specialization?->handler) {
+                $player = $battlefield->player->specialization->handler::battle($player, $battle->duration);
+            }
+            if ($battlefield->enemy->specialization?->handler) {
+                $enemy = $battlefield->enemy->specialization->handler::battle($enemy, $battle->duration);
+            }
 
-        while ($playerStats['health'] > 0 && $enemyStats['health'] > 0) {
+            $playerStats = $this->stats($player, $enemy);
+            $enemyStats = $this->stats($enemy, $player);
+
             foreach ($battlefield->shrines as $shrine) {
-                $playerStats = $shrine->handler::battle($playerStats, $battle->duration);
-                $enemyStats = $shrine->handler::battle($enemyStats, $battle->duration);
-            }
-            if ($area) {
-                $playerStats = $area::battle($playerStats, $battle->duration);
-                $enemyStats = $area::battle($enemyStats, $battle->duration);
-            }
-            if ($specialization) {
-                $playerStats = $specialization::battle($playerStats, $battle->duration);
+                $playerStats = $shrine->handler::stats($playerStats);
+                $enemyStats = $shrine->handler::stats($enemyStats);
             }
 
             $drain = 1.1 ** $battle->duration;
-            $playerStats['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
-            $enemyStats['health'] -= $playerStats['damage'] + $playerStats['magic'] + (int) $drain;
+            $player['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
+            $enemy['health'] -= $playerStats['damage'] + $playerStats['magic'] + (int) $drain;
             $battle->duration++;
         }
 
-        $battle->winner = $playerStats['health'] >= $enemyStats['health'];
+        $battle->winner = $player['health'] >= $enemy['health'];
         return $battle;
     }
 
-    private function stats(array $player, array $enemy): array
+    private function prepare(array $player, array $enemy): array
     {
-        return [
-            'health' => $player['health'] * 10,
-            'damage' => max(
-                max($player['damage'], 0) - max($enemy['defense'], 0),
-                0
-            ),
-            'defense' => $player['defense'],
-            'magic' => max(
-                max($player['magic_offense'], 0) - max($enemy['magic_defense'], 0),
-                0
-            ),
-            'magic_defense' => $player['magic_defense'],
-            'speed' => max(
-                max($player['speed'], 0) - max($enemy['speed'], 0),
-                0
-            ),
+        $player['health'] *= 10;
+
+        $player['magic_offense'] = $player['magic'];
+        $player['magic_defense'] = $player['magic'];
+
+        $player['speed_damage'] = 0;
+        if ($player['speed'] > 0 && $player['speed'] > $enemy['speed']) {
+            $player['speed_damage'] += $player['damage'];
+        }
+
+        return $player;
+    }
+
+    private function stats(array $player, array $enemy): array {
+        return  [
+            'damage' => max($player['damage'] - $enemy['defense'], 0),
+            'magic' => max($player['magic_offense'] - $enemy['magic_defense'], 0),
         ];
     }
 }

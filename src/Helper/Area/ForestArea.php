@@ -9,9 +9,9 @@ class ForestArea implements AreaInterface
         return $player;
     }
 
-    public static function battle(array $stats, int $duration): array
+    public static function battle(array $player, array $enemy, int $duration): array
     {
-        $stats['defense'] *= .9;
-        return $stats;
+        $player['defense'] *= .9;
+        return $player;
     }
 }

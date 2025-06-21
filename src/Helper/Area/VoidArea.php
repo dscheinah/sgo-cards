@@ -16,12 +16,13 @@ class VoidArea implements AreaInterface
         $player['magic_offense'] = $values[4];
         $player['magic_defense'] = $values[5];
         $player['speed'] = $values[6];
+        $player['speed_damage'] = $values[7];
 
         return $player;
     }
 
-    public static function battle(array $stats, int $duration): array
+    public static function battle(array $player, array $enemy, int $duration): array
     {
-        return $stats;
+        return $player;
     }
 }

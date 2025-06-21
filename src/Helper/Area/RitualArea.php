@@ -12,8 +12,8 @@ class RitualArea implements AreaInterface
         return $player;
     }
 
-    public static function battle(array $stats, int $duration): array
+    public static function battle(array $player, array $enemy, int $duration): array
     {
-        return $stats;
+        return $player;
     }
 }

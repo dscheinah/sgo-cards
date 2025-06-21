@@ -4,14 +4,9 @@ namespace App\Helper\Specialization;
 
 class DefenseSpecialization implements SpecializationInterface
 {
-    public static function enemy(array $enemy): array
+    public static function battle(array $player, int $duration): array
     {
-        $enemy['damage'] *= .8;
-        return $enemy;
-    }
-
-    public static function battle(array $stats, int $duration): array
-    {
-        return $stats;
+        $player['defense'] += 2 * (int) (1.1 ** $duration);
+        return $player;
     }
 }

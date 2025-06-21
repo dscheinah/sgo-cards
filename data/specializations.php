@@ -1,7 +1,6 @@
 <?php
 
 use App\Helper\Specialization\DamageSpecialization;
-use App\Helper\Specialization\DebuffSpecialization;
 use App\Helper\Specialization\DefenseSpecialization;
 use App\Helper\Specialization\DefensiveMagicSpecialization;
 use App\Helper\Specialization\OffensiveMagicSpecialization;
@@ -244,8 +243,15 @@ return [
         'y' => 80,
         'modifiers' => [
             'more_player_health',
+            'remove_damage',
+            'remove_damage',
+            'remove_defense',
+            'remove_defense',
+            'remove_magic',
+            'remove_magic',
+            'remove_speed',
+            'remove_speed',
         ],
-        'handler' => DebuffSpecialization::class
     ],
     'bard' => [
         'icon' => '🎶',

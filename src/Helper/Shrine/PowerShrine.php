@@ -4,8 +4,11 @@ namespace App\Helper\Shrine;
 
 class PowerShrine extends NoopShrine
 {
-    public static function speed(array $player, float $damage): float
+    public static function player(array $player): array
     {
-        return ($damage + $player['magic']) / 2;
+        if ($player['speed_damage'] > 0) {
+            $player['speed_damage'] = ($player['speed_damage'] + $player['magic']) / 2;
+        }
+        return $player;
     }
 }

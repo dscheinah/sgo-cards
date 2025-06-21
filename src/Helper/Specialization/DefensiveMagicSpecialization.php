@@ -4,14 +4,9 @@ namespace App\Helper\Specialization;
 
 class DefensiveMagicSpecialization implements SpecializationInterface
 {
-    public static function enemy(array $enemy): array
+    public static function battle(array $player, int $duration): array
     {
-        $enemy['magic_offense'] *= .8;
-        return $enemy;
-    }
-
-    public static function battle(array $stats, int $duration): array
-    {
-        return $stats;
+        $player['magic_defense'] += 2 * (int) (1.1 ** $duration);
+        return $player;
     }
 }

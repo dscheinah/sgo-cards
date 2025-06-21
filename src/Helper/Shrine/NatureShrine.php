@@ -4,9 +4,9 @@ namespace App\Helper\Shrine;
 
 class NatureShrine extends NoopShrine
 {
-    public static function battle(array $stats, int $duration): array
+    public static function battle(array $player, array $enemy): array
     {
-        $stats['health'] *= .95;
-        return $stats;
+        $player['health'] *= .95;
+        return $player;
     }
 }

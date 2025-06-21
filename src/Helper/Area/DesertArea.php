@@ -9,9 +9,9 @@ class DesertArea implements AreaInterface
         return $player;
     }
 
-    public static function battle(array $stats, int $duration): array
+    public static function battle(array $player, array $enemy, int $duration): array
     {
-        $stats['health'] -= (int) (1.5 ** $duration);
-        return $stats;
+        $player['health'] -= (int) (1.4 ** $duration);
+        return $player;
     }
 }
