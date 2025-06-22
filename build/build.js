@@ -74,6 +74,10 @@ fs.rmSync('dist', {recursive: true, force: true});
     '../public/.htaccess',
     '../public/favicon.ico',
     '../public/index.php',
+    '../public/manifest.json',
+    '../public/icons/128.png',
+    '../public/icons/256.png',
+    '../public/icons/512.png',
 ].forEach((file) => {
     dist(file);
     fs.copyFileSync(file, file.replace('../public/', 'dist/'));

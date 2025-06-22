@@ -19,6 +19,7 @@ FROM php:8-apache
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
  && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
+ && sed -ri -e 's/^Alias/#Alias/' /etc/apache2/mods-enabled/alias.conf \
  # These settings do not prevent development but are quite useful for production.
  && echo "ServerTokens Prod" >> /etc/apache2/apache2.conf \
  && mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" \
