@@ -11,8 +11,8 @@ class DungeonArea implements AreaInterface
 
     public static function battle(array $player, array $enemy, int $duration): array
     {
-        $player['health'] -= max(0, $player['damage'] - $player['defense']);
-        $player['health'] -= max(0, $player['magic_offense'] - $player['magic_defense']);
+        $player['health'] -= max(0, $player['damage'] - $enemy['defense'] - $player['defense']) / 2;
+        $player['health'] -= max(0, $player['magic_offense'] - $enemy['magic_defense'] - $player['magic_defense']);
         return $player;
     }
 }
