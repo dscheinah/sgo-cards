@@ -30,12 +30,11 @@ class Player
 
     public function calculation(League $league, ?Player $enemy = null): array
     {
-        /* @var array<Modifier> $modifiers */
-        $modifiers = [
-            ...array_filter([$league->modifier, $this->modifier, ...($this->specialization?->modifiers ?: [])]),
-            ...array_filter($enemy?->modifiers ?: [], static fn (Modifier $modifier) => $modifier->enemy),
-            ...array_filter($this->modifiers, static fn (Modifier $modifier) => $modifier->self),
-        ];
+        $modifiers = array_filter([
+            $league->modifier,
+            ...array_filter($enemy?->mods() ?: [], static fn (Modifier $modifier) => $modifier->enemy),
+            ...array_filter($this->mods(), static fn (Modifier $modifier) => $modifier->self),
+        ]);
 
         $change = 1;
         foreach (array_filter($modifiers, static fn (Modifier $modifier) => $modifier->modifiers) as $modifier) {
@@ -52,6 +51,14 @@ class Player
             $data = $modifier->handler::multiply($data, $modifier, $change);
         }
         return array_map(static fn ($value) => max((int) round($value), 0), $data);
+    }
+
+    /**
+     * @return array<Modifier>
+     */
+    public function mods(): array
+    {
+        return [$this->modifier, ...($this->specialization?->modifiers ?: []), ...$this->modifiers];
     }
 
     public function withModifier(Modifier $modifier): Player
