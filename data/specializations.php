@@ -222,7 +222,9 @@ return [
         'description' => 'Faster and deadlier than average',
         'y' => 60,
         'modifiers' => [
+            'add_damage',
             'more_player_damage',
+            'add_speed',
             'more_player_speed',
         ],
     ],
