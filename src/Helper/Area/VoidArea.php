@@ -6,10 +6,20 @@ class VoidArea implements AreaInterface
 {
     public static function player(array $player): array
     {
-        $values = array_values($player);
+        $values = [
+            $player['health'] / 10,
+            $player['damage'],
+            $player['defense'],
+            $player['magic'],
+            $player['magic_offense'],
+            $player['magic_defense'],
+            $player['speed'],
+            $player['speed_damage'],
+        ];
+
         shuffle($values);
 
-        $player['health'] = $values[0];
+        $player['health'] = $values[0] * 10;
         $player['damage'] = $values[1];
         $player['defense'] = $values[2];
         $player['magic'] = $values[3];

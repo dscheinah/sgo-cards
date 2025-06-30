@@ -6,7 +6,7 @@ class RunwayArea implements AreaInterface
 {
     public static function player(array $player): array
     {
-        $player['health'] += $player['speed'];
+        $player['health'] += $player['speed'] * 5;
         return $player;
     }
 
