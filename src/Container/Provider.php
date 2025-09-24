@@ -11,6 +11,8 @@ use App\Handler\ListHandlerFactory;
 use App\Handler\RoundHandlerFactory;
 use App\Handler\RoundLoadHandler;
 use App\Handler\RoundNextHandler;
+use App\Handler\TreasureActivateHandler;
+use App\Handler\TreasureHandlerFactory;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
 use App\Handler\UserHandlerFactory;
@@ -24,6 +26,8 @@ use App\Helper\ModifierHelper;
 use App\Helper\ModifierHelperFactory;
 use App\Helper\ShrineHelper;
 use App\Helper\ShrineHelperFactory;
+use App\Helper\TreasureHelper;
+use App\Helper\TreasureHelperFactory;
 use App\Middleware\SpecializationMiddleware;
 use App\Middleware\SpecializationMiddlewareFactory;
 use App\Middleware\UserMiddlewareFactory;
@@ -41,12 +45,16 @@ use App\Provider\ShrineProvider;
 use App\Provider\ShrineProviderFactory;
 use App\Provider\StatisticProvider;
 use App\Provider\StatisticProviderFactory;
+use App\Provider\TreasureProvider;
+use App\Provider\TreasureProviderFactory;
 use App\Repository\LeagueRepository;
 use App\Repository\LeagueRepositoryFactory;
 use App\Repository\RoundRepository;
 use App\Repository\RoundRepositoryFactory;
 use App\Repository\SpecializationRepository;
 use App\Repository\SpecializationRepositoryFactory;
+use App\Repository\TreasureRepository;
+use App\Repository\TreasureRepositoryFactory;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryFactory;
 use App\RouterFactory;
@@ -55,6 +63,7 @@ use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\ShrineStorage;
 use App\Storage\SnapshotStorage;
+use App\Storage\TreasureStorage;
 use App\Storage\UserStorage;
 use Sx\Application\Container\ApplicationProvider;
 use Sx\Container\Injector;
@@ -96,6 +105,7 @@ class Provider implements ProviderInterface
         $injector->set(LeagueInformationHandler::class, LeagueHandlerFactory::class);
         $injector->set(RoundLoadHandler::class, RoundHandlerFactory::class);
         $injector->set(RoundNextHandler::class, RoundHandlerFactory::class);
+        $injector->set(TreasureActivateHandler::class, TreasureHandlerFactory::class);
         $injector->set(UserGetHandler::class, UserHandlerFactory::class);
         $injector->set(UserCreateHandler::class, UserHandlerFactory::class);
 
@@ -108,6 +118,7 @@ class Provider implements ProviderInterface
         $injector->set(ModifierHelper::class, ModifierHelperFactory::class);
         $injector->set(ShrineHelper::class, ShrineHelperFactory::class);
         $injector->set(SpecializationHelper::class, SpecializationHelperFactory::class);
+        $injector->set(TreasureHelper::class, TreasureHelperFactory::class);
 
         $injector->set(BattlefieldBuilder::class, BattlefieldBuilderFactory::class);
         $injector->set(BattleProvider::class, BattleProviderFactory::class);
@@ -115,10 +126,12 @@ class Provider implements ProviderInterface
         $injector->set(PlayerProvider::class, PlayerProviderFactory::class);
         $injector->set(ShrineProvider::class, ShrineProviderFactory::class);
         $injector->set(StatisticProvider::class, StatisticProviderFactory::class);
+        $injector->set(TreasureProvider::class, TreasureProviderFactory::class);
 
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);
         $injector->set(SpecializationRepository::class, SpecializationRepositoryFactory::class);
+        $injector->set(TreasureRepository::class, TreasureRepositoryFactory::class);
         $injector->set(UserRepository::class, UserRepositoryFactory::class);
 
         $injector->set(CardStorage::class, StorageFactory::class);
@@ -126,6 +139,7 @@ class Provider implements ProviderInterface
         $injector->set(PlayerStorage::class, StorageFactory::class);
         $injector->set(ShrineStorage::class, StorageFactory::class);
         $injector->set(SnapshotStorage::class, StorageFactory::class);
+        $injector->set(TreasureStorage::class, StorageFactory::class);
         $injector->set(UserStorage::class, StorageFactory::class);
     }
 }

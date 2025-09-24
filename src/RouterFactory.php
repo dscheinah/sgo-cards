@@ -7,6 +7,7 @@ use App\Handler\LeagueListHandler;
 use App\Handler\ListHandler;
 use App\Handler\RoundLoadHandler;
 use App\Handler\RoundNextHandler;
+use App\Handler\TreasureActivateHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
 use App\Middleware\SpecializationMiddleware;
@@ -51,6 +52,8 @@ class RouterFactory implements FactoryInterface
 
         $router->post($prefix . 'round/next', UserTokenValidateMiddleware::class);
         $router->post($prefix . 'round/next', RoundNextHandler::class);
+
+        $router->post($prefix . 'treasure/activate', TreasureActivateHandler::class);
 
         $router->get($prefix . 'user/get', UserGetHandler::class);
         $router->post($prefix . 'user/create', UserCreateHandler::class);

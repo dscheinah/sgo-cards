@@ -13,6 +13,7 @@ class BattlefieldBuilder
         private readonly LeagueProvider $leagueProvider,
         private readonly PlayerProvider $playerProvider,
         private readonly ShrineProvider $shrineProvider,
+        private readonly TreasureProvider $treasureProvider,
         private readonly CardHelper $cardHelper,
     ) {
     }
@@ -21,6 +22,7 @@ class BattlefieldBuilder
     {
         $league = $this->leagueProvider->createLatest();
         $player = $this->playerProvider->create($userId, $league);
+        $treasures = $this->treasureProvider->create($league, $player);
 
         $this->shrineProvider->initialize($league, $player);
 
@@ -29,7 +31,6 @@ class BattlefieldBuilder
         $battlefield->player = $player;
         $battlefield->shrine = $this->shrineProvider->create();
         $battlefield->shrines = $this->shrineProvider->createInRange();
-        $battlefield->cards = $this->cardHelper->draw($league, $player);
 
         foreach ($league->areas as $area) {
             if ($player->y >= $area->y && $player->y <= $area->h) {
@@ -37,6 +38,13 @@ class BattlefieldBuilder
                 break;
             }
         }
+
+        $battlefield->treasures = $treasures;
+        foreach ($treasures as $treasure) {
+            $treasure->beginOfTurn($battlefield);
+        }
+
+        $battlefield->cards = $this->cardHelper->draw($league, $player, $treasures);
 
         return $battlefield;
     }
@@ -62,6 +70,7 @@ class BattlefieldBuilder
 
         mt_srand();
         $battlefield->battle = $this->battleProvider->create($battlefield);
+        $this->treasureProvider->endOfTurn($battlefield);
 
         return $battlefield;
     }

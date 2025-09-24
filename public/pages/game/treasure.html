@@ -1,0 +1,93 @@
+<template>
+    <h2>Treasures</h2>
+    <details>
+        <summary>Inspect your treasures and activate up to four.</summary>
+        <ul>
+            <li>You need to identify a treasure before it is usable</li>
+            <li>Effects are applied at battle time and not visible in stats</li>
+            <li>Only active treasures apply an effect</li>
+            <li>You can only activate four treasures at once</li>
+            <li>All identified treasures can level</li>
+            <li>The level is shown by a number with a plus sign</li>
+            <li>Some treasures consume charges and need to be refilled</li>
+            <li>Remaining charges are shown by a multiplicator</li>
+            <li>There is a limit of maximum treasures you can find</li>
+        </ul>
+    </details>
+    <form id="game-treasure">
+        <table class="sx-list">
+            <tbody></tbody>
+        </table>
+        <div class="sx-actions">
+            <button type="submit"><span class="sx-button-icon">💾</span> Apply</button>
+        </div>
+    </form>
+</template>
+<script type="module">
+    import {helper, page, state} from '../../js/app.js';
+
+    let user = state.get('user');
+    let round = state.get('round');
+
+    page.register('game-treasure', ({render, action, listen}) => {
+        render(() => {
+            if (!round) {
+                return;
+            }
+            helper.list('#game-treasure tbody', round['treasures'], (treasure) => {
+                const tr = helper.create('tr');
+                const charges = treasure['charges'] ? `${treasure['charges']} x ` : ''
+                const level = treasure.level ? ` +${treasure.level}` : ''
+                const description = treasure['trigger']
+                    ? `${treasure['descriptions']['identify']} (${treasure['trigger']})`
+                    : `${treasure['descriptions']['effect']}<br/>${treasure['descriptions'].level}`;
+                tr.innerHTML = `
+                    <td class="game-treasure-checkbox">
+                        <input type="checkbox" name="ids[]" value="${treasure.id}" ${treasure.active ? 'checked' : ''} aria-label="active">
+                    </td>
+                    <td class="game-treasure-icon">${treasure.icon}</td>
+                    <td>
+                        <strong>${charges}${treasure.name}${level}</strong><br/>
+                        ${description}
+                    </td>
+                `
+                return tr;
+            });
+        });
+
+        action('#game-treasure input', 'input', (event, target) => {
+            if (helper.elements('#game-treasure input:checked').length > 4) {
+                target.checked = false;
+            }
+        });
+
+        action('#game-treasure', 'submit', (event, target) => {
+            event.preventDefault();
+            state.dispatch('loading', true);
+            state.dispatch('treasure-activate', [user.id, new FormData(target), round['league'].id]);
+        });
+
+        listen('user', (payload) => {
+            user = payload;
+        });
+
+        listen('round', (payload) => {
+            round = payload;
+        });
+
+        listen('treasure-activate', () => {
+            state.dispatch('loading', false);
+            history.back();
+        });
+    });
+</script>
+<style>
+    .game-treasure-checkbox {
+        width: 1.5em;
+    }
+
+    .game-treasure-icon {
+        width: 1em;
+        font-size: 2em;
+    }
+</style>

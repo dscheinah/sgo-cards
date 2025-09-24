@@ -56,16 +56,23 @@ class BattleProvider
         return $battle;
     }
 
-    public function battle(Battlefield $battlefield): Battle
+    private function battle(Battlefield $battlefield): Battle
     {
         $battle = new Battle();
 
         $playerCalculation = $battlefield->player->calculation($battlefield->league, $battlefield->enemy);
         $enemyCalculation = $battlefield->enemy->calculation($battlefield->league, $battlefield->player);
 
+        foreach ($battlefield->treasures as $treasure) {
+            $playerCalculation = $treasure->calculation($playerCalculation);
+        }
+
         $player = $this->prepare($playerCalculation, $enemyCalculation);
         $enemy = $this->prepare($enemyCalculation, $playerCalculation);
 
+        foreach ($battlefield->treasures as $treasure) {
+            $player = $treasure->player($player);
+        }
         foreach ($battlefield->shrines as $shrine) {
             $player = $shrine->handler::player($player);
             $enemy = $shrine->handler::player($enemy);
@@ -79,6 +86,10 @@ class BattleProvider
         $enemy['health'] -= $player['speed_damage'];
 
         while ($player['health'] > 0 && $enemy['health'] > 0) {
+            foreach ($battlefield->treasures as $treasure) {
+                $player = $treasure->battlePlayer($player, $enemy);
+                $enemy = $treasure->battleEnemy($enemy, $player);
+            }
             foreach ($battlefield->shrines as $shrine) {
                 $player = $shrine->handler::battle($player, $enemy);
                 $enemy = $shrine->handler::battle($enemy, $player);

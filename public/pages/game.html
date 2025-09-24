@@ -27,6 +27,10 @@
             <em id="game-result" class="sx-highlight"></em>
             <p id="game-shrines-icons" class="game-shrines"></p>
         </div>
+        <button id="game-treasure-button" data-navigation value="game-treasure">
+            <span class="sx-button-icon">📦️</span>
+            Treasures (<span id="game-treasure-count"></span>)
+        </button>
         <h2>Player #<span id="game-player-number"></span></h2>
         <select id="game-player-specialization"></select>
         <label for="game-player-specialization">Specialization <span id="game-player-specialization-count"></span></label>
@@ -65,6 +69,8 @@
             } else {
                 helper.set('#game-area', 'innerHTML', '');
             }
+            helper.set('#game-treasure-button', 'disabled', loading);
+            helper.set('#game-treasure-count', 'innerHTML', round['treasures'].length);
             helper.set('#game-player-number', 'innerHTML', round['player']['try']);
             helper.set('#game-player', 'innerHTML', helper.player(round['player'], result && result['enemy'] && result['enemy']['calculation']));
             helper.list('#game-player-specialization', [null, ...round['player']['specializations']], (specialization) => {
@@ -208,6 +214,20 @@
 
     #game-cards button {
         margin: 0;
+    }
+
+    #game-treasure-button {
+        width: 100%;
+        background: none;
+        border: 1px solid var(--secondary-color);
+        color: var(--secondary-color);
+        font-weight: bold;
+        transition: border-color .5s, color .5s;
+    }
+
+    #game-treasure-button:not(:disabled):hover {
+        border-color: var(--secondary-color-highlight);
+        color: var(--secondary-color-highlight);
     }
 
     .game-actions {

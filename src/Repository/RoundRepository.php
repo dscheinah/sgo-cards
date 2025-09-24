@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Model\Card;
+use App\Model\Treasure;
 use App\Provider\BattlefieldBuilder;
 
 class RoundRepository
@@ -31,6 +32,7 @@ class RoundRepository
             ],
             'player' => $battlefield->player->output($battlefield->league),
             'cards' => $cards,
+            'treasures' => array_map(static fn (Treasure $treasure) => $treasure->output(), $battlefield->treasures),
             'shrines' => $battlefield->shrines,
         ];
     }

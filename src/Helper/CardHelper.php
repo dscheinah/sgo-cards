@@ -5,6 +5,7 @@ namespace App\Helper;
 use App\Model\Card;
 use App\Model\League;
 use App\Model\Player;
+use App\Model\Treasure;
 
 class CardHelper
 {
@@ -19,10 +20,11 @@ class CardHelper
     /**
      * @param League $league
      * @param Player $player
+     * @param array<Treasure> $treasures
      *
      * @return array<Card>
      */
-    public function draw(League $league, Player $player): array
+    public function draw(League $league, Player $player, array $treasures = []): array
     {
         $cards = $this->cardsForTier($league, $player);
 
@@ -30,7 +32,10 @@ class CardHelper
 
         $draw = [];
         for ($i = 0; $i < $this->amount; $i++) {
-            $draw[] = $this->create($league, $player, $cards[array_rand($cards)]);
+            do {
+                $card = $this->create($league, $player, $cards[array_rand($cards)]);
+            } while (array_any($treasures, static fn (Treasure $treasure) => $treasure->needToRedraw($card)));
+            $draw[] = $card;
         }
 
         return $draw;

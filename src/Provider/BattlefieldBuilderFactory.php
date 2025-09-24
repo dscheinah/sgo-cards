@@ -15,6 +15,7 @@ class BattlefieldBuilderFactory implements FactoryInterface
             $injector->get(LeagueProvider::class),
             $injector->get(PlayerProvider::class),
             $injector->get(ShrineProvider::class),
+            $injector->get(TreasureProvider::class),
             $injector->get(CardHelper::class),
         );
     }
