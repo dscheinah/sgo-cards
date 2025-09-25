@@ -24,6 +24,11 @@ export default function (state) {
         window.localStorage.setItem('user-id', payload.id);
         return payload;
     });
+    state.handle('user-logout', async(id) => {
+        await user.logout(id);
+        state.set('user', create);
+        window.localStorage.setItem('user-id', null);
+    });
 
     const id = window.localStorage.getItem('user-id');
     if (id) {

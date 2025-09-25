@@ -11,3 +11,11 @@ export async function create(body) {
         return result.json();
     }
 }
+
+export async function logout(userId) {
+    const result = await fetch('user/logout?user_id=' + encodeURIComponent(userId));
+    if (result.ok) {
+        return;
+    }
+    throw new Error('An error occurred. Please reload and try again.');
+}

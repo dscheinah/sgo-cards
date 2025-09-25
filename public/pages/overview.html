@@ -6,7 +6,12 @@
     </p>
     <div id="overview-user" hidden>
         <p>You are currently logged in as "<span id="overview-name"></span>"</p>
-        <button data-navigation value="game"><span class="sx-button-icon">▶️</span> Play</button>
+        <button type="button" data-navigation value="game"><span class="sx-button-icon">▶️</span> Play</button>
+        <p>
+            If you log out, your name will be released and can be used on another device to transfer access.
+            But be aware that anyone can pick it up, until you logged in again.
+        </p>
+        <button type="button" id="overview-logout"><span class="sx-button-icon">🚫</span> Log out</button>
     </div>
     <div id="overview-create" hidden>
         <p>
@@ -55,6 +60,11 @@
             state.dispatch('user', new FormData(event.target));
         });
 
+        action('#overview-logout', 'click', () => {
+            state.dispatch('loading', true);
+            state.dispatch('user-logout', user.id);
+        });
+
         listen('user', (payload) => {
             user = payload;
         });
@@ -62,5 +72,15 @@
         listen('loading', (payload) => {
             loading = payload;
         });
+
+        listen('user-logout', () => {
+            state.dispatch('loading', false);
+        })
     });
 </script>
+
+<style>
+    #overview-user button {
+        min-width: 100px;
+    }
+</style>

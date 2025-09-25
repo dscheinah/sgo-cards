@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `logged_in` BOOLEAN DEFAULT TRUE;

@@ -10,6 +10,7 @@ use App\Handler\RoundNextHandler;
 use App\Handler\TreasureActivateHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
+use App\Handler\UserLogoutHandler;
 use App\Middleware\SpecializationMiddleware;
 use App\Middleware\UserTokenCreateMiddleware;
 use App\Middleware\UserTokenValidateMiddleware;
@@ -57,6 +58,7 @@ class RouterFactory implements FactoryInterface
 
         $router->get($prefix . 'user/get', UserGetHandler::class);
         $router->post($prefix . 'user/create', UserCreateHandler::class);
+        $router->get($prefix . 'user/logout', UserLogoutHandler::class);
 
         return $router;
     }

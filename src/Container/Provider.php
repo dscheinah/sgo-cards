@@ -16,6 +16,7 @@ use App\Handler\TreasureHandlerFactory;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
 use App\Handler\UserHandlerFactory;
+use App\Handler\UserLogoutHandler;
 use App\Helper\AreaHelper;
 use App\Helper\AreaHelperFactory;
 use App\Helper\CardHelper;
@@ -108,6 +109,7 @@ class Provider implements ProviderInterface
         $injector->set(TreasureActivateHandler::class, TreasureHandlerFactory::class);
         $injector->set(UserGetHandler::class, UserHandlerFactory::class);
         $injector->set(UserCreateHandler::class, UserHandlerFactory::class);
+        $injector->set(UserLogoutHandler::class, UserHandlerFactory::class);
 
         $injector->set(SpecializationMiddleware::class, SpecializationMiddlewareFactory::class);
         $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);

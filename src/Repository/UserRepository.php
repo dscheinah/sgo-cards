@@ -18,7 +18,9 @@ class UserRepository
 
     public function create(string $name): ?array
     {
-        return $this->userStorage->createWithName(substr(strip_tags($name), 0, 23));
+        $name = substr(strip_tags($name), 0, 23);
+        return $this->userStorage->fetchLoggedOut($name)
+            ?: $this->userStorage->createWithName($name);
     }
 
     public function generateToken(string $userId): ?string
@@ -34,5 +36,10 @@ class UserRepository
     public function validateToken(string $userId, string $token): bool
     {
         return $this->userStorage->validateToken($userId, $token);
+    }
+
+    public function logout(string $userId): void
+    {
+        $this->userStorage->logout($userId);
     }
 }
