@@ -58,6 +58,11 @@ class UserStorage extends Storage
         }
     }
 
+    public function login(string $id): void
+    {
+        $this->execute('UPDATE `users` SET `logged_in` = TRUE WHERE `id` = ?', [$id]);
+    }
+
     public function logout(string $id): void
     {
         $this->execute('UPDATE `users` SET `logged_in` = FALSE WHERE `id` = ?', [$id]);
