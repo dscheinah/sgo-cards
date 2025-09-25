@@ -45,7 +45,7 @@ class EvasionTreasure implements TreasureInterface
         if (mt_rand() % 100 >= $treasure->power) {
             return null;
         }
-        $mitigation = max($player['speed'] - $enemy['speed'], 0);
+        $mitigation = max($player['speed'], 0);
         $damage = max($enemy['damage'] - $player['defense'], 0)
             + max($enemy['magic_offense'] - $player['magic_defense'], 0);
         $player['health'] += min($mitigation, $damage);

@@ -130,10 +130,8 @@ class BattleProvider
         $player['magic_offense'] = $player['magic'];
         $player['magic_defense'] = $player['magic'];
 
-        $player['speed_damage'] = 0;
-        if ($player['speed'] > 0 && $player['speed'] > $enemy['speed']) {
-            $player['speed_damage'] += $player['damage'];
-        }
+        $player['speed'] = max(0, $player['speed'] - $enemy['speed']);
+        $player['speed_damage'] = $player['speed'] > 0 ? $player['damage'] : 0;
 
         return $player;
     }
