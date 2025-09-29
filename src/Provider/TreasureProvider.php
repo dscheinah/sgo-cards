@@ -39,7 +39,10 @@ class TreasureProvider
             $treasure->endOfTurn($battlefield);
             $this->treasureStorage->update($treasure);
         }
-        if ($battlefield->player->try <= count($battlefield->treasures) || mt_rand() % 300) {
+        if ($battlefield->player->try <= count($battlefield->treasures)) {
+            return;
+        }
+        if ((mt_rand() % 1000) > ($battlefield->battle->winner ? 9 : 0)) {
             return;
         }
         $exclude = [];
