@@ -10,6 +10,8 @@ class Area
 
     public string $name;
 
+    public string $description;
+
     public int $y;
 
     public int $h;
@@ -22,6 +24,7 @@ class Area
         return [
             'icon' => $this->icon,
             'name' => $this->name,
+            'description' => $this->description,
             'y' => $this->y,
             'h' => $this->h,
         ];

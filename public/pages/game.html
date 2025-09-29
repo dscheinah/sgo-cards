@@ -65,7 +65,15 @@
             helper.set('#game-league-number', 'innerHTML', round['league'].id);
             helper.set('#game-league', 'innerHTML', round['league']['modifier']?.text || 'Not yet activated');
             if (round['league']['area']) {
-                helper.set('#game-area', 'innerHTML', `Area: ${round['league']['area'].icon} ${round['league']['area'].name}`);
+                helper.set('#game-area', 'innerHTML', `
+                    <span class="game-area-icon">
+                        ${round['league']['area'].icon}
+                    </span>
+                    <span>
+                        <strong>${round['league']['area'].name}</strong><br/>
+                        ${round['league']['area'].description}
+                    </span>
+                `);
             } else {
                 helper.set('#game-area', 'innerHTML', '');
             }
@@ -179,6 +187,12 @@
     #game-area {
         line-height: 1.1;
         min-height: 2.2em;
+        display: flex;
+        gap: .3em;
+    }
+
+    .game-area-icon {
+        font-size: 2em;
     }
 
     #game-cards {

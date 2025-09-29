@@ -37,6 +37,7 @@ class AreaHelper
             $area = new Area();
             $area->icon = $input['icon'];
             $area->name = $input['name'];
+            $area->description = $input['description'];
             $area->handler = $input['handler'];
             $area->y = $y;
             $area->h = $h;
