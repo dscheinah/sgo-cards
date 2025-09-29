@@ -30,3 +30,22 @@
         margin-left: 1.2em;
     }
 }
+
+.app-notify {
+    position: relative;
+}
+
+.app-notify:after {
+    content: "";
+    position: absolute;
+    top: -.5em;
+    left: -.5em;
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1;
+    text-align: center;
+    background: var(--primary-color);
+    border-radius: 50%;
+    z-index: 3000;
+}

@@ -29,7 +29,7 @@
     let user = state.get('user');
     let round = state.get('round');
 
-    page.register('game-treasure', ({render, action, listen}) => {
+    page.register('game-treasure', ({render, show, action, listen}) => {
         render(() => {
             if (!round) {
                 return;
@@ -54,6 +54,10 @@
                 `
                 return tr;
             });
+        });
+
+        show(() => {
+            state.dispatch('notify-treasure', round);
         });
 
         action('#game-treasure input', 'input', (event, target) => {

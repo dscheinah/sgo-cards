@@ -10,6 +10,7 @@ import * as treasure from './repository/treasure.js';
 // By separating the helpers to it's own namespace they do not need to packed to an object here.
 import * as helper from './helper.js';
 import user from './app/user.js';
+import notify from './app/notify.js';
 
 // Only allow one app to be run. This may happen, if browser cache loads an outdated page for some reason.
 if (window.sxAppInitialized) {
@@ -53,10 +54,12 @@ state.handle('backend-data', (payload) => data.load(payload));
 
 state.handle('leagues', () => leagues.list());
 state.handle('league', (payload) => leagues.information(payload));
-state.handle('round', (payload) => round.load(payload));
+state.handle('round', async(payload, next) => next(await round.load(payload)));
 state.handle('round-next', (payload) => round.next(...payload));
 state.handle('round-specialization', (payload) => round.specialization(...payload));
 state.handle('treasure-activate', (payload) => treasure.activate(...payload));
+
+notify(state);
 
 // Define all pages and load the main page. The ID defined here is globally used for:
 //  - handling navigation by href or value (see above)

@@ -32,8 +32,10 @@
             Treasures (<span id="game-treasure-count"></span>)
         </button>
         <h2>Player #<span id="game-player-number"></span></h2>
-        <select id="game-player-specialization"></select>
-        <label for="game-player-specialization">Specialization <span id="game-player-specialization-count"></span></label>
+        <div id="game-player-specialization-notify">
+            <select id="game-player-specialization"></select>
+            <label for="game-player-specialization">Specialization <span id="game-player-specialization-count"></span></label>
+        </div>
         <div id="game-player"></div>
         <div class="game-shrines">
             <h2>Shrines in range</h2>
@@ -50,6 +52,10 @@
     let loading = state.get('loading');
     let round = state.get('round');
     let result = state.get('round-next');
+    const notify = {
+        treasure: state.get('notify-treasure'),
+        specialization: state.get('notify-specialization'),
+    }
 
     page.register('game', ({render, show, action, listen}) => {
         render(() => {
@@ -138,6 +144,8 @@
                     round['shrines'].map(shrine => `${shrine.icon} ${shrine.description}`).join('<br/>')
                 );
             }
+            helper.set('#game-treasure-button', 'className', notify.treasure ? 'app-notify' : null);
+            helper.set('#game-player-specialization-notify', 'className', notify.specialization ? 'app-notify' : null);
         });
 
         show(() => {
@@ -156,6 +164,10 @@
         action('#game-round select', 'change', (event, target) => {
             state.dispatch('loading', true);
             state.dispatch('round-specialization', [user.id, target.value, round['league'].id]);
+        });
+
+        action('#game-player-specialization-notify', 'click', () => {
+            state.dispatch('notify-specialization', round);
         });
 
         listen('user', (payload) => {
@@ -179,6 +191,14 @@
         listen('round-specialization', (payload) => {
             round = payload;
             state.dispatch('loading', false);
+        });
+
+        listen('notify-treasure', (payload) => {
+            notify.treasure = payload;
+        });
+
+        listen('notify-specialization', (payload) => {
+            notify.specialization = payload;
         });
     });
 </script>
