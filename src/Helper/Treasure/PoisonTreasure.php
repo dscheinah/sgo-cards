@@ -10,7 +10,7 @@ class PoisonTreasure implements TreasureInterface
 {
     public static function beginOfTurn(Treasure $treasure, Battlefield $battlefield): void
     {
-        if (!$treasure->charges && $treasure->trigger) {
+        if (!$treasure->charges && !$treasure->trigger) {
             $treasure->initialize();
         }
     }
