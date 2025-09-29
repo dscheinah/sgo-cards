@@ -58,7 +58,10 @@ class PoisonTreasure implements TreasureInterface
 
     public static function battleEnemy(Treasure $treasure, array $enemy, array $player): ?array
     {
-        $enemy['health'] -= $treasure->power;
+        if ($treasure->power > 0) {
+            $enemy['health'] -= $treasure->power;
+            $treasure->power--;
+        }
         return $enemy;
     }
 }
