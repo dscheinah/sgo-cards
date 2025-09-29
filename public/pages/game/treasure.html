@@ -41,13 +41,14 @@
                 const description = treasure['trigger']
                     ? `${treasure['descriptions']['identify']} (${treasure['trigger']})`
                     : `${treasure['descriptions']['effect']}<br/>${treasure['descriptions'].level}`;
+                const inactive = `${treasure['trigger'] ? 'game-treasure-inactive' : ''}`;
                 tr.innerHTML = `
-                    <td class="game-treasure-checkbox">
+                    <td class="game-treasure-checkbox ${inactive}">
                         <input type="checkbox" name="ids[]" value="${treasure.id}" ${treasure.active ? 'checked' : ''} aria-label="active">
                     </td>
-                    <td class="game-treasure-icon">${treasure.icon}</td>
+                    <td class="game-treasure-icon ${inactive}">${treasure.icon}</td>
                     <td>
-                        <strong>${charges}${treasure.name}${level}</strong><br/>
+                        <strong class="${inactive}">${charges}${treasure.name}${level}</strong><br/>
                         ${description}
                     </td>
                 `
@@ -89,5 +90,9 @@
     .game-treasure-icon {
         width: 1em;
         font-size: 2em;
+    }
+
+    .game-treasure-inactive {
+        opacity: .2;
     }
 </style>
