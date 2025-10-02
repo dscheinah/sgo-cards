@@ -42,22 +42,23 @@ class TreasureProvider
         if ($battlefield->player->try <= count($battlefield->treasures)) {
             return;
         }
-        if ((mt_rand() % 1000) > ($battlefield->battle->winner ? 9 : 0)) {
+        if ((mt_rand() % 1000) > ($battlefield->battle->winner ? 11 : 0)) {
             return;
         }
-        $exclude = [];
+        $treasure = $this->treasureHelper->random();
+        if (!$treasure) {
+            return;
+        }
         $counter = 0;
-        foreach ($battlefield->treasures as $treasure) {
-            if ($counter >= 5 || !$treasure->multiple) {
-                $exclude[] = $treasure->treasure;
-            } else {
-                $counter++;
+        foreach ($battlefield->treasures as $owned) {
+            if ($treasure->treasure !== $owned->treasure) {
+                continue;
+            }
+            if (!$treasure->multiple || $counter++ >= 5) {
+                return;
             }
         }
-        $treasure = $this->treasureHelper->random($exclude);
-        if ($treasure) {
-            $treasure->initialize();
-            $this->treasureStorage->insertOne($battlefield->player->user_id, $battlefield->league->id, $treasure);
-        }
+        $treasure->initialize();
+        $this->treasureStorage->insertOne($battlefield->player->user_id, $battlefield->league->id, $treasure);
     }
 }

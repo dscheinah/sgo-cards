@@ -41,15 +41,8 @@ class TreasureHelper
         return $treasure;
     }
 
-    public function random(array $exclude = []): ?Treasure
+    public function random(): ?Treasure
     {
-        $treasures = $this->treasures;
-        foreach ($exclude as $key) {
-            unset($treasures[$key]);
-        }
-        if (!$treasures) {
-            return null;
-        }
-        return $this->get(['treasure' => array_rand($treasures)]);
+        return $this->get(['treasure' => array_rand($this->treasures)]);
     }
 }
