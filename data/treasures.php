@@ -245,7 +245,6 @@ return [
         'trigger_min' => 3,
         'trigger_max' => 9,
         'charges_base' => 7,
-        'multiple' => true,
     ],
     'consumable' => [
         'handler' => ChargeTreasure::class,

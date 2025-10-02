@@ -48,7 +48,7 @@ class TreasureProvider
         $exclude = [];
         $counter = 0;
         foreach ($battlefield->treasures as $treasure) {
-            if ($counter >= 9 || !$treasure->multiple) {
+            if ($counter >= 5 || !$treasure->multiple) {
                 $exclude[] = $treasure->treasure;
             } else {
                 $counter++;
