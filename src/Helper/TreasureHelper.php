@@ -37,7 +37,7 @@ class TreasureHelper
         $treasure->charges_base = $data['charges_base'] ?? 0;
         $treasure->charges = $input['charges'] ?? 0;
         $treasure->multiple = $data['multiple'] ?? false;
-        $treasure->power = $treasure->level();
+        $treasure->power = $treasure->level() + 1;
         return $treasure;
     }
 
