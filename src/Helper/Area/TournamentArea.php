@@ -6,15 +6,18 @@ class TournamentArea implements AreaInterface
 {
     public static function player(array $player): array
     {
-        $player['health'] = - 1000000
-            + ($player['health'] / 10)
+        $player['health'] = -1000000
+            + (int) round($player['health'] / 10)
             + $player['damage']
             + $player['defense']
             + $player['magic']
             + $player['speed']
         ;
         $player['damage'] = 0;
+        $player['defense'] = 0;
         $player['magic_offense'] = 0;
+        $player['magic_defense'] = 0;
+        $player['speed'] = 0;
         $player['speed_damage'] = 0;
         return $player;
     }
