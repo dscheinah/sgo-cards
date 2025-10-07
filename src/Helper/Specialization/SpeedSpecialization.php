@@ -8,7 +8,7 @@ class SpeedSpecialization implements SpecializationInterface
     {
         if ($player['speed_damage'] > 0) {
             $player['speed_damage'] = 0;
-            $player['damage'] += $player['speed'];
+            $player['damage'] += $player['speed'] / 3;
         }
         return $player;
     }
