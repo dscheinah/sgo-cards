@@ -20,7 +20,7 @@ class ShrineHelper
             return null;
         }
 
-        $shrine = new Shrine;
+        $shrine = new Shrine();
         $shrine->x = $input['x'];
         $shrine->y = $input['y'];
         $shrine->modifier = $input['modifier'];
@@ -32,6 +32,7 @@ class ShrineHelper
         $shrine->color = $data['color'];
         $shrine->description = $data['description'];
         $shrine->handler = $data['handler'];
+        $shrine->tags = $data['tags'];
 
         return $shrine;
     }

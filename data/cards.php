@@ -1,10 +1,14 @@
 <?php
+
+use App\Model\Card;
+
 $healthTier1 = [
     'icon' => '❤️',
     'text' => 'Health',
     'data' => [
         'health' => 1,
     ],
+    'tags' => [Card::HEALTH, Card::BASE],
 ];
 $healthTier2 = [
     'icon' => '❤️❤️',
@@ -12,6 +16,7 @@ $healthTier2 = [
     'data' => [
         'health' => 2,
     ],
+    'tags' => [Card::HEALTH, Card::BASE],
 ];
 $healthTier3 = [
     'icon' => '💖️',
@@ -19,6 +24,7 @@ $healthTier3 = [
     'data' => [
         'health' => 5,
     ],
+    'tags' => [Card::HEALTH, Card::BASE],
 ];
 $healthTier4 = [
     'icon' => '💖💖',
@@ -26,6 +32,7 @@ $healthTier4 = [
     'data' => [
         'health' => 9,
     ],
+    'tags' => [Card::HEALTH, Card::BASE],
 ];
 $damageTier1 = [
     'icon' => '⚔️',
@@ -33,6 +40,7 @@ $damageTier1 = [
     'data' => [
         'damage' => 1,
     ],
+    'tags' => [Card::DAMAGE, Card::BASE],
 ];
 $damageTier2 = [
     'icon' => '⚔️⚔️',
@@ -40,6 +48,7 @@ $damageTier2 = [
     'data' => [
         'damage' => 2,
     ],
+    'tags' => [Card::DAMAGE, Card::BASE],
 ];
 $damageTier3 = [
     'icon' => '🪓',
@@ -47,6 +56,7 @@ $damageTier3 = [
     'data' => [
         'damage' => 5,
     ],
+    'tags' => [Card::DAMAGE, Card::BASE],
 ];
 $damageTier4 = [
     'icon' => '🪓🪓',
@@ -54,6 +64,7 @@ $damageTier4 = [
     'data' => [
         'damage' => 9,
     ],
+    'tags' => [Card::DAMAGE, Card::BASE],
 ];
 $defenseTier1 = [
     'icon' => '🛡️',
@@ -61,6 +72,7 @@ $defenseTier1 = [
     'data' => [
         'defense' => 1,
     ],
+    'tags' => [Card::DEFENSE, Card::BASE],
 ];
 $defenseTier2 = [
     'icon' => '🛡️🛡️',
@@ -68,6 +80,7 @@ $defenseTier2 = [
     'data' => [
         'defense' => 2,
     ],
+    'tags' => [Card::DEFENSE, Card::BASE],
 ];
 $defenseTier3 = [
     'icon' => '🪬',
@@ -75,6 +88,7 @@ $defenseTier3 = [
     'data' => [
         'defense' => 5,
     ],
+    'tags' => [Card::DEFENSE, Card::BASE],
 ];
 $defenseTier4 = [
     'icon' => '🪬🪬',
@@ -82,6 +96,7 @@ $defenseTier4 = [
     'data' => [
         'defense' => 9,
     ],
+    'tags' => [Card::DEFENSE, Card::BASE],
 ];
 $magicTier1 = [
     'icon' => '🪄️',
@@ -89,6 +104,7 @@ $magicTier1 = [
     'data' => [
         'magic' => 1,
     ],
+    'tags' => [Card::MAGIC, Card::BASE],
 ];
 $magicTier2 = [
     'icon' => '🪄️🪄️',
@@ -96,6 +112,7 @@ $magicTier2 = [
     'data' => [
         'magic' => 2,
     ],
+    'tags' => [Card::MAGIC, Card::BASE],
 ];
 $magicTier3 = [
     'icon' => '🦄',
@@ -103,6 +120,7 @@ $magicTier3 = [
     'data' => [
         'magic' => 5,
     ],
+    'tags' => [Card::MAGIC, Card::BASE],
 ];
 $magicTier4 = [
     'icon' => '🦄🦄',
@@ -110,6 +128,7 @@ $magicTier4 = [
     'data' => [
         'magic' => 9,
     ],
+    'tags' => [Card::MAGIC, Card::BASE],
 ];
 $speedTier1 = [
     'icon' => '🥾',
@@ -117,6 +136,7 @@ $speedTier1 = [
     'data' => [
         'speed' => 1,
     ],
+    'tags' => [Card::SPEED, Card::BASE],
 ];
 $speedTier2 = [
     'icon' => '🥾🥾',
@@ -124,6 +144,7 @@ $speedTier2 = [
     'data' => [
         'speed' => 2,
     ],
+    'tags' => [Card::SPEED, Card::BASE],
 ];
 $speedTier3 = [
     'icon' => '👟',
@@ -131,6 +152,7 @@ $speedTier3 = [
     'data' => [
         'speed' => 5,
     ],
+    'tags' => [Card::SPEED, Card::BASE],
 ];
 $speedTier4 = [
     'icon' => '👟👟',
@@ -138,6 +160,7 @@ $speedTier4 = [
     'data' => [
         'speed' => 9,
     ],
+    'tags' => [Card::SPEED, Card::BASE],
 ];
 
 $defenseAndDamage = [
@@ -148,6 +171,7 @@ $defenseAndDamage = [
         'damage' => 2,
     ],
     'league' => true,
+    'tags' => [Card::DEFENSE, Card::DAMAGE, Card::BASE],
 ];
 $defenseAndMagic = [
     'icon' => '🛡️🪄️',
@@ -157,6 +181,7 @@ $defenseAndMagic = [
         'magic' => 1,
     ],
     'league' => true,
+    'tags' => [Card::DEFENSE, Card::MAGIC, Card::BASE],
 ];
 $defenseAndSpeed = [
     'icon' => '🛡️🥾️',
@@ -166,6 +191,7 @@ $defenseAndSpeed = [
         'speed' => 1,
     ],
     'league' => true,
+    'tags' => [Card::DEFENSE, Card::SPEED, Card::BASE],
 ];
 $damageAndMagic = [
     'icon' => '⚔️🪄️',
@@ -175,6 +201,7 @@ $damageAndMagic = [
         'magic' => 1,
     ],
     'league' => true,
+    'tags' => [Card::DAMAGE, Card::MAGIC, Card::BASE],
 ];
 $damageAndSpeed = [
     'icon' => '⚔️🥾',
@@ -184,6 +211,7 @@ $damageAndSpeed = [
         'speed' => 1,
     ],
     'league' => true,
+    'tags' => [Card::DAMAGE, Card::SPEED, Card::BASE],
 ];
 $magicAndSpeed = [
     'icon' => '🪄️🥾',
@@ -193,6 +221,7 @@ $magicAndSpeed = [
         'speed' => 1,
     ],
     'league' => true,
+    'tags' => [Card::MAGIC, Card::SPEED, Card::BASE],
 ];
 
 $tradeDefenseForDamage = [
@@ -202,6 +231,7 @@ $tradeDefenseForDamage = [
         'damage' => 2,
         'defense' => -1,
     ],
+    'tags' => [Card::DAMAGE, Card::BASE],
 ];
 $tradeDamageForDefense = [
     'icon' => '💱🛡️',
@@ -209,7 +239,8 @@ $tradeDamageForDefense = [
     'data' => [
         'defense' => 2,
         'damage' => -1,
-    ]
+    ],
+    'tags' => [Card::DEFENSE, Card::BASE],
 ];
 $tradePhysicalForMagic = [
     'icon' => '💱🪄️',
@@ -219,6 +250,7 @@ $tradePhysicalForMagic = [
         'damage' => -1,
         'defense' => -1,
     ],
+    'tags' => [Card::MAGIC, Card::BASE],
 ];
 
 $boostDefenseFromSpeed = [
@@ -229,6 +261,7 @@ $boostDefenseFromSpeed = [
     'data' => [
         'defense' => 2,
     ],
+    'tags' => [Card::SPEED, Card::DEFENSE, Card::MODIFIER],
 ];
 $boostMagicFromDefense = [
     'icon' => '🔮🪄️',
@@ -238,6 +271,7 @@ $boostMagicFromDefense = [
     'data' => [
         'magic' => 2,
     ],
+    'tags' => [Card::DEFENSE, Card::MAGIC, Card::MODIFIER],
 ];
 $boostMagicFromSpeed = [
     'icon' => '🧚🪄️',
@@ -247,6 +281,7 @@ $boostMagicFromSpeed = [
     'data' => [
         'magic' => 2,
     ],
+    'tags' => [Card::SPEED, Card::MAGIC, Card::MODIFIER],
 ];
 $boostDamageFromDefense = [
     'icon' => '🥀⚔️',
@@ -256,6 +291,7 @@ $boostDamageFromDefense = [
     'data' => [
         'damage' => 2,
     ],
+    'tags' => [Card::DEFENSE, Card::DAMAGE, Card::MODIFIER],
 ];
 $boostDamageFromMagic = [
     'icon' => '🔫⚔️',
@@ -265,6 +301,7 @@ $boostDamageFromMagic = [
     'data' => [
         'damage' => 2,
     ],
+    'tags' => [Card::MAGIC, Card::DAMAGE, Card::MODIFIER],
 ];
 $boostHealthFromDamage = [
     'icon' => '❣️',
@@ -274,6 +311,7 @@ $boostHealthFromDamage = [
     'data' => [
         'health' => 2,
     ],
+    'tags' => [Card::DAMAGE, Card::HEALTH, Card::MODIFIER],
 ];
 $boostHealthFromMagic = [
     'icon' => '❤️‍🔥',
@@ -283,37 +321,44 @@ $boostHealthFromMagic = [
     'data' => [
         'health' => 2,
     ],
+    'tags' => [Card::MAGIC, Card::HEALTH, Card::MODIFIER],
 ];
 
 $buffDamage = [
     'icon' => '️️🔺⚔️',
     'text' => 'Buff Damage',
     'modifier' => 'add_damage',
+    'tags' => [Card::DAMAGE, Card::MODIFIER],
 ];
 $buffDefense = [
     'icon' => '🔺🛡️',
     'text' => 'Buff Defense',
     'modifier' => 'add_defense',
+    'tags' => [Card::DEFENSE, Card::MODIFIER],
 ];
 $buffMagic = [
     'icon' => '️️🔺🪄️',
     'text' => 'Buff Magic',
     'modifier' => 'add_magic',
+    'tags' => [Card::MAGIC, Card::MODIFIER],
 ];
 $curseDamage = [
     'icon' => '⚔️🔻',
     'text' => 'Curse Enemy Damage',
     'modifier' => 'remove_damage',
+    'tags' => [Card::DAMAGE, Card::MODIFIER],
 ];
 $curseDefense = [
     'icon' => '🛡️🔻',
     'text' => 'Curse Enemy Defense',
     'modifier' => 'remove_defense',
+    'tags' => [Card::DEFENSE, Card::MODIFIER],
 ];
 $curseMagic = [
     'icon' => '🪄️🔻',
     'text' => 'Curse Enemy Magic',
     'modifier' => 'remove_magic',
+    'tags' => [Card::MAGIC, Card::MODIFIER],
 ];
 
 $convertDamageToHealth = [
@@ -321,49 +366,58 @@ $convertDamageToHealth = [
     'text' => 'Convert Damage to Health',
     'modifier' => 'convert_damage_to_health',
     'league' => true,
+    'tags' => [Card::DAMAGE, Card::HEALTH, Card::CONVERSION],
 ];
 $convertDefenseToHealth = [
     'icon' => '🛡️💥️️',
     'text' => 'Convert Defense to Health',
     'modifier' => 'convert_defense_to_health',
     'league' => true,
+    'tags' => [Card::DEFENSE, Card::HEALTH, Card::CONVERSION],
 ];
 $convertMagicToHealth = [
     'icon' => '🪄️💥️️',
     'text' => 'Convert Magic to Health',
     'modifier' => 'convert_magic_to_health',
+    'tags' => [Card::MAGIC, Card::HEALTH, Card::CONVERSION],
 ];
 $convertSpeedToHealth = [
     'icon' => '🥾💥️',
     'text' => 'Convert Speed to Health',
     'modifier' => 'convert_speed_to_health',
+    'tags' => [Card::SPEED, Card::HEALTH, Card::CONVERSION],
 ];
 $convertAllToDamage = [
     'icon' => '💪️️',
     'text' => 'Berserker',
     'modifier' => 'convert_all_to_damage',
     'league' => true,
+    'tags' => [Card::HEALTH, Card::DEFENSE, Card::MAGIC, Card::SPEED, Card::DAMAGE, Card::CONVERSION],
 ];
 
 $increaseDamage = [
     'icon' => '️️⏫️️⚔️️',
     'text' => 'Increase Damage',
     'modifier' => 'more_damage',
+    'tags' => [Card::DAMAGE, Card::MODIFIER],
 ];
 $increaseDefense = [
     'icon' => '⏫️️🛡️',
     'text' => 'Increase Defense',
     'modifier' => 'more_defense',
+    'tags' => [Card::DEFENSE, Card::MODIFIER],
 ];
 $increaseMagic = [
     'icon' => '⏫️️🪄️️',
     'text' => 'Increase Magic',
     'modifier' => 'more_magic',
+    'tags' => [Card::MAGIC, Card::MODIFIER],
 ];
 $increaseSpeed = [
     'icon' => '⏫️️🥾️',
     'text' => 'Increase Speed',
     'modifier' => 'more_speed',
+    'tags' => [Card::SPEED, Card::MODIFIER],
 ];
 
 return [

@@ -15,20 +15,21 @@ class RngTreasure implements TreasureInterface
 
     public static function trigger(Treasure $treasure, Battlefield $battlefield): void
     {
-        if (!$treasure->type || !$battlefield->card) {
+        if (!$battlefield->card) {
             return;
         }
-        if (self::checkCard($battlefield->card, $treasure->type)) {
+        if (in_array($treasure->type, $battlefield->card->tags, true)) {
             $treasure->trigger--;
         }
     }
 
     public static function levels(Treasure $treasure, Battlefield $battlefield): bool
     {
-        if (!$treasure->type || !$battlefield->card?->modifier) {
+        if (!$battlefield->card) {
             return false;
         }
-        return self::checkModifier($battlefield->card->modifier, $treasure->type);
+        return in_array($treasure->type, $battlefield->card->tags, true)
+            && in_array(Card::MODIFIER, $battlefield->card->tags, true);
     }
 
     public static function discard(Treasure $treasure, Card $card): bool
@@ -37,7 +38,7 @@ class RngTreasure implements TreasureInterface
             return false;
         }
         $treasure->power--;
-        return $treasure->type && self::checkCard($card, $treasure->type);
+        return $treasure->type && in_array($treasure->type, $card->tags, true);
     }
 
     public static function calculation(Treasure $treasure, array $calculation): ?array
@@ -58,18 +59,5 @@ class RngTreasure implements TreasureInterface
     public static function battleEnemy(Treasure $treasure, array $enemy, array $player): ?array
     {
         return null;
-    }
-
-    private static function checkCard(Card $card, string $type): bool
-    {
-        if (isset($card->data[$type])) {
-            return true;
-        }
-        return $card->modifier && self::checkModifier($card->modifier, $type);
-    }
-
-    private static function checkModifier(Modifier $modifier, string $type): bool
-    {
-        return isset($modifier->data[$type]) || $modifier->source === $type || $modifier->target === $type;
     }
 }

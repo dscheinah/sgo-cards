@@ -8,6 +8,7 @@ use App\Helper\Shrine\MistShrine;
 use App\Helper\Shrine\NatureShrine;
 use App\Helper\Shrine\PowerShrine;
 use App\Helper\Shrine\WaterShrine;
+use App\Model\Card;
 
 return [
     'fire' => [
@@ -16,6 +17,7 @@ return [
         'icon' => '🔥⛩️',
         'color' => 'red',
         'description' => 'Increase offensive Magic',
+        'tags' => [Card::MAGIC],
     ],
     'ice' => [
         'handler' => IceShrine::class,
@@ -23,6 +25,7 @@ return [
         'icon' => '️❄️⛩️️',
         'color' => 'aqua',
         'description' => 'Require additional Speed',
+        'tags' => [Card::SPEED],
     ],
     'mist' => [
         'handler' => MistShrine::class,
@@ -30,6 +33,7 @@ return [
         'icon' => '☁️⛩️️',
         'color' => 'darkgray',
         'description' => 'Chance to miss Damage',
+        'tags' => [Card::DAMAGE],
     ],
     'nature' => [
         'handler' => NatureShrine::class,
@@ -37,6 +41,7 @@ return [
         'icon' => '🍂⛩️',
         'color' => 'green',
         'description' => 'Poison based on Health',
+        'tags' => [Card::HEALTH],
     ],
     'power' => [
         'handler' => PowerShrine::class,
@@ -44,6 +49,7 @@ return [
         'icon' => '⚡️⛩️️',
         'color' => 'gold',
         'description' => 'Speed applies to Magic',
+        'tags' => [Card::SPEED, Card::MAGIC],
     ],
     'water' => [
         'handler' => WaterShrine::class,
@@ -51,6 +57,7 @@ return [
         'icon' => '💧⛩️',
         'color' => 'blue',
         'description' => 'Increase defensive Magic',
+        'tags' => [Card::MAGIC],
     ],
     'earth' => [
         'handler' => EarthShrine::class,
@@ -58,6 +65,7 @@ return [
         'icon' => '⛰️⛩️',
         'color' => 'brown',
         'description' => 'Deal Damage with Defense',
+        'tags' => [Card::DEFENSE, Card::DAMAGE],
     ],
     'air' => [
         'handler' => AirShrine::class,
@@ -65,5 +73,6 @@ return [
         'icon' => '🌪️⛩️',
         'color' => 'magenta',
         'description' => 'Break Defense with Speed',
+        'tags' => [Card::SPEED, Card::DAMAGE],
     ],
 ];

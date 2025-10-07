@@ -9,11 +9,12 @@ use App\Helper\Treasure\PotionTreasure;
 use App\Helper\Treasure\RngTreasure;
 use App\Helper\Treasure\StatTreasure;
 use App\Helper\Treasure\TreasureTreasure;
+use App\Model\Card;
 
 return [
     'health_rng' => [
         'handler' => RngTreasure::class,
-        'type' => 'health',
+        'type' => Card::HEALTH,
         'icon' => '🖌️',
         'name' => 'Re-Brush',
         'descriptions' => [
@@ -26,7 +27,7 @@ return [
     ],
     'damage_rng' => [
         'handler' => RngTreasure::class,
-        'type' => 'damage',
+        'type' => Card::DAMAGE,
         'icon' => '🪚',
         'name' => 'Un-Saw',
         'descriptions' => [
@@ -39,7 +40,7 @@ return [
     ],
     'defense_rng' => [
         'handler' => RngTreasure::class,
-        'type' => 'defense',
+        'type' => Card::DEFENSE,
         'icon' => '🔨️',
         'name' => 'In-Hammer',
         'descriptions' => [
@@ -52,7 +53,7 @@ return [
     ],
     'magic_rng' => [
         'handler' => RngTreasure::class,
-        'type' => 'magic',
+        'type' => Card::MAGIC,
         'icon' => '🧹',
         'name' => 'De-Broom',
         'descriptions' => [
@@ -65,7 +66,7 @@ return [
     ],
     'speed_rng' => [
         'handler' => RngTreasure::class,
-        'type' => 'speed',
+        'type' => Card::SPEED,
         'icon' => '🔒️',
         'name' => 'Ex-Lock',
         'descriptions' => [
@@ -78,7 +79,7 @@ return [
     ],
     'health' => [
         'handler' => StatTreasure::class,
-        'type' => 'health',
+        'type' => Card::HEALTH,
         'icon' => '🧣',
         'name' => 'Healthy Scarf',
         'descriptions' => [
@@ -91,7 +92,7 @@ return [
     ],
     'damage' => [
         'handler' => StatTreasure::class,
-        'type' => 'damage',
+        'type' => Card::DAMAGE,
         'icon' => '🧤',
         'name' => 'Aggressive Gloves',
         'descriptions' => [
@@ -104,7 +105,7 @@ return [
     ],
     'defense' => [
         'handler' => StatTreasure::class,
-        'type' => 'defense',
+        'type' => Card::DEFENSE,
         'icon' => '🥻',
         'name' => 'Heavy Armor',
         'descriptions' => [
@@ -117,7 +118,7 @@ return [
     ],
     'magic' => [
         'handler' => StatTreasure::class,
-        'type' => 'magic',
+        'type' => Card::MAGIC,
         'icon' => '💍',
         'name' => 'Enchanted Ring',
         'descriptions' => [
@@ -130,7 +131,7 @@ return [
     ],
     'speed' => [
         'handler' => StatTreasure::class,
-        'type' => 'speed',
+        'type' => Card::SPEED,
         'icon' => '👒',
         'name' => 'Lightweight Hat',
         'descriptions' => [

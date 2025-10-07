@@ -14,14 +14,14 @@ class ConvertTreasure implements TreasureInterface
 
     public static function trigger(Treasure $treasure, Battlefield $battlefield): void
     {
-        if (self::cardIsConversion($battlefield->card)) {
+        if ($battlefield->card && in_array(Card::CONVERSION, $battlefield->card->tags, true)) {
             $treasure->trigger--;
         }
     }
 
     public static function levels(Treasure $treasure, Battlefield $battlefield): bool
     {
-        return self::cardIsConversion($battlefield->card);
+        return $battlefield->card && in_array(Card::CONVERSION, $battlefield->card->tags, true);
     }
 
     public static function discard(Treasure $treasure, Card $card): bool
@@ -74,13 +74,5 @@ class ConvertTreasure implements TreasureInterface
     public static function battleEnemy(Treasure $treasure, array $enemy, array $player): ?array
     {
         return null;
-    }
-
-    private static function cardIsConversion(?Card $card = null): bool
-    {
-        if (!$card || !$card->modifier) {
-            return false;
-        }
-        return str_contains($card->modifier->identifier, 'convert');
     }
 }

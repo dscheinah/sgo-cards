@@ -18,11 +18,7 @@ class RoundRepository
         $battlefield = $this->battlefieldBuilder->create($userId);
         $cards = array_map(static fn (Card $card) => $card->output(), $battlefield->cards);
         if ($battlefield->shrine) {
-            $cards[0] = [
-                'shrine' => true,
-                'icon' => $battlefield->shrine->icon,
-                'text' => $battlefield->shrine->text,
-            ];
+            $cards[0] = $battlefield->shrine->output();
         }
         return [
             'league' => [

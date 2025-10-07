@@ -90,6 +90,7 @@ class CardHelper
         $card->data = $input['data'] ?? [];
         $card->modifier = $this->modifierHelper->get($input['modifier'] ?? null);
         $card->value = $this->powerLevel($league, $player, $card);
+        $card->tags = $input['tags'] ?? [];
         return $card;
     }
 

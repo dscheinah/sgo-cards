@@ -4,6 +4,15 @@ namespace App\Model;
 
 class Card
 {
+    public const string HEALTH = 'health';
+    public const string DAMAGE = 'damage';
+    public const string DEFENSE = 'defense';
+    public const string MAGIC = 'magic';
+    public const string SPEED = 'speed';
+    public const string BASE = 'base';
+    public const string MODIFIER = 'modifier';
+    public const string CONVERSION = 'conversion';
+
     public string $icon;
 
     public string $text;
@@ -14,12 +23,15 @@ class Card
 
     public int $value = 0;
 
+    public array $tags = [];
+
     public function output(): array
     {
         return [
             'icon' => $this->icon,
             'text' => $this->text,
             'value' => $this->value,
+            'tags' => $this->tags,
         ];
     }
 }

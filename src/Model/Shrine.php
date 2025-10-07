@@ -23,13 +23,17 @@ class Shrine
     /** @var class-string<ShrineInterface> */
     public string $handler;
 
+    public array $tags = [];
+
     public function output(): array
     {
         return [
+            'shrine' => true,
             'text' => $this->text,
             'icon' => $this->icon,
             'color' => $this->color,
             'description' => $this->description,
+            'tags' => $this->tags,
         ];
     }
 }

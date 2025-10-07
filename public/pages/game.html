@@ -112,9 +112,12 @@
                 const div = helper.create('div');
                 div.classList.add('sx-card');
                 div.innerHTML = `
-                    <small class="game-value">⚡️ ${card.value || 0}</small>
+                    <small class="game-tags">
+                        <span>${helper.tags(card['tags'])}</span>
+                        <span>⚡️ ${card.value || 0}</span>
+                    </small>
                     <span class="game-icon">${card.icon}</span>
-                    <p><strong>${card.text}</strong></p>
+                    <p><strong>${card.text}</strong><br/></p>
                     <button value="${value}" accesskey="${index + 1}" type="button">Select</button>
                 `;
                 return div;
@@ -226,16 +229,24 @@
         padding: .5em;
     }
 
-    .game-value {
-        text-align: right;
+    .game-tags {
         margin: -.5em 0 .5em;
         filter: grayscale(1);
         opacity: .5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-wrap: nowrap;
+    }
+
+    .game-tags span:first-child {
+        font-size: .8em;
     }
 
     .game-icon {
         font-size: 8vw;
         margin: 0 0 auto;
+        text-wrap: nowrap;
     }
 
     #game-cards p {

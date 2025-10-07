@@ -28,10 +28,11 @@ class StatTreasure implements TreasureInterface
 
     public static function levels(Treasure $treasure, Battlefield $battlefield): bool
     {
-        if (!$treasure->type || !isset($battlefield->card->data[$treasure->type])) {
+        if (!$battlefield->card) {
             return false;
         }
-        return !$battlefield->card->modifier && $battlefield->card->data[$treasure->type] > 0;
+        return in_array($treasure->type, $battlefield->card->tags, true)
+            && in_array(Card::BASE, $battlefield->card->tags, true);
     }
 
     public static function discard(Treasure $treasure, Card $card): bool
