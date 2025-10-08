@@ -42,6 +42,7 @@
             <p>Shrines within straight line of sight are in range and activated:</p>
             <p id="game-shrines-descriptions"></p>
         </div>
+        <div id="game-log"></div>
     </div>
 </template>
 
@@ -132,6 +133,7 @@
                 } else {
                     text = `${result['winner'] ? 'Victory' : 'Defeat'} in ${result['duration']} ${result['duration'] === 1 ? 'round' : 'rounds'} vs ${result['enemy']['name'] || ''} #${result['enemy']['try']}`
                 }
+                helper.set('#game-log', 'innerHTML', helper.log(result.log));
             }
             helper.set('#game-result', 'innerText', text);
             if (round['shrines'].length) {
@@ -292,6 +294,11 @@
     #game-player table th, #game-player table td {
         padding-top: .1em;
         padding-bottom: .1em;
+    }
+
+    #game-log svg {
+        width: 100%;
+        height: auto;
     }
 
     @media only screen and (min-width: 525px) {

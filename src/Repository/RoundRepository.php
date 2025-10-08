@@ -43,7 +43,8 @@ class RoundRepository
             'duration' => $battlefield->battle->duration,
             'enemy' => $battlefield->battle->league || $battlefield->battle->finished
                 ? null
-                : $battlefield->enemy->output($battlefield->league, $battlefield->player)
+                : $battlefield->enemy->output($battlefield->league, $battlefield->player),
+            'log' => $battlefield->battle->log,
         ];
     }
 }

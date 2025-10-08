@@ -63,12 +63,17 @@ class BattleProvider
         $playerCalculation = $battlefield->player->calculation($battlefield->league, $battlefield->enemy);
         $enemyCalculation = $battlefield->enemy->calculation($battlefield->league, $battlefield->player);
 
+        $player = $this->prepare($playerCalculation, $enemyCalculation);
+        $enemy = $this->prepare($enemyCalculation, $playerCalculation);
+        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
+
         foreach ($battlefield->treasures as $treasure) {
             $playerCalculation = $treasure->calculation($playerCalculation);
         }
 
         $player = $this->prepare($playerCalculation, $enemyCalculation);
         $enemy = $this->prepare($enemyCalculation, $playerCalculation);
+        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
 
         foreach ($battlefield->treasures as $treasure) {
             $player = $treasure->player($player);
@@ -82,8 +87,12 @@ class BattleProvider
             $enemy = $battlefield->area->handler::player($enemy);
         }
 
+        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
+
         $player['health'] -= $enemy['speed_damage'];
         $enemy['health'] -= $player['speed_damage'];
+
+        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
 
         while ($player['health'] > 0 && $enemy['health'] > 0) {
             foreach ($battlefield->treasures as $treasure) {
@@ -113,10 +122,14 @@ class BattleProvider
                 $enemyStats = $shrine->handler::stats($enemyStats);
             }
 
+            $battle->log($player, $enemy, $playerStats, $enemyStats);
+
             $drain = 1.1 ** $battle->duration;
             $player['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
             $enemy['health'] -= $playerStats['damage'] + $playerStats['magic'] + (int) $drain;
             $battle->duration++;
+
+            $battle->log($player, $enemy, $playerStats, $enemyStats);
         }
 
         $battle->winner = $player['health'] >= $enemy['health'];
