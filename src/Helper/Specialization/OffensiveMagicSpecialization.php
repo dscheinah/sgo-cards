@@ -6,7 +6,7 @@ class OffensiveMagicSpecialization implements SpecializationInterface
 {
     public static function battle(array $player, int $duration): array
     {
-        $player['magic'] += (int) (1.2 ** $duration);
+        $player['magic_offense'] += (int) (1.1 ** $duration);
         return $player;
     }
 }
