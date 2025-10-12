@@ -241,7 +241,7 @@ return [
         'descriptions' => [
             'identify' => 'Refills slowly after each try.',
             'effect' => 'Consumes charges to apply poison each battle.',
-            'level' => 'Levels to the maximum rounds of your battles.',
+            'level' => 'Level is fixed by the maximum rounds of your battles.',
         ],
         'trigger_min' => 3,
         'trigger_max' => 9,
