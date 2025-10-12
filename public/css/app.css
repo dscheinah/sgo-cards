@@ -31,6 +31,25 @@
     }
 }
 
+progress {
+    appearance: none;
+    background: none;
+    border: 1px solid lightgray;
+    --progress-color: var(--tertiary-color);
+}
+
+::-webkit-progress-bar {
+    background: none;
+}
+
+::-webkit-progress-value {
+    background-color: var(--progress-color);
+}
+
+::-moz-progress-bar {
+    background-color: var(--progress-color);
+}
+
 .app-notify {
     position: relative;
 }
