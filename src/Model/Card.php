@@ -11,6 +11,7 @@ class Card
     public const string SPEED = 'speed';
     public const string BASE = 'base';
     public const string MODIFIER = 'modifier';
+    public const string CURSE = 'curse';
     public const string CONVERSION = 'conversion';
 
     public string $icon;

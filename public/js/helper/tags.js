@@ -6,6 +6,7 @@ const icons = {
     speed: '🥾',
     base: '➕',
     modifier: '❇️',
+    curse: '🔻',
     conversion: '💥',
 }
 

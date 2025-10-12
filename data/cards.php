@@ -346,19 +346,19 @@ $curseDamage = [
     'icon' => '⚔️🔻',
     'text' => 'Curse Enemy Damage',
     'modifier' => 'remove_damage',
-    'tags' => [Card::DAMAGE, Card::MODIFIER],
+    'tags' => [Card::DAMAGE, Card::CURSE],
 ];
 $curseDefense = [
     'icon' => '🛡️🔻',
     'text' => 'Curse Enemy Defense',
     'modifier' => 'remove_defense',
-    'tags' => [Card::DEFENSE, Card::MODIFIER],
+    'tags' => [Card::DEFENSE, Card::CURSE],
 ];
 $curseMagic = [
     'icon' => '🪄️🔻',
     'text' => 'Curse Enemy Magic',
     'modifier' => 'remove_magic',
-    'tags' => [Card::MAGIC, Card::MODIFIER],
+    'tags' => [Card::MAGIC, Card::CURSE],
 ];
 
 $convertDamageToHealth = [
