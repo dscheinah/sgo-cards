@@ -44,7 +44,7 @@ return [
     'healer' => [
         'icon' => '📿',
         'name' => 'Healer',
-                'description' => 'More Health and Regeneration',
+        'description' => 'More Health and Regeneration',
         'data' => [
             'health' => 80,
         ],

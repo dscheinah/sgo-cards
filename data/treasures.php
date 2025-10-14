@@ -200,7 +200,7 @@ return [
         'name' => 'Hindering Chains',
         'descriptions' => [
             'identify' => 'Identifies by reaching Total stats',
-            'effect' => 'Converts Speed mechanic to mitigation based on difference..',
+            'effect' => 'Converts Speed mechanic to mitigation based on difference.',
             'level' => 'Levels by loosing a battle.',
         ],
         'trigger_min' => 300,
