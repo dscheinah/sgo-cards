@@ -43,9 +43,9 @@ class AchievementRepository
                 'max' => 175,
             ],
             [
-                'description' => 'Win 3 leagues',
+                'description' => 'Win 4 leagues',
                 'value' => $this->playerStorage->fetchWinnerCountForUser($userId, $this->max),
-                'max' => 3,
+                'max' => 4,
             ],
             [
                 'description' => 'Pick 1000 base cards',

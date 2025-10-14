@@ -68,7 +68,7 @@ class TreasureStorage extends Storage
 
     public function fetchIdentifiedCountForUser(string $userId): int
     {
-        $statement = 'SELECT COUNT(DISTINCT `treasure`) AS `count` FROM `treasures` WHERE `user_id` = ? AND `trigger` < 1 OR `experience` > 0';
+        $statement = 'SELECT COUNT(DISTINCT `treasure`) AS `count` FROM `treasures` WHERE `user_id` = ? AND (`trigger` < 1 OR `experience` > 0)';
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
 
