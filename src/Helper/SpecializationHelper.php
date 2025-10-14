@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use App\Model\Player;
 use App\Model\Specialization;
 
 class SpecializationHelper

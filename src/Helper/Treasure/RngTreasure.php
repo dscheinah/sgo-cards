@@ -4,7 +4,6 @@ namespace App\Helper\Treasure;
 
 use App\Model\Battlefield;
 use App\Model\Card;
-use App\Model\Modifier;
 use App\Model\Treasure;
 
 class RngTreasure implements TreasureInterface

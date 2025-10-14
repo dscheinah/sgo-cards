@@ -7,7 +7,6 @@ use App\Model\League;
 use App\Model\Player;
 use App\Model\Shrine;
 use App\Storage\ShrineStorage;
-use RuntimeException;
 
 class ShrineProvider
 {
