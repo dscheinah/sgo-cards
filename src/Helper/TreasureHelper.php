@@ -45,4 +45,9 @@ class TreasureHelper
     {
         return $this->get(['treasure' => array_rand($this->treasures)]);
     }
+
+    public function count(): int
+    {
+        return count($this->treasures);
+    }
 }

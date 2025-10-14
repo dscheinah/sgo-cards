@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Provider\LeagueProvider;
 use App\Provider\PlayerProvider;
 use App\Storage\PlayerStorage;
+use App\Storage\PoolStorage;
 
 class SpecializationRepository
 {
@@ -12,6 +13,7 @@ class SpecializationRepository
         private readonly LeagueProvider $leagueProvider,
         private readonly PlayerProvider $playerProvider,
         private readonly PlayerStorage $playerStorage,
+        private readonly PoolStorage $poolStorage,
     ) {
     }
 
@@ -37,5 +39,6 @@ class SpecializationRepository
             return;
         }
         $this->playerStorage->updateSpecialization($player->id, $specialization->identifier);
+        $this->poolStorage->insertSpecialization($player->user_id, $specialization);
     }
 }

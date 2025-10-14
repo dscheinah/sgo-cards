@@ -3,6 +3,7 @@
 namespace App\Provider;
 
 use App\Helper\CardHelper;
+use App\Storage\PoolStorage;
 use Sx\Container\FactoryInterface;
 use Sx\Container\Injector;
 
@@ -17,6 +18,7 @@ class BattlefieldBuilderFactory implements FactoryInterface
             $injector->get(ShrineProvider::class),
             $injector->get(TreasureProvider::class),
             $injector->get(CardHelper::class),
+            $injector->get(PoolStorage::class),
         );
     }
 }

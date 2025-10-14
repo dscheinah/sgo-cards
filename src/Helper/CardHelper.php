@@ -76,7 +76,13 @@ class CardHelper
                     $picked[] = $leagueCards[array_rand($leagueCards)];
                 }
             }
-            $cards[] = $picked;
+            $cards[] = array_map(
+                static function (array $input) use ($i): array {
+                    $input['tier'] = $i;
+                    return $input;
+                },
+                $picked,
+            );
         }
 
         return array_merge(...$cards);
@@ -85,12 +91,14 @@ class CardHelper
     private function create(League $league, Player $player, array $input): Card
     {
         $card = new Card();
+        $card->identifier = $input['identifier'];
         $card->icon = $input['icon'];
         $card->text = $input['text'];
         $card->data = $input['data'] ?? [];
         $card->modifier = $this->modifierHelper->get($input['modifier'] ?? null);
         $card->value = $this->powerLevel($league, $player, $card);
         $card->tags = $input['tags'] ?? [];
+        $card->tier = $input['tier'];
         return $card;
     }
 
@@ -102,5 +110,10 @@ class CardHelper
         $baseCalculation = $player->calculation($league, $nextPlayer);
 
         return max(array_sum($nextCalculation) - array_sum($baseCalculation), 0);
+    }
+
+    public function count(): int
+    {
+        return count(array_merge(...$this->cards));
     }
 }

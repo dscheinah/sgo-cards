@@ -49,4 +49,9 @@ class ModifierHelper
         mt_srand();
         return array_rand(array_filter($this->modifiers, static fn ($modifier) => $modifier['world'] ?? false));
     }
+
+    public function countPlayer(): int
+    {
+        return count(array_filter($this->modifiers, static fn ($modifier) => $modifier['player'] ?? false));
+    }
 }

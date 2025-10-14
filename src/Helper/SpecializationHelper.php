@@ -68,4 +68,9 @@ class SpecializationHelper
         mt_srand();
         return $specializations[array_rand($specializations)];
     }
+
+    public function count(): int
+    {
+        return count($this->specializations);
+    }
 }

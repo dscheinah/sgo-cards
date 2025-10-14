@@ -4,7 +4,8 @@ import State from '../vendor/dscheinah/sx-js/src/State.js';
 import init from './app/init.js';
 import navigate from './app/navigate.js';
 import * as data from './repository/data.js';
-import * as leagues from './repository/league.js';
+import * as achievement from './repository/achievement.js';
+import * as league from './repository/league.js';
 import * as round from './repository/round.js';
 import * as treasure from './repository/treasure.js';
 // By separating the helpers to it's own namespace they do not need to packed to an object here.
@@ -52,8 +53,9 @@ state.listen('sx-show', () => state.dispatch('loading', false));
 // This is a simple example for async global state management.
 state.handle('backend-data', (payload) => data.load(payload));
 
-state.handle('leagues', () => leagues.list());
-state.handle('league', (payload) => leagues.information(payload));
+state.handle('achievements', async(payload, next) => next(await achievement.list(payload)));
+state.handle('leagues', () => league.list());
+state.handle('league', (payload) => league.information(payload));
 state.handle('round', async(payload, next) => next(await round.load(payload)));
 state.handle('round-next', (payload) => round.next(...payload));
 state.handle('round-specialization', (payload) => round.specialization(...payload));

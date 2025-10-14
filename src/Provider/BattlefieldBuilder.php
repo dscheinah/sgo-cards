@@ -4,6 +4,7 @@ namespace App\Provider;
 
 use App\Helper\CardHelper;
 use App\Model\Battlefield;
+use App\Storage\PoolStorage;
 use RuntimeException;
 
 class BattlefieldBuilder
@@ -15,6 +16,7 @@ class BattlefieldBuilder
         private readonly ShrineProvider $shrineProvider,
         private readonly TreasureProvider $treasureProvider,
         private readonly CardHelper $cardHelper,
+        private readonly PoolStorage $poolStorage,
     ) {
     }
 
@@ -62,10 +64,12 @@ class BattlefieldBuilder
         if ($card === 542123) {
             if ($battlefield->shrine) {
                 $battlefield->shrines[] = $battlefield->shrine;
+                $this->poolStorage->insertShrine($battlefield->player->user_id, $battlefield->shrine);
             }
             $this->shrineProvider->activate();
         } else {
             $battlefield->card = $battlefield->cards[$card] ?? null;
+            $this->poolStorage->insertCard($battlefield->player->user_id, $battlefield->card);
         }
 
         mt_srand();

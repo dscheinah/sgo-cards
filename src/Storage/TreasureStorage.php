@@ -65,4 +65,28 @@ class TreasureStorage extends Storage
             );
         }
     }
+
+    public function fetchIdentifiedCountForUser(string $userId): int
+    {
+        $statement = 'SELECT COUNT(DISTINCT `treasure`) AS `count` FROM `treasures` WHERE `user_id` = ? AND `trigger` < 1 OR `experience` > 0';
+        return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
+    }
+
+    public function fetchExperienceMaxForUserExclude(string $userId, string $treasure): int
+    {
+        $statement = 'SELECT MAX(`experience`) AS `max` FROM `treasures` WHERE `user_id` = ? AND `treasure` <> ?';
+        return $this->fetch($statement, [$userId, $treasure])->current()['max'] ?? 0;
+    }
+
+    public function fetchExperienceMaxForUserInclude(string $userId, string $treasure): int
+    {
+        $statement = 'SELECT MAX(`experience`) AS `max` FROM `treasures` WHERE `user_id` = ? AND `treasure` = ?';
+        return $this->fetch($statement, [$userId, $treasure])->current()['max'] ?? 0;
+    }
+
+    public function fetchExperienceSumForUser(string $userId, string $treasure): int
+    {
+        $statement = 'SELECT SUM(`experience`) AS `sum` FROM `treasures` WHERE `user_id` = ? AND `treasure` = ?';
+        return $this->fetch($statement, [$userId, $treasure])->current()['sum'] ?? 0;
+    }
 }

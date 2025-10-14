@@ -45,4 +45,9 @@ class ShrineHelper
         }
         return array_rand($this->shrines);
     }
+
+    public function count(): int
+    {
+        return count($this->shrines);
+    }
 }

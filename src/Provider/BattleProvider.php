@@ -31,7 +31,7 @@ class BattleProvider
             $this->cardStorage->insertForPlayer($battlefield->player->id, $battlefield->card);
         }
 
-        $this->snapshotStorage->insertForLeagueFromPlayer($battlefield->league->id, $battlefield->player);
+        $this->snapshotStorage->insertForLeagueFromPlayer($battlefield->league, $battlefield->player);
 
         if ($battle->winner) {
             $battlefield->player->y++;

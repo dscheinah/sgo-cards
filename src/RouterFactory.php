@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Handler\AchievementListHandler;
 use App\Handler\LeagueInformationHandler;
 use App\Handler\LeagueListHandler;
 use App\Handler\ListHandler;
@@ -40,6 +41,8 @@ class RouterFactory implements FactoryInterface
         $router = new Router($injector->get(MiddlewareHandlerInterface::class));
         // Add the example handler for the backend page.
         $router->post($prefix . 'list', ListHandler::class);
+
+        $router->get($prefix . 'achievement/list', AchievementListHandler::class);
 
         $router->get($prefix . 'league/list', LeagueListHandler::class);
         $router->get($prefix . 'league/information', LeagueInformationHandler::class);

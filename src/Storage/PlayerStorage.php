@@ -53,12 +53,12 @@ class PlayerStorage extends Storage
 
     public function updateX(int $id, int $x): void
     {
-        $this->execute('UPDATE `players` SET `x` = ? WHERE `id` = ?', [$x, $id]);
+        $this->execute('UPDATE `players` SET `x` = ?, `level` = `y` + ? WHERE `id` = ?', [$x, $x, $id]);
     }
 
     public function updateY(int $id, int $y): void
     {
-        $this->execute('UPDATE `players` SET `y` = ? WHERE `id` = ?', [$y, $id]);
+        $this->execute('UPDATE `players` SET `y` = ?, `level` = `x` + ? WHERE `id` = ?', [$y, $y, $id]);
     }
 
     public function updateSpecialization(int $id, string $specialization): void
@@ -69,5 +69,29 @@ class PlayerStorage extends Storage
     public function removeSpecialization(int $id): void
     {
         $this->execute('UPDATE `players` SET `specialization` = NULL WHERE `id` = ?', [$id]);
+    }
+
+    public function fetchLeagueCountForUser(string $userId): int
+    {
+        $statement = 'SELECT COUNT(DISTINCT `league_id`) AS `count` FROM `players` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
+    }
+
+    public function fetchMaxLevelForUser(string $userId): int
+    {
+        $statement = 'SELECT MAX(`level`) AS `level` FROM `players` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['level'] ?? 0;
+    }
+
+    public function fetchWinnerCountForUser(string $userId, int $max): int
+    {
+        $statement = 'SELECT COUNT(*) AS `count` FROM `players` WHERE `user_id` = ? AND `y` = ?';
+        return $this->fetch($statement, [$userId, $max])->current()['count'] ?? 0;
+    }
+
+    public function fetchModifierCountForUser(string $userId): int
+    {
+        $statement = 'SELECT COUNT(DISTINCT `modifier`) AS `count` FROM `players` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
 }

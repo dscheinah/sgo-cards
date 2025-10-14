@@ -2,6 +2,7 @@
 
 namespace App\Storage;
 
+use App\Model\League;
 use App\Model\Modifier;
 use App\Model\Player;
 use Generator;
@@ -15,7 +16,7 @@ class SnapshotStorage extends Storage
         yield from $this->fetch($statement, [$leagueId]);
     }
 
-    public function insertForLeagueFromPlayer(int $leagueId, Player $player): void
+    public function insertForLeagueFromPlayer(League $league, Player $player): void
     {
         $modifiers = array_map(
             static fn (Modifier $modifier) => [
@@ -25,13 +26,19 @@ class SnapshotStorage extends Storage
             $player->modifiers
         );
 
+        $totalBase = array_sum($player->data);
+        $totalCalculation = array_sum($player->calculation($league));
+
         $statement = 'INSERT INTO `snapshots` 
-            (`league_id`, `x`, `y`, `modifier`, `data`, `modifiers`, `user_id`, `try`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+            (
+                `league_id`, `x`, `y`, `modifier`, `data`, `modifiers`, `user_id`, `try`, 
+                `total_base`, `total_calculation`, `total_boost`
+            ) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $this->insert(
             $statement,
             [
-                $leagueId,
+                $league->id,
                 $player->x,
                 $player->y,
                 $player->modifier->identifier,
@@ -39,6 +46,9 @@ class SnapshotStorage extends Storage
                 json_encode($modifiers, JSON_THROW_ON_ERROR),
                 $player->user_id,
                 $player->try,
+                (int) $totalBase,
+                (int) $totalCalculation,
+                $totalBase ? (int) ($totalCalculation / $totalBase * 100) - 100 : 0,
             ]
         );
     }
@@ -52,5 +62,23 @@ class SnapshotStorage extends Storage
             $snapshot['modifiers'] = json_decode($snapshot['modifiers'], true, 512, JSON_THROW_ON_ERROR);
         }
         return $snapshot;
+    }
+
+    public function fetchMaxTotalBase(string $userId): int
+    {
+        $statement = 'SELECT MAX(`total_base`) AS `max` FROM `snapshots` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['max'] ?? 0;
+    }
+
+    public function fetchMaxTotalCalculation(string $userId): int
+    {
+        $statement = 'SELECT MAX(`total_calculation`) AS `max` FROM `snapshots` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['max'] ?? 0;
+    }
+
+    public function fetchMaxTotalBoost(string $userId): int
+    {
+        $statement = 'SELECT MAX(`total_boost`) AS `max` FROM `snapshots` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['max'] ?? 0;
     }
 }

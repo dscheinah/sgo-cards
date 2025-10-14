@@ -14,6 +14,8 @@ class Card
     public const string CURSE = 'curse';
     public const string CONVERSION = 'conversion';
 
+    public string $identifier;
+
     public string $icon;
 
     public string $text;
@@ -25,6 +27,8 @@ class Card
     public int $value = 0;
 
     public array $tags = [];
+
+    public int $tier;
 
     public function output(): array
     {
