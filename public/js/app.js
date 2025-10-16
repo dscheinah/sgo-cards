@@ -75,6 +75,7 @@ page.add('overview', 'pages/overview.html', window.location.href);
 page.add('game', 'pages/game.html', window.location.href);
 page.add('game-treasure', 'pages/game/treasure.html', window.location.href);
 page.add('statistics', 'pages/statistics.html', window.location.href);
+page.add('castle', 'pages/castle.html', window.location.href);
 // If used with routing this must be replaced with a check on the called route.
 page.show('overview');
 
