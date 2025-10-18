@@ -5,6 +5,7 @@ import init from './app/init.js';
 import navigate from './app/navigate.js';
 import * as data from './repository/data.js';
 import * as achievement from './repository/achievement.js';
+import * as castle from './repository/castle.js';
 import * as league from './repository/league.js';
 import * as round from './repository/round.js';
 import * as treasure from './repository/treasure.js';
@@ -54,6 +55,10 @@ state.listen('sx-show', () => state.dispatch('loading', false));
 state.handle('backend-data', (payload) => data.load(payload));
 
 state.handle('achievements', async(payload, next) => next(await achievement.list(payload)));
+state.handle('castle-rankings', (payload) => castle.rankings(payload));
+state.handle('castle-tournament', (payload) => castle.tournament(payload));
+state.handle('castle-results', (payload) => castle.results(payload));
+state.handle('castle-heroes', (payload) => castle.heroes(payload));
 state.handle('leagues', () => league.list());
 state.handle('league', (payload) => league.information(payload));
 state.handle('round', async(payload, next) => next(await round.load(payload)));

@@ -1,8 +1,127 @@
 <template>
     <h1>Castle</h1>
+    <div id="castle-login" hidden>
+        <p>Please log in to start playing.</p>
+        <button type="button" data-navigation value="overview"><span class="sx-button-icon">🪟</span> Login</button>
+    </div>
+    <div id="castle-main" hidden>
+        <h2>Tournament</h2>
+        <div id="castle-tournament" hidden></div>
+        <div id="castle-result" hidden>
+            <h3>Previous Results</h3>
+            <div id="castle-result-tiers" class="sx-cards"></div>
+        </div>
+        <h2>Heroes</h2>
+        <table id="castle-heroes" class="sx-list"></table>
+    </div>
 </template>
 <script type="module">
-    import {page} from '../js/app.js';
+    import {helper, page, state} from '../js/app.js';
 
-    page.register('castle', () => {});
+    let user = state.get('user');
+    let tournament = state.get('castle-tournament');
+    let results = state.get('castle-results');
+    let heroes = state.get('castle-heroes') || [];
+
+    page.register('castle', ({render, show, listen}) => {
+        render(() => {
+            if (!user) {
+                return;
+            }
+            helper.set('#castle-main', 'hidden', !user.id);
+            helper.set('#castle-login', 'hidden', !user.create);
+            helper.set('#castle-tournament', 'hidden', !tournament);
+            helper.set('#castle-result', 'hidden', !results?.length);
+            if (tournament) {
+                helper.set('#castle-tournament', 'innerHTML', `
+                    <p>The next tournament will start in about <strong>${tournament.hours}</strong> ${tournament.hours === 1 ? 'hour' : 'hours'}.</p>
+                    <table>
+                        <tbody>
+                            <tr><th>Modifier</th>
+                            <td>${tournament.modifier.text}</td></tr>
+                            <tr><th>Area</th>
+                            <td>${tournament.area.icon} ${tournament.area.name}<br/>${tournament.area.description}</td></tr>
+                        </tbody>
+                    </table>
+                `);
+            }
+            helper.list('#castle-result-tiers', results || [], (entry, index) => {
+                const div = helper.create('div');
+                div.classList.add('sx-card');
+                div.innerHTML = `
+                    <h4>Tier ${index + 1}</h4>
+                    <table>
+                        <tbody>
+                            <tr><th>Win</th><td>${entry.win}</td></tr>
+                            <tr><th>Loose</th><td>${entry.loose}</td></tr>
+                        </tbody>
+                    </table>
+                `;
+                const p = helper.create('p');
+                if (entry.current === entry.last) {
+                    p.innerHTML = 'You successfully defended rank';
+                } else if (entry.current < entry.last) {
+                    p.innerHTML = 'You were <strong class="sx-highlight">promoted</strong> to rank';
+                } else {
+                    p.innerHTML = 'You were downgraded to rank';
+                }
+                p.innerHTML += ` <strong>${entry.current}</strong>.`;
+                div.appendChild(p);
+                return div;
+            });
+            helper.list('#castle-heroes', heroes, (hero) => {
+                const tr = helper.create('tr');
+                if (!hero) {
+                    tr.innerHTML = '<td></td>';
+                    return tr;
+                }
+                const specialization = hero.specialization ? `&ndash; ${hero.specialization.icon} ${hero.specialization.name}` : '';
+                const shrine = hero.shrine ? `${hero.shrine.icon} ${hero.shrine.text}` : '';
+                tr.innerHTML = `
+                    <td>
+                        <strong>${hero.name}</strong> ${specialization}<br/>
+                        <span>${helper.tags(['health'])} ${hero.health}</span>
+                        <span>${helper.tags(['damage'])} ${hero.damage}</span>
+                        <span>${helper.tags(['defense'])} ${hero.defense}</span>
+                        <span>${helper.tags(['magic'])} ${hero.magic}</span>
+                        <span>${helper.tags(['speed'])} ${hero.speed}</span>
+                        <span>${helper.tags(['curse'])} ${hero.curse}</span><br/>
+                        ${shrine}
+                    </td>
+                `
+                return tr;
+            })
+        });
+
+        show(() => {
+            state.dispatch('castle-tournament', null);
+            state.dispatch('castle-results', user?.id);
+            state.dispatch('castle-heroes', user?.id);
+        });
+
+        listen('user', (payload) => {
+            user = payload;
+            state.dispatch('castle-results', user.id);
+            state.dispatch('castle-heroes', user.id);
+        });
+
+        listen('castle-tournament', (payload) => {
+            tournament = payload;
+        });
+
+        listen('castle-results', (payload) => {
+            results = payload;
+        });
+
+        listen('castle-heroes', (payload) => {
+            heroes = payload || [];
+        });
+    });
 </script>
+<style>
+    #castle-heroes span {
+        display: inline-block;
+        min-width: 55px;
+        margin: .5em 0;
+    }
+</style>
