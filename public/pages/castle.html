@@ -5,13 +5,35 @@
         <button type="button" data-navigation value="overview"><span class="sx-button-icon">🪟</span> Login</button>
     </div>
     <div id="castle-main" hidden>
+        <p>Gather your heroes in the castle and let them compete in tournaments to win fame and glory.</p>
         <h2>Tournament</h2>
+        <details>
+            <summary>Once a tournament is held, your active hero will compete against all other heroes across all tiers. Win to increase your rank.</summary>
+            <ul>
+                <li>Each tournament has a league modifier that applies to all tiers.</li>
+                <li>An additional area effect is active in the final tier.</li>
+                <li>Only your active hero will compete.</li>
+                <li>You enter a separate tournament for each tier, limiting your hero accordingly.</li>
+                <li>You can review the results of your previous tournaments.</li>
+                <li>Your rank is determined by comparing your win/loss ratio with the surrounding heroes.</li>
+            </ul>
+        </details>
         <div id="castle-tournament" hidden></div>
         <div id="castle-result" hidden>
             <h3>Previous Results</h3>
             <div id="castle-result-tiers" class="sx-cards"></div>
         </div>
         <h2>Heroes</h2>
+        <details>
+            <summary>Manage your heroes, run sparring matches, and activate one for the tournament.</summary>
+            <ul>
+                <li>You can send up to three heroes to the castle.</li>
+                <li>Only one hero can participate in the tournament.</li>
+                <li>The stat summary shows your final tier.</li>
+                <li>Edit a hero to view detailed information about the tiers.</li>
+                <li>You can run training matches against other heroes outside the rankings.</li>
+            </ul>
+        </details>
         <table id="castle-heroes" class="sx-list"></table>
     </div>
 </template>
