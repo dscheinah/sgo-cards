@@ -55,7 +55,7 @@
                 div.classList.add('sx-card');
                 div.innerHTML = `
                     <h3>Tier ${index + 1}</h3>
-                    <p></p>${ranking.join('<br/>')}</p>
+                    <p></p>${ranking.map((rank) => helper.escape(rank)).join('<br/>')}</p>
                 `;
                 return div;
             });
@@ -65,7 +65,7 @@
             helper.set('#overview-user', 'hidden', !user.id);
             helper.set('#overview-create', 'hidden', !user.create);
             helper.set('#overview-error', 'hidden', !user.error);
-            helper.set('#overview-name', 'innerHTML', user.name);
+            helper.set('#overview-name', 'innerText', user.name);
         });
 
         show(() => {
