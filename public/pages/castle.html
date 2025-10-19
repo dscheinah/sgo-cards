@@ -101,7 +101,7 @@
                 const shrine = hero.shrine ? `${hero.shrine.icon} ${hero.shrine.text}` : '';
                 tr.innerHTML = `
                     <td>
-                        <strong>${hero.name}</strong> ${specialization}<br/>
+                        <strong>${helper.escape(hero.name)}</strong> ${specialization}<br/>
                         <span>${helper.tags(['health'])} ${hero.health}</span>
                         <span>${helper.tags(['damage'])} ${hero.damage}</span>
                         <span>${helper.tags(['defense'])} ${hero.defense}</span>

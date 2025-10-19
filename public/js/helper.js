@@ -7,6 +7,7 @@ export {default as focus} from '../vendor/dscheinah/sx-js/src/helper/focus.js';
 export {default as list} from '../vendor/dscheinah/sx-js/src/helper/list.js';
 export {default as set} from '../vendor/dscheinah/sx-js/src/helper/set.js';
 export {default as style} from '../vendor/dscheinah/sx-js/src/helper/style.js';
+export {default as escape} from './helper/escape.js';
 export {default as log} from './helper/log.js';
 export {default as player} from './helper/player.js';
 export {default as tags} from './helper/tags.js';

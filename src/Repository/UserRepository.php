@@ -18,7 +18,7 @@ class UserRepository
 
     public function create(string $name): ?array
     {
-        $name = substr(strip_tags($name), 0, 23);
+        $name = substr(strip_tags(html_entity_decode($name)), 0, 23);
         $user = $this->userStorage->fetchLoggedOut($name);
         if ($user) {
             $this->userStorage->login($user['id']);
