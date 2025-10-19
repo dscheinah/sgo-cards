@@ -1,4 +1,4 @@
-export function rankings(userId) {
+export async function rankings(userId) {
     if (userId) {
         return [
             [
@@ -43,7 +43,7 @@ export function rankings(userId) {
     ];
 }
 
-export function tournament() {
+export async function tournament() {
     return {
         modifier: {text: "More global Buff and Curse effectivity"},
         area: {icon: "🕳️", name: "Trapped Dungeons", description: "Reflect back the dealt Damage."},
@@ -51,7 +51,7 @@ export function tournament() {
     }
 }
 
-export function results(userId) {
+export async function results(userId) {
     if (!userId) {
         return null;
     }
@@ -71,12 +71,13 @@ export function results(userId) {
     ];
 }
 
-export function heroes(userId) {
+export async function heroes(userId, heroId) {
     if (!userId) {
         return null;
     }
     return [
         {
+            id: 1,
             name: 'Tattersail',
             health: 100,
             damage: 50,
@@ -86,8 +87,10 @@ export function heroes(userId) {
             curse: -12,
             shrine: { icon: "🍂⛩️", text: "Shrine of Nature"},
             specialization: {icon: "🤺", name: "Warrior"},
+            active: heroId === 1,
         },
         {
+            id: 2,
             name: 'Weatherwax',
             health: 10,
             damage: 20,
@@ -95,6 +98,7 @@ export function heroes(userId) {
             magic: 40,
             speed: 50,
             curse: 0,
+            active: heroId === 2,
         },
         null,
     ];

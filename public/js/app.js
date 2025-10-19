@@ -58,7 +58,7 @@ state.handle('achievements', async(payload, next) => next(await achievement.list
 state.handle('castle-rankings', (payload) => castle.rankings(payload));
 state.handle('castle-tournament', (payload) => castle.tournament(payload));
 state.handle('castle-results', (payload) => castle.results(payload));
-state.handle('castle-heroes', (payload) => castle.heroes(payload));
+state.handle('castle-heroes', (payload) => castle.heroes(...payload));
 state.handle('leagues', () => league.list());
 state.handle('league', (payload) => league.information(payload));
 state.handle('round', async(payload, next) => next(await round.load(payload)));
@@ -81,6 +81,8 @@ page.add('game', 'pages/game.html', window.location.href);
 page.add('game-treasure', 'pages/game/treasure.html', window.location.href);
 page.add('statistics', 'pages/statistics.html', window.location.href);
 page.add('castle', 'pages/castle.html', window.location.href);
+page.add('castle-hero', 'pages/castle/hero.html', window.location.href);
+page.add('castle-training', 'pages/castle/training.html', window.location.href);
 // If used with routing this must be replaced with a check on the called route.
 page.show('overview');
 
