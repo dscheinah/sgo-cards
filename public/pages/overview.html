@@ -37,7 +37,9 @@
     </div>
     <h2>Tournament Rankings</h2>
     <div id="overview-tournament" class="sx-cards"></div>
-    <button type="button" data-navigation value="castle"><span class="sx-button-icon">🏰️</span> Visit Castle</button>
+    <button id="overview-castle" type="button" data-navigation value="castle" hidden>
+        <span class="sx-button-icon">🏰️</span> Visit Castle
+    </button>
 </template>
 
 <script type="module">
@@ -66,6 +68,7 @@
             helper.set('#overview-create', 'hidden', !user.create);
             helper.set('#overview-error', 'hidden', !user.error);
             helper.set('#overview-name', 'innerText', user.name);
+            helper.set('#overview-castle', 'hidden', !user.id);
         });
 
         show(() => {
