@@ -1,3 +1,83 @@
 <template>
     <h2>Training</h2>
+    <p>Select other heroes to test your build and see the detailed result.</p>
+    <table id="castle-training" class="sx-list">
+        <colgroup>
+            <col/>
+            <col class="sx-action"/>
+        </colgroup>
+        <tbody></tbody>
+    </table>
 </template>
+<script type="module">
+    import {helper, page, state} from '../../js/app.js';
+
+    let enemies = state.get('castle-enemies') || [];
+
+    page.register('castle-training', ({render, action, listen}) => {
+        render(() => {
+            helper.list('#castle-training tbody', enemies, (enemy, index) => {
+                const tr = helper.create('tr');
+                const specialization = enemy.specialization ? `&ndash; ${enemy.specialization.icon} ${enemy.specialization.name}` : '';
+                const shrine = enemy.shrine ? `&ndash; ${enemy.shrine.icon} ${enemy.shrine.text}` : '';
+                const result = enemy.result ? `
+                    <h3>Result</h3>
+                    ${enemy.result['winner'] ? 'Victory' : 'Defeat'} in ${enemy.result['duration']} ${enemy.result['duration'] === 1 ? 'round' : 'rounds'}
+                    ${helper.log(enemy.result.log)}
+                ` : '';
+                tr.innerHTML = `
+                    <td>
+                        <strong>${helper.escape(enemy.name)}</strong> <span>${shrine}</span> <span>${specialization}</span><br/>
+                        <span class="castle-training-stat">${helper.tags(['health'])} ${enemy.health}</span>
+                        <span class="castle-training-stat">${helper.tags(['damage'])} ${enemy.damage}</span>
+                        <span class="castle-training-stat">${helper.tags(['defense'])} ${enemy.defense}</span>
+                        <span class="castle-training-stat">${helper.tags(['magic'])} ${enemy.magic}</span>
+                        <span class="castle-training-stat">${helper.tags(['speed'])} ${enemy.speed}</span>
+                        <span class="castle-training-stat">${helper.tags(['curse'])} ${enemy.curse}</span><br/>
+                        ${result}
+                    </td>
+                    <td><button type="button" value="${index}"><span class="sx-button-icon">🤼</span> Fight</button></td>
+                `;
+                return tr;
+            });
+        });
+
+        action('#castle-training button', 'click', (event, target) => {
+            const enemy = enemies[parseInt(target.value)];
+            if (enemy) {
+                state.dispatch('castle-training', [enemy.hero_id, enemy.enemy_id]);
+            }
+        });
+
+        listen('castle-enemies', (payload) => {
+            enemies = payload || [];
+        });
+
+        listen('castle-training', (payload) => {
+            const enemy = enemies.find((enemy) => enemy.enemy_id === payload.enemy_id);
+            if (enemy) {
+                enemy.result = payload;
+            }
+        })
+    });
+</script>
+<style>
+    #castle-training td {
+        vertical-align: top;
+    }
+
+    #castle-training span {
+        display: inline-block;
+    }
+
+    .castle-training-stat {
+        min-width: 55px;
+        margin: .5em 0;
+    }
+
+    #castle-training svg {
+        width: 100%;
+        height: auto;
+        max-height: 33vh;
+    }
+</style>
