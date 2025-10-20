@@ -20,6 +20,7 @@
         </table>
         <div class="sx-actions">
             <button type="submit"><span class="sx-button-icon">💾</span> Apply</button>
+            <span id="game-treasure-counter"></span>
         </div>
     </form>
 </template>
@@ -54,6 +55,8 @@
                 `
                 return tr;
             });
+            const length = helper.elements('#game-treasure input:checked').length;
+            helper.set('#game-treasure-counter', 'innerHTML', `${length} ${length === 1 ? 'treasure' : 'treasures'} selected`);
         });
 
         show(() => {
@@ -61,8 +64,11 @@
         });
 
         action('#game-treasure input', 'input', (event, target) => {
-            if (helper.elements('#game-treasure input:checked').length > 4) {
+            const length = helper.elements('#game-treasure input:checked').length;
+            if (length > 4) {
                 target.checked = false;
+            } else {
+                helper.set('#game-treasure-counter', 'innerHTML', `${length} ${length === 1 ? 'treasure' : 'treasures'} selected`);
             }
         });
 
