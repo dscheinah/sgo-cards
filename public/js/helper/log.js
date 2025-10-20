@@ -26,9 +26,9 @@ export default function (entries) {
     `;
 
     return `
-        <h2>Battle-Log</h2>
+        <h3>Battle-Log</h3>
         <p><strong style="color:#d3273e;">Health</strong> - <strong style="color:#1d4289;">Damage</strong> - <strong style="color:#ffc845;">Magic</strong></p>
-        <h3>Player</h3>
+        <h4>Player</h4>
         <svg viewBox="-10 -10 ${width + 20} ${height + 20}" xmlns="http://www.w3.org/2000/svg" stroke-width="2">
             <polyline points="${pdt.join(' ')}" fill="none" stroke="#1d4289" opacity=".25"/>
             <polyline points="${pmt.join(' ')}" fill="none" stroke="#ffc845" opacity=".25"/>
@@ -37,7 +37,7 @@ export default function (entries) {
             <polyline points="${pht.join(' ')}" fill="none" stroke="#d3273e"/>
             ${axis}
         </svg>
-        <h3>Enemy</h3>
+        <h4>Enemy</h4>
         <svg viewBox="-10 -10 ${width + 20} ${height + 20}" xmlns="http://www.w3.org/2000/svg" stroke-width="2">
             <polyline points="${edt.join(' ')}" fill="none" stroke="#1d4289" opacity=".25"/>
             <polyline points="${emt.join(' ')}" fill="none" stroke="#ffc845" opacity=".25"/>

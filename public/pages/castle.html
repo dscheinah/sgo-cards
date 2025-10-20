@@ -139,12 +139,12 @@
         });
 
         action('#castle-heroes [data-training]', 'click', (event, target) => {
-            state.dispatch('castle-training', [user?.id, target.value]);
+            state.dispatch('castle-enemies', parseInt(target.value));
             page.show('castle-training');
         });
 
         action('#castle-heroes [data-hero]', 'click', (event, target) => {
-            state.dispatch('castle-hero', [user?.id, target.value]);
+            state.dispatch('castle-hero', [user?.id, parseInt(target.value)]);
             page.show('castle-hero');
         });
 
