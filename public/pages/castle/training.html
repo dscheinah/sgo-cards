@@ -22,7 +22,9 @@
                 const shrine = enemy.shrine ? `&ndash; ${enemy.shrine.icon} ${enemy.shrine.text}` : '';
                 const result = enemy.result ? `
                     <h3>Result</h3>
-                    ${enemy.result['winner'] ? 'Victory' : 'Defeat'} in ${enemy.result['duration']} ${enemy.result['duration'] === 1 ? 'round' : 'rounds'}
+                    ${enemy.result.tiers
+                        .map((tier, index) => `Tier ${index + 1}: ${tier.winner ? 'Victory' : 'Defeat'} in ${tier.duration} ${tier.duration === 1 ? 'round' : 'rounds'}`)
+                        .join('<br/>')}
                     ${helper.log(enemy.result.log)}
                 ` : '';
                 tr.innerHTML = `

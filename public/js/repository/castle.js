@@ -128,8 +128,11 @@ export async function training(heroId, enemyId) {
     return {
         hero_id: heroId,
         enemy_id: enemyId,
-        winner: false,
-        duration: 4,
+        tiers: [
+            {winner: true, duration: 4},
+            {winner: false, duration: 10},
+            {winner: true, duration: 7},
+        ],
         log: [{
             player_health: 22,
             player_damage: 40,
