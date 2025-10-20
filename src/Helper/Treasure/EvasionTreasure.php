@@ -36,7 +36,9 @@ class EvasionTreasure implements TreasureInterface
 
     public static function player(Treasure $treasure, array $player): ?array
     {
-        $player['speed_damage'] = 0;
+        if ($player['speed_damage'] > 0) {
+            $player['speed_damage'] = 1;
+        }
         return $player;
     }
 
