@@ -73,7 +73,12 @@ progress {
     display: inline-block;
 }
 
-.hero-stat {
-    min-width: 55px;
-    margin: .5em 0;
+.hero-table.hero-table {
+    width: 100%;
+    max-width: 520px;
+    margin: .5em 0
+}
+
+.hero-table td {
+    min-width: 25px;
 }
