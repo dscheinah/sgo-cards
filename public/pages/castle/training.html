@@ -23,7 +23,7 @@
                 const result = enemy.result ? `
                     <h3>Result</h3>
                     ${enemy.result.tiers
-                        .map((tier, index) => `Tier ${index + 1}: ${tier.winner ? 'Victory' : 'Defeat'} in ${tier.duration} ${tier.duration === 1 ? 'round' : 'rounds'}`)
+                        .map((tier, index) => `${helper.league(index, 'icon')}: ${tier.winner ? 'Victory' : 'Defeat'} in ${tier.duration} ${tier.duration === 1 ? 'round' : 'rounds'}`)
                         .join('<br/>')}
                     ${helper.log(enemy.result.log)}
                 ` : '';
