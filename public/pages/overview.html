@@ -56,8 +56,11 @@
                 const div = helper.create('div');
                 div.classList.add('sx-card');
                 div.innerHTML = `
-                    <h3>Tier ${index + 1}</h3>
-                    <p></p>${ranking.map((rank) => helper.escape(rank)).join('<br/>')}</p>
+                    <h3>
+                        ${helper.league(index, 'icon')} ${helper.league(index, 'name')}<br/>
+                        <small>${helper.league(index, 'tier')}</small>
+                    </h3>
+                    <p>${ranking.map((rank) => helper.escape(rank)).join('<br/>')}</p>
                 `;
                 return div;
             });
@@ -113,8 +116,11 @@
         margin-bottom: 2em;
     }
 
-    #overview-tournament .sx-card {
-        text-align: left;
+    #overview-tournament > * {
         justify-content: flex-start;
+    }
+
+    #overview-tournament p {
+        text-align: left;
     }
 </style>

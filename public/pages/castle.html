@@ -78,7 +78,10 @@
                 const div = helper.create('div');
                 div.classList.add('sx-card');
                 div.innerHTML = `
-                    <h4>Tier ${index + 1}</h4>
+                    <h4>
+                        ${helper.league(index, 'icon')} ${helper.league(index, 'name')}<br/>
+                        <small>${helper.league(index, 'tier')}</small>
+                    </h4>
                     <table>
                         <tbody>
                             <tr><th>Win</th><td>${entry.win}</td></tr>
