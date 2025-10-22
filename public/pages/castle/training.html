@@ -12,7 +12,15 @@
 <script type="module">
     import {helper, page, state} from '../../js/app.js';
 
+    let heroes = state.get('castle-heroes') || [];
     let enemies = state.get('castle-enemies') || [];
+
+    function compareForClassString(key, reference, data) {
+        if (!reference || reference[key] === data[key]) {
+            return '';
+        }
+        return reference[key] > data[key] ? 'sx-error' : 'sx-highlight';
+    }
 
     page.register('castle-training', ({render, action, listen}) => {
         render(() => {
@@ -27,15 +35,16 @@
                         .join('<br/>')}
                     ${helper.log(enemy.result.log)}
                 ` : '';
+                const hero = heroes.find((hero) => hero.id === enemy.hero_id);
                 tr.innerHTML = `
                     <td>
                         <strong>${helper.escape(enemy.name)}</strong> <span>${shrine}</span> <span>${specialization}</span><br/>
-                        <span class="castle-training-stat">${helper.tags(['health'])} ${enemy.health}</span>
-                        <span class="castle-training-stat">${helper.tags(['damage'])} ${enemy.damage}</span>
-                        <span class="castle-training-stat">${helper.tags(['defense'])} ${enemy.defense}</span>
-                        <span class="castle-training-stat">${helper.tags(['magic'])} ${enemy.magic}</span>
-                        <span class="castle-training-stat">${helper.tags(['speed'])} ${enemy.speed}</span>
-                        <span class="castle-training-stat">${helper.tags(['curse'])} ${enemy.curse}</span><br/>
+                        <span class="castle-training-stat ${compareForClassString('health', hero, enemy)}">${helper.tags(['health'])} ${enemy.health}</span>
+                        <span class="castle-training-stat ${compareForClassString('damage', hero, enemy)}">${helper.tags(['damage'])} ${enemy.damage}</span>
+                        <span class="castle-training-stat ${compareForClassString('defense', hero, enemy)}">${helper.tags(['defense'])} ${enemy.defense}</span>
+                        <span class="castle-training-stat ${compareForClassString('magic', hero, enemy)}">${helper.tags(['magic'])} ${enemy.magic}</span>
+                        <span class="castle-training-stat ${compareForClassString('speed', hero, enemy)}">${helper.tags(['speed'])} ${enemy.speed}</span>
+                        <span class="castle-training-stat ${compareForClassString('curse', hero, enemy)}">${helper.tags(['curse'])} ${enemy.curse}</span><br/>
                         ${result}
                     </td>
                     <td><button type="button" value="${index}"><span class="sx-button-icon">🤼</span> Fight</button></td>
@@ -49,6 +58,10 @@
             if (enemy) {
                 state.dispatch('castle-training', [enemy.hero_id, enemy.enemy_id]);
             }
+        });
+
+        listen('castle-heroes', (payload) => {
+            heroes = payload || [];
         });
 
         listen('castle-enemies', (payload) => {
