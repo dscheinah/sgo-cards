@@ -68,3 +68,12 @@ progress {
     border-radius: 50%;
     z-index: 3000;
 }
+
+.hero span {
+    display: inline-block;
+}
+
+.hero-stat {
+    min-width: 55px;
+    margin: .5em 0;
+}
