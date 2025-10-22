@@ -35,11 +35,6 @@
             </ul>
         </details>
         <table id="castle-heroes" class="sx-list">
-            <colgroup>
-                <col/>
-                <col class="sx-action"/>
-                <col class="sx-action"/>
-            </colgroup>
             <tbody></tbody>
         </table>
     </div>
@@ -105,19 +100,20 @@
                 const tr = helper.create('tr');
                 if (!hero) {
                     tr.innerHTML = `
-                        <td><em>Empty slot</em><br/></td>
-                        <td></td>
-                        <td><button type="button" data-hero><span class="sx-button-icon">⚙️</span> Manage</button></td>
+                        <td>
+                            <p><em>Empty slot</em></p>
+                            <button type="button" data-hero><span class="sx-button-icon">⚙️</span> Manage</button>
+                        </td>
                     `;
                     return tr;
                 }
                 tr.innerHTML = `
                     <td>
                         ${helper.hero(hero)}
+                        <button type="button" value="${hero.id}" data-hero><span class="sx-button-icon">⚙️</span> Manage</button>
+                        <button type="button" value="${hero.id}" data-training><span class="sx-button-icon">🏋️</span> Training</button>
                         <button type="button" value="${hero.id}" ${hero.active ? 'disabled' :''} data-activate><span class="sx-button-icon">⭐️</span> Activate</button>
                     </td>
-                    <td><button type="button" value="${hero.id}" data-training><span class="sx-button-icon">🏋️</span> Training</button></td>
-                    <td><button type="button" value="${hero.id}" data-hero><span class="sx-button-icon">⚙️</span> Manage</button></td>
                 `
                 return tr;
             })
@@ -164,6 +160,6 @@
 </script>
 <style>
     #castle-heroes button {
-        margin: .5rem 0;
+        margin-right: 1rem;
     }
 </style>

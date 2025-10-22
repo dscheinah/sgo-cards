@@ -2,10 +2,6 @@
     <h2>Training</h2>
     <p>Select other heroes to test your build and see the detailed result.</p>
     <table id="castle-training" class="sx-list">
-        <colgroup>
-            <col/>
-            <col class="sx-action"/>
-        </colgroup>
         <tbody></tbody>
     </table>
 </template>
@@ -30,9 +26,9 @@
                 tr.innerHTML = `
                     <td>
                         ${helper.hero(enemy, hero)}
+                        <button type="button" value="${index}"><span class="sx-button-icon">🤼</span> Fight</button>
                         ${result}
                     </td>
-                    <td><button type="button" value="${index}"><span class="sx-button-icon">🤼</span> Fight</button></td>
                 `;
                 return tr;
             });
@@ -62,10 +58,6 @@
     });
 </script>
 <style>
-    #castle-training td {
-        vertical-align: top;
-    }
-
     #castle-training svg {
         width: 100%;
         height: auto;
