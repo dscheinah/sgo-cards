@@ -111,17 +111,9 @@
                     `;
                     return tr;
                 }
-                const specialization = hero.specialization ? `&ndash; ${hero.specialization.icon} ${hero.specialization.name}` : '';
-                const shrine = hero.shrine ? `&ndash; ${hero.shrine.icon} ${hero.shrine.text}` : '';
                 tr.innerHTML = `
                     <td>
-                        ${hero.active ? '⭐️' : ''} <strong>${helper.escape(hero.name)}</strong> <span>${shrine}</span> <span>${specialization}</span><br/>
-                        <span class="castle-hero-stat">${helper.tags(['health'])} ${hero.health}</span>
-                        <span class="castle-hero-stat">${helper.tags(['damage'])} ${hero.damage}</span>
-                        <span class="castle-hero-stat">${helper.tags(['defense'])} ${hero.defense}</span>
-                        <span class="castle-hero-stat">${helper.tags(['magic'])} ${hero.magic}</span>
-                        <span class="castle-hero-stat">${helper.tags(['speed'])} ${hero.speed}</span>
-                        <span class="castle-hero-stat">${helper.tags(['curse'])} ${hero.curse}</span><br/>
+                        ${helper.hero(hero)}
                         <button type="button" value="${hero.id}" ${hero.active ? 'disabled' :''} data-activate><span class="sx-button-icon">⭐️</span> Activate</button>
                     </td>
                     <td><button type="button" value="${hero.id}" data-training><span class="sx-button-icon">🏋️</span> Training</button></td>
@@ -171,15 +163,6 @@
     });
 </script>
 <style>
-    #castle-heroes span {
-        display: inline-block;
-    }
-
-    .castle-hero-stat {
-        min-width: 55px;
-        margin: .5em 0;
-    }
-
     #castle-heroes button {
         margin: .5rem 0;
     }
