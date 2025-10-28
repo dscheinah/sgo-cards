@@ -12,13 +12,13 @@
         </ul>
     </details>
     <form id="castle-hero">
-        <input id="castle-hero-name" required/>
+        <input id="castle-hero-name" name="name" required/>
         <label for="castle-hero-name">Name</label>
         <p>
             <strong>Tournament modifier:</strong><br/>
             More global Buff and Curse effectivity
         </p>
-        <select id="castle-hero-modifier"></select>
+        <select id="castle-hero-modifier" name="modifier"></select>
         <label for="castle-hero-modifier">Hero modifier</label>
         <div id="castle-hero-base">
             <h3>Base</h3>
@@ -39,7 +39,7 @@
             <h3>Tier 1</h3>
             <p hidden><em>Is unlocked once you pick higher-level cards during gameplay.</em></p>
             <div hidden>
-                <select id="castle-hero-shrine"></select>
+                <select id="castle-hero-shrine" name="shrine"></select>
                 <label for="castle-hero-shrine">Blessing</label>
                 <table class="sx-list">
                     <colgroup>
@@ -59,7 +59,7 @@
             <h3>Tier 2</h3>
             <p hidden><em>Is unlocked once you reach 33 % achievements and pick high-level cards during gameplay.</em></p>
             <div hidden>
-                <select id="castle-hero-specialization"></select>
+                <select id="castle-hero-specialization" name="specialization"></select>
                 <label for="castle-hero-specialization">Specialization</label>
                 <table class="sx-list">
                     <colgroup>
@@ -136,9 +136,9 @@
             <td class="castle-hero-icons">${card.icon}</td>
             <td>${card.text}</td>
             <td class="castle-hero-tags">${helper.tags(card.tags)}</td>
-            <td><button type="button" ${card.amount < 1 ? 'disabled' : ''}>&minus;</button></td>
+            <td><button type="button" ${card.amount < 1 ? 'disabled' : ''} value="${card.amount - 1}" data-change="${identifier}">&minus;</button></td>
             <td class="castle-hero-amount">${card.amount}</td>
-            <td><button type="button" ${count > 14 ? 'disabled' : ''}>&plus;</button></td>
+            <td><button type="button" ${count > 14 ? 'disabled' : ''} value="${card.amount + 1}" data-change="${identifier}">&plus;</button></td>
         `;
         return tr;
     }
@@ -184,7 +184,7 @@
         `;
     }
 
-    page.register('castle-hero', ({render, show, listen}) => {
+    page.register('castle-hero', ({render, show, action, listen}) => {
         render(() => {
             helper.list('#castle-hero-modifier', [null, ...modifiers], (modifier) => {
                 const option = helper.create('option');
@@ -261,6 +261,32 @@
             state.dispatch('castle-specializations', user?.id);
         });
 
+        action('#castle-hero', 'submit', (event, target) => {
+            event.preventDefault();
+            const data = new FormData(target);
+            [
+                ...Object.entries(hero.base || {}),
+                ...Object.entries(hero.tier_1 || {}),
+                ...Object.entries(hero.tier_2 || {}),
+                ...Object.entries(hero.tier_3 || {}),
+                ...Object.entries(hero.final || {}),
+            ].forEach(([identifier, card]) => {
+                data.append(`cards[${identifier}]`, card.amount);
+            })
+            state.dispatch('castle-hero-save', [user?.id, hero.hero_id, data]);
+        });
+
+        action('#castle-hero [data-change]', 'click', (event, target) => {
+            const identifier = target.dataset.change;
+            const amount = parseInt(target.value);
+            ['base', 'tier_1', 'tier_2', 'tier_3', 'final'].forEach((type) => {
+                if (hero[type][identifier]) {
+                    hero[type][identifier].amount = amount;
+                }
+            })
+            state.set('castle-hero', hero);
+        });
+
         listen('user', (payload) => {
             user = payload;
             state.dispatch('castle-modifiers', user.id);
@@ -282,6 +308,10 @@
 
         listen('castle-specializations', (payload) => {
             specializations = payload || [];
+        });
+
+        listen('castle-hero-save', () => {
+            history.back();
         });
     });
 </script>

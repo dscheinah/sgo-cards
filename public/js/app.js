@@ -62,6 +62,7 @@ state.handle('castle-enemies', (payload) => castle.enemies(payload));
 state.handle('castle-training', (payload) => castle.training(...payload));
 state.handle('castle-heroes', (payload) => castle.heroes(...payload));
 state.handle('castle-hero', (payload) => castle.hero(...payload));
+state.handle('castle-hero-save', (payload) => castle.save(...payload));
 state.handle('castle-modifiers', (payload) => castle.modifiers(payload));
 state.handle('castle-shrines', (payload) => castle.shrines(payload));
 state.handle('castle-specializations', (payload) => castle.specializations(payload));

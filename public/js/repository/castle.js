@@ -877,3 +877,6 @@ export function specializations(userId) {
         },
     ];
 }
+
+export function save(userId, heroId, data) {
+}
