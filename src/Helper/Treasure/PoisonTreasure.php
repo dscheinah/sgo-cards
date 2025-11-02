@@ -10,9 +10,6 @@ class PoisonTreasure implements TreasureInterface
 {
     public static function beginOfTurn(Treasure $treasure, Battlefield $battlefield): void
     {
-        if (!$treasure->charges && !$treasure->trigger) {
-            $treasure->initialize();
-        }
     }
 
     public static function trigger(Treasure $treasure, Battlefield $battlefield): void
@@ -25,6 +22,9 @@ class PoisonTreasure implements TreasureInterface
 
     public static function levels(Treasure $treasure, Battlefield $battlefield): bool
     {
+        if (!$treasure->charges) {
+            $treasure->initialize();
+        }
         if ($battlefield->battle) {
             $treasure->experience = max($battlefield->battle->duration ** 2, $treasure->experience);
         }

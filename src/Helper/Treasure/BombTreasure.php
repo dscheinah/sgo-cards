@@ -10,9 +10,6 @@ class BombTreasure implements TreasureInterface
 {
     public static function beginOfTurn(Treasure $treasure, Battlefield $battlefield): void
     {
-        if (!$treasure->charges && !$treasure->trigger) {
-            $treasure->initialize();
-        }
     }
 
     public static function trigger(Treasure $treasure, Battlefield $battlefield): void
@@ -22,6 +19,9 @@ class BombTreasure implements TreasureInterface
 
     public static function levels(Treasure $treasure, Battlefield $battlefield): bool
     {
+        if (!$treasure->charges) {
+            $treasure->initialize();
+        }
         return false;
     }
 
