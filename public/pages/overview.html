@@ -36,7 +36,8 @@
         </p>
     </div>
     <h2>Tournament Rankings</h2>
-    <div id="overview-tournament" class="sx-cards"></div>
+    <p id="overview-no-tournament" hidden>Rankings will be available after the first tournament.</p>
+    <div id="overview-tournament" class="sx-cards" hidden></div>
     <button id="overview-castle" type="button" data-navigation value="castle" hidden>
         <span class="sx-button-icon">🏰️</span> Visit Castle
     </button>
@@ -47,11 +48,13 @@
 
     let user = state.get('user');
     let loading = state.get('loading');
-    let rankings = state.get('rankings');
+    let rankings = state.get('rankings') || [];
 
     page.register('overview', ({render, show, action, listen}) => {
         render(() => {
             helper.set('#overview-submit', 'disabled', loading || null);
+            helper.set('#overview-tournament', 'hidden', !rankings.length);
+            helper.set('#overview-no-tournament', 'hidden', rankings.length);
             helper.list('#overview-tournament', rankings, (ranking, index) => {
                 const div = helper.create('div');
                 div.classList.add('sx-card');
