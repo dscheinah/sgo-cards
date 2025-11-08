@@ -18,7 +18,7 @@ class AreaHelper
      *
      * @return array<Area>
      */
-    public function get(League $league): array
+    public function getForLeague(League $league): array
     {
         mt_srand($league->id);
 
