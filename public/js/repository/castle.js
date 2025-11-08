@@ -1,46 +1,9 @@
 export async function rankings(userId) {
-    if (userId) {
-        return [
-            [
-                '1. Logen',
-                '2. Mandragoran',
-                '3. Mill',
-                '...',
-                '11. Anomander',
-                '12. Kholin',
-                '13. Beric',
-            ],
-            [
-                '1. Logen',
-                '2. Mandragoran',
-                '3. Mill',
-                '4. Kholin',
-                '5. Emhyr',
-            ],
-            [
-                '1. Logen',
-                '2. Emhyr',
-                '3. Mill',
-            ],
-        ];
+    const result = await fetch('castle/ranking?user_id=' + encodeURIComponent(userId || ''));
+    if (result.ok) {
+        return result.json();
     }
-    return [
-        [
-            '1. Logen',
-            '2. Mandragoran',
-            '3. Mill',
-        ],
-        [
-            '1. Logen',
-            '2. Mandragoran',
-            '3. Mill',
-        ],
-        [
-            '1. Logen',
-            '2. Emhyr',
-            '3. Mill',
-        ],
-    ];
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
 export async function tournament() {

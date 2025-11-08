@@ -5,6 +5,8 @@ namespace App\Container;
 use App\ApplicationFactory;
 use App\Handler\AchievementHandlerFactory;
 use App\Handler\AchievementListHandler;
+use App\Handler\CastleHandlerFactory;
+use App\Handler\CastleRankingHandler;
 use App\Handler\LeagueHandlerFactory;
 use App\Handler\LeagueInformationHandler;
 use App\Handler\LeagueListHandler;
@@ -52,6 +54,8 @@ use App\Provider\TreasureProvider;
 use App\Provider\TreasureProviderFactory;
 use App\Repository\AchievementRepository;
 use App\Repository\AchievementRepositoryFactory;
+use App\Repository\CastleRepository;
+use App\Repository\CastleRepositoryFactory;
 use App\Repository\LeagueRepository;
 use App\Repository\LeagueRepositoryFactory;
 use App\Repository\RoundRepository;
@@ -67,6 +71,7 @@ use App\Storage\CardStorage;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\PoolStorage;
+use App\Storage\RankingStorage;
 use App\Storage\ShrineStorage;
 use App\Storage\SnapshotStorage;
 use App\Storage\TreasureStorage;
@@ -108,6 +113,7 @@ class Provider implements ProviderInterface
         $injector->set(BackendInterface::class, MySqlBackendFactory::class);
 
         $injector->set(AchievementListHandler::class, AchievementHandlerFactory::class);
+        $injector->set(CastleRankingHandler::class, CastleHandlerFactory::class);
         $injector->set(LeagueListHandler::class, LeagueHandlerFactory::class);
         $injector->set(LeagueInformationHandler::class, LeagueHandlerFactory::class);
         $injector->set(RoundLoadHandler::class, RoundHandlerFactory::class);
@@ -137,6 +143,7 @@ class Provider implements ProviderInterface
         $injector->set(TreasureProvider::class, TreasureProviderFactory::class);
 
         $injector->set(AchievementRepository::class, AchievementRepositoryFactory::class);
+        $injector->set(CastleRepository::class, CastleRepositoryFactory::class);
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);
         $injector->set(SpecializationRepository::class, SpecializationRepositoryFactory::class);
@@ -147,6 +154,7 @@ class Provider implements ProviderInterface
         $injector->set(LeagueStorage::class, StorageFactory::class);
         $injector->set(PlayerStorage::class, StorageFactory::class);
         $injector->set(PoolStorage::class, StorageFactory::class);
+        $injector->set(RankingStorage::class, StorageFactory::class);
         $injector->set(ShrineStorage::class, StorageFactory::class);
         $injector->set(SnapshotStorage::class, StorageFactory::class);
         $injector->set(TreasureStorage::class, StorageFactory::class);
