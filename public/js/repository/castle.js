@@ -7,11 +7,11 @@ export async function rankings(userId) {
 }
 
 export async function tournament() {
-    return {
-        modifier: {text: "More global Buff and Curse effectivity"},
-        area: {icon: "🕳️", name: "Trapped Dungeons", description: "Reflect back the dealt Damage."},
-        hours: 112,
+    const result = await fetch('castle/tournament');
+    if (result.ok) {
+        return result.json();
     }
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
 export async function results(userId) {
