@@ -16,7 +16,7 @@
         <label for="castle-hero-name">Name</label>
         <p>
             <strong>Tournament modifier:</strong><br/>
-            More global Buff and Curse effectivity
+            <span id="castle-hero-tournament"></span>
         </p>
         <select id="castle-hero-modifier" name="modifier"></select>
         <label for="castle-hero-modifier">Hero modifier</label>
@@ -81,8 +81,7 @@
             <div hidden>
                 <p>
                     <strong>Area:</strong><br/>
-                    🕳️ Trapped Dungeons<br/>
-                    Reflect back the dealt Damage.
+                    <span id="castle-hero-area"></span>
                 </p>
                 <table class="sx-list">
                     <colgroup>
@@ -129,6 +128,7 @@
     let modifiers = state.get('castle-modifiers') || [];
     let shrines = state.get('castle-shrines') || [];
     let specializations = state.get('castle-specializations') || [];
+    let tournament = state.get('castle-tournament') || {};
 
     function createCard(card, identifier, count) {
         const tr = helper.create('tr');
@@ -253,6 +253,9 @@
             helper.set('#castle-hero-final > div', 'hidden', !final.length);
             helper.list('#castle-hero-final .sx-list tbody', final, ([identifier, card]) => createCard(card, identifier, finalCount));
             helper.set('#castle-hero-final .castle-hero-boost', 'innerHTML', createBoost([...base, ...tier1, ...tier2, ...tier3, ...final]));
+
+            helper.set('#castle-hero-tournament', 'innerHTML', tournament.modifier?.text);
+            helper.set('#castle-hero-area', 'innerHTML', `${tournament.area?.icon} ${tournament.area?.name}<br/>${tournament.area?.description}`);
         });
 
         show(() => {
@@ -308,6 +311,10 @@
 
         listen('castle-specializations', (payload) => {
             specializations = payload || [];
+        });
+
+        listen('castle-tournament', (payload) => {
+            tournament = payload || {};
         });
 
         listen('castle-hero-save', () => {
