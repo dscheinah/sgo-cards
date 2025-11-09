@@ -54,7 +54,7 @@ class ShrineProvider
         if (!$this->atPosition) {
             return null;
         }
-        return $this->shrineHelper->get($this->atPosition);
+        return $this->shrineHelper->create($this->atPosition);
     }
 
     /**
@@ -62,7 +62,7 @@ class ShrineProvider
      */
     public function createInRange(): array
     {
-        return array_filter(array_map(fn (array $input) => $this->shrineHelper->get($input), $this->inRange));
+        return array_filter(array_map(fn (array $input) => $this->shrineHelper->create($input), $this->inRange));
     }
 
     public function activate(): void

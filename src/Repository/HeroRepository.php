@@ -32,7 +32,7 @@ class HeroRepository
     {
         $shrines = [];
         foreach ($this->poolStorage->fetchShrinesForUser($userId) as $shrine) {
-            $shrines[] = $this->shrineHelper->get(['modifier' => $shrine['identifier']])?->output();
+            $shrines[] = $this->shrineHelper->get($shrine['identifier'])?->output();
         }
         return array_filter($shrines);
     }

@@ -6,9 +6,9 @@ use App\Helper\Shrine\ShrineInterface;
 
 class Shrine
 {
-    public int $x;
+    public int $x = 0;
 
-    public int $y;
+    public int $y = 0;
 
     public string $modifier;
 
