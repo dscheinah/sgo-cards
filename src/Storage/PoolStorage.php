@@ -5,6 +5,7 @@ namespace App\Storage;
 use App\Model\Card;
 use App\Model\Shrine;
 use App\Model\Specialization;
+use Generator;
 use Sx\Data\Storage;
 
 class PoolStorage extends Storage
@@ -48,9 +49,21 @@ class PoolStorage extends Storage
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
 
+    public function fetchShrinesForUser(string $userId): Generator
+    {
+        $statement = 'SELECT `identifier` FROM `pool_shrines` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId]);
+    }
+
     public function fetchSpecializationCountForUser(string $userId): int
     {
         $statement = 'SELECT COUNT(*) AS `count` FROM `pool_specializations` WHERE `user_id` = ?';
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
+    }
+
+    public function fetchSpecializationsForUser(string $userId): Generator
+    {
+        $statement = 'SELECT `identifier` FROM `pool_specializations` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId]);
     }
 }

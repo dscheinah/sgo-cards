@@ -9,6 +9,10 @@ use App\Handler\CastleHandlerFactory;
 use App\Handler\CastleRankingHandler;
 use App\Handler\CastleResultHandler;
 use App\Handler\CastleTournamentHandler;
+use App\Handler\HeroHandlerFactory;
+use App\Handler\HeroModifierHandler;
+use App\Handler\HeroShrineHandler;
+use App\Handler\HeroSpecializationHandler;
 use App\Handler\LeagueHandlerFactory;
 use App\Handler\LeagueInformationHandler;
 use App\Handler\LeagueListHandler;
@@ -58,6 +62,8 @@ use App\Repository\AchievementRepository;
 use App\Repository\AchievementRepositoryFactory;
 use App\Repository\CastleRepository;
 use App\Repository\CastleRepositoryFactory;
+use App\Repository\HeroRepository;
+use App\Repository\HeroRepositoryFactory;
 use App\Repository\LeagueRepository;
 use App\Repository\LeagueRepositoryFactory;
 use App\Repository\RoundRepository;
@@ -120,6 +126,9 @@ class Provider implements ProviderInterface
         $injector->set(CastleRankingHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleResultHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleTournamentHandler::class, CastleHandlerFactory::class);
+        $injector->set(HeroModifierHandler::class, HeroHandlerFactory::class);
+        $injector->set(HeroShrineHandler::class, HeroHandlerFactory::class);
+        $injector->set(HeroSpecializationHandler::class, HeroHandlerFactory::class);
         $injector->set(LeagueListHandler::class, LeagueHandlerFactory::class);
         $injector->set(LeagueInformationHandler::class, LeagueHandlerFactory::class);
         $injector->set(RoundLoadHandler::class, RoundHandlerFactory::class);
@@ -150,6 +159,7 @@ class Provider implements ProviderInterface
 
         $injector->set(AchievementRepository::class, AchievementRepositoryFactory::class);
         $injector->set(CastleRepository::class, CastleRepositoryFactory::class);
+        $injector->set(HeroRepository::class, HeroRepositoryFactory::class);
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);
         $injector->set(SpecializationRepository::class, SpecializationRepositoryFactory::class);

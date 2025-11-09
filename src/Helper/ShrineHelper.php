@@ -21,8 +21,8 @@ class ShrineHelper
         }
 
         $shrine = new Shrine();
-        $shrine->x = $input['x'];
-        $shrine->y = $input['y'];
+        $shrine->x = $input['x'] ?? 0;
+        $shrine->y = $input['y'] ?? 0;
         $shrine->modifier = $input['modifier'];
 
         $data = $this->shrines[$input['modifier']];

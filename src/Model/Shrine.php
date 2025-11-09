@@ -28,6 +28,7 @@ class Shrine
     public function output(): array
     {
         return [
+            'identifier' => $this->modifier,
             'shrine' => true,
             'text' => $this->text,
             'icon' => $this->icon,

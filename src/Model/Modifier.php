@@ -49,6 +49,7 @@ class Modifier
     public function output(): array
     {
         return [
+            'identifier' => $this->identifier,
             'text' => $this->text,
             'value' => $this->enemy ? array_sum($this->data) : $this->count,
         ];

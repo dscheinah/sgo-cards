@@ -744,92 +744,37 @@ export function hero(userId, heroId) {
     };
 }
 
-export function modifiers(userId) {
+export async function modifiers(userId) {
     if (!userId) {
         return null;
     }
-    return [
-        {
-            identifier: 'more_player_damage',
-            text: 'More global Damage',
-        },
-        {
-            identifier: 'more_player_defense',
-            text: 'More global Defense',
-        },
-        {
-            identifier: 'more_player_magic',
-            text: 'More global Magic',
-        },
-        {
-            identifier: 'more_player_speed',
-            text: 'More global Speed',
-        },
-    ];
+    const result = await fetch('castle/hero/modifier?user_id=' + encodeURIComponent(userId));
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
-export function shrines(userId) {
+export async function shrines(userId) {
     if (!userId) {
         return null;
     }
-    return [
-        {
-            identifier: 'fire',
-            text: 'Shrine of Fire',
-            icon: '🔥⛩️',
-            description: 'Increase offensive Magic',
-        },
-        {
-            identifier: 'ice',
-            text: 'Shrine of Ice',
-            icon: '️❄️⛩️',
-            description: 'Require additional Speed',
-        },
-        {
-            identifier: 'mist',
-            text: 'Shrine of Mist',
-            icon: '☁️⛩️️',
-            description: 'Chance to miss Damage',
-        },
-        {
-            identifier: 'nature',
-            text: 'Shrine of Nature',
-            icon: '🍂⛩️',
-            description: 'Poison based on Health',
-        },
-    ];
+    const result = await fetch('castle/hero/shrine?user_id=' + encodeURIComponent(userId));
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
-export function specializations(userId) {
+export async function specializations(userId) {
     if (!userId) {
         return null;
     }
-    return [
-        {
-            identifier: 'rogue',
-            icon: '🗡️️',
-            name: 'Rogue',
-            description: 'You never know what he does',
-        },
-        {
-            identifier: 'cleric',
-            icon: '📿',
-            name: 'Cleric',
-            description: 'Increase Health',
-        },
-        {
-            identifier: 'assassin',
-            icon: '🥷',
-            name: 'Assassin',
-            description: 'Faster and deadlier than average',
-        },
-        {
-            identifier: 'necromancer',
-            icon: '💀',
-            name: 'Necro',
-            description: 'Summons damaging undead every round',
-        },
-    ];
+    const result = await fetch('castle/hero/specialization?user_id=' + encodeURIComponent(userId));
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
 export function save(userId, heroId, data) {
