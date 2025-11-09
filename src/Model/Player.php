@@ -12,9 +12,9 @@ class Player
 
     public int $try = 0;
 
-    public int $x;
+    public int $x = 0;
 
-    public int $y;
+    public int $y = 0;
 
     public Modifier $modifier;
 
