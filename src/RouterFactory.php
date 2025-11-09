@@ -18,6 +18,7 @@ use App\Handler\TreasureActivateHandler;
 use App\Handler\UserCreateHandler;
 use App\Handler\UserGetHandler;
 use App\Handler\UserLogoutHandler;
+use App\Middleware\AchievementListMiddleware;
 use App\Middleware\SpecializationMiddleware;
 use App\Middleware\UserTokenCreateMiddleware;
 use App\Middleware\UserTokenValidateMiddleware;
@@ -48,6 +49,7 @@ class RouterFactory implements FactoryInterface
         // Add the example handler for the backend page.
         $router->post($prefix . 'list', ListHandler::class);
 
+        $router->get($prefix . 'achievement/list', AchievementListMiddleware::class);
         $router->get($prefix . 'achievement/list', AchievementListHandler::class);
 
         $router->get($prefix . 'castle/ranking', CastleRankingHandler::class);

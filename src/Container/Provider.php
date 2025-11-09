@@ -3,8 +3,8 @@
 namespace App\Container;
 
 use App\ApplicationFactory;
-use App\Handler\AchievementHandlerFactory;
 use App\Handler\AchievementListHandler;
+use App\Handler\AchievementListHandlerFactory;
 use App\Handler\CastleHandlerFactory;
 use App\Handler\CastleRankingHandler;
 use App\Handler\CastleResultHandler;
@@ -31,14 +31,16 @@ use App\Helper\AreaHelper;
 use App\Helper\AreaHelperFactory;
 use App\Helper\CardHelper;
 use App\Helper\CardHelperFactory;
-use App\Helper\SpecializationHelper;
-use App\Helper\SpecializationHelperFactory;
 use App\Helper\ModifierHelper;
 use App\Helper\ModifierHelperFactory;
 use App\Helper\ShrineHelper;
 use App\Helper\ShrineHelperFactory;
+use App\Helper\SpecializationHelper;
+use App\Helper\SpecializationHelperFactory;
 use App\Helper\TreasureHelper;
 use App\Helper\TreasureHelperFactory;
+use App\Middleware\AchievementListMiddleware;
+use App\Middleware\AchievementListMiddlewareFactory;
 use App\Middleware\SpecializationMiddleware;
 use App\Middleware\SpecializationMiddlewareFactory;
 use App\Middleware\UserMiddlewareFactory;
@@ -122,7 +124,7 @@ class Provider implements ProviderInterface
 
         $injector->set(BackendInterface::class, MySqlBackendFactory::class);
 
-        $injector->set(AchievementListHandler::class, AchievementHandlerFactory::class);
+        $injector->set(AchievementListHandler::class, AchievementListHandlerFactory::class);
         $injector->set(CastleRankingHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleResultHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleTournamentHandler::class, CastleHandlerFactory::class);
@@ -138,6 +140,7 @@ class Provider implements ProviderInterface
         $injector->set(UserCreateHandler::class, UserHandlerFactory::class);
         $injector->set(UserLogoutHandler::class, UserHandlerFactory::class);
 
+        $injector->set(AchievementListMiddleware::class, AchievementListMiddlewareFactory::class);
         $injector->set(SpecializationMiddleware::class, SpecializationMiddlewareFactory::class);
         $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);
         $injector->set(UserTokenValidateMiddleware::class, UserMiddlewareFactory::class);
