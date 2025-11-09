@@ -4,6 +4,7 @@ namespace App;
 
 use App\Handler\AchievementListHandler;
 use App\Handler\CastleRankingHandler;
+use App\Handler\CastleResultHandler;
 use App\Handler\CastleTournamentHandler;
 use App\Handler\LeagueInformationHandler;
 use App\Handler\LeagueListHandler;
@@ -47,6 +48,7 @@ class RouterFactory implements FactoryInterface
         $router->get($prefix . 'achievement/list', AchievementListHandler::class);
 
         $router->get($prefix . 'castle/ranking', CastleRankingHandler::class);
+        $router->get($prefix . 'castle/result', CastleResultHandler::class);
         $router->get($prefix . 'castle/tournament', CastleTournamentHandler::class);
 
         $router->get($prefix . 'league/list', LeagueListHandler::class);

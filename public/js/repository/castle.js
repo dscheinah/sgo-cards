@@ -18,20 +18,11 @@ export async function results(userId) {
     if (!userId) {
         return null;
     }
-    return [
-        {
-            win: 10,
-            loose: 5,
-            last: 13,
-            current: 12,
-        },
-        {
-            loose: 10,
-            win: 5,
-            last: 4,
-            current: 4,
-        },
-    ];
+    const result = await fetch('castle/result?user_id=' + encodeURIComponent(userId));
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
 export async function enemies(heroId) {

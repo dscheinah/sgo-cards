@@ -7,6 +7,7 @@ use App\Handler\AchievementHandlerFactory;
 use App\Handler\AchievementListHandler;
 use App\Handler\CastleHandlerFactory;
 use App\Handler\CastleRankingHandler;
+use App\Handler\CastleResultHandler;
 use App\Handler\CastleTournamentHandler;
 use App\Handler\LeagueHandlerFactory;
 use App\Handler\LeagueInformationHandler;
@@ -73,6 +74,7 @@ use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\PoolStorage;
 use App\Storage\RankingStorage;
+use App\Storage\ResultStorage;
 use App\Storage\ShrineStorage;
 use App\Storage\SnapshotStorage;
 use App\Storage\TournamentStorage;
@@ -116,6 +118,7 @@ class Provider implements ProviderInterface
 
         $injector->set(AchievementListHandler::class, AchievementHandlerFactory::class);
         $injector->set(CastleRankingHandler::class, CastleHandlerFactory::class);
+        $injector->set(CastleResultHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleTournamentHandler::class, CastleHandlerFactory::class);
         $injector->set(LeagueListHandler::class, LeagueHandlerFactory::class);
         $injector->set(LeagueInformationHandler::class, LeagueHandlerFactory::class);
@@ -158,6 +161,7 @@ class Provider implements ProviderInterface
         $injector->set(PlayerStorage::class, StorageFactory::class);
         $injector->set(PoolStorage::class, StorageFactory::class);
         $injector->set(RankingStorage::class, StorageFactory::class);
+        $injector->set(ResultStorage::class, StorageFactory::class);
         $injector->set(ShrineStorage::class, StorageFactory::class);
         $injector->set(SnapshotStorage::class, StorageFactory::class);
         $injector->set(TournamentStorage::class, StorageFactory::class);
