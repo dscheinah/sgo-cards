@@ -1,11 +1,10 @@
-const yScale = 2;
-
 export default function (entries) {
     if (!entries || !entries.length) {
         return '';
     }
     const xScale = window.innerWidth / (entries.length - 1);
     const max = Math.max(...entries.map((entry) => Object.values(entry)).flat());
+    const yScale = Math.max(.5, Math.min(window.innerHeight / 3 / max, 3));
 
     const pht = entries.map((entry, index) => `${index * xScale},${yScale * (max - entry['player_health'])}`);
     const pdt = entries.map((entry, index) => `${index * xScale},${yScale * (max - entry['player_damage'])}`);
