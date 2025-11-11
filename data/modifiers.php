@@ -17,6 +17,7 @@ return [
         ],
         'multiplicative' => true,
         'player' => true,
+        'self' => true,
         'text' => 'More global Damage',
     ],
     'more_player_defense' => [
@@ -25,6 +26,7 @@ return [
         ],
         'multiplicative' => true,
         'player' => true,
+        'self' => true,
         'text' => 'More global Defense',
     ],
     'more_player_magic' => [
@@ -33,6 +35,7 @@ return [
         ],
         'multiplicative' => true,
         'player' => true,
+        'self' => true,
         'text' => 'More global Magic',
     ],
     'more_player_speed' => [
@@ -41,6 +44,7 @@ return [
         ],
         'multiplicative' => true,
         'player' => true,
+        'self' => true,
         'text' => 'More global Speed',
     ],
     'reduce_damage' => [
@@ -49,6 +53,7 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
+        'self' => true,
         'text' => 'Less global Damage',
     ],
     'reduce_magic' => [
@@ -57,6 +62,7 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
+        'self' => true,
         'text' => 'Less global Magic',
     ],
     'reduce_speed' => [
@@ -65,6 +71,7 @@ return [
         ],
         'multiplicative' => true,
         'world' => true,
+        'self' => true,
         'text' => 'Less global Speed',
     ],
     'more_modifiers' => [
