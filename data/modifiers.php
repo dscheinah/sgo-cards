@@ -5,7 +5,7 @@ use App\Helper\Modifier\DependentModifier;
 return [
     'more_player_health' => [
         'data' => [
-            'health' => 1.3,
+            'health' => 1.2,
         ],
         'multiplicative' => true,
         'self' => true,
