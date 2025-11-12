@@ -39,7 +39,7 @@ class RouterFactory implements FactoryInterface
      * @param array    $options
      * @param string   $class
      *
-     * @return mixed|Router
+     * @return Router
      */
     public function create(Injector $injector, array $options, string $class): Router
     {
