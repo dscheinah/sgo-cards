@@ -50,6 +50,8 @@ use App\Provider\BattlefieldBuilder;
 use App\Provider\BattlefieldBuilderFactory;
 use App\Provider\BattleProvider;
 use App\Provider\BattleProviderFactory;
+use App\Provider\HeroBuilder;
+use App\Provider\HeroBuilderFactory;
 use App\Provider\LeagueProvider;
 use App\Provider\LeagueProviderFactory;
 use App\Provider\PlayerProvider;
@@ -78,6 +80,7 @@ use App\Repository\UserRepository;
 use App\Repository\UserRepositoryFactory;
 use App\RouterFactory;
 use App\Storage\CardStorage;
+use App\Storage\HeroStorage;
 use App\Storage\LeagueStorage;
 use App\Storage\PlayerStorage;
 use App\Storage\PoolStorage;
@@ -154,6 +157,7 @@ class Provider implements ProviderInterface
 
         $injector->set(BattlefieldBuilder::class, BattlefieldBuilderFactory::class);
         $injector->set(BattleProvider::class, BattleProviderFactory::class);
+        $injector->set(HeroBuilder::class, HeroBuilderFactory::class);
         $injector->set(LeagueProvider::class, LeagueProviderFactory::class);
         $injector->set(PlayerProvider::class, PlayerProviderFactory::class);
         $injector->set(ShrineProvider::class, ShrineProviderFactory::class);
@@ -170,6 +174,7 @@ class Provider implements ProviderInterface
         $injector->set(UserRepository::class, UserRepositoryFactory::class);
 
         $injector->set(CardStorage::class, StorageFactory::class);
+        $injector->set(HeroStorage::class, StorageFactory::class);
         $injector->set(LeagueStorage::class, StorageFactory::class);
         $injector->set(PlayerStorage::class, StorageFactory::class);
         $injector->set(PoolStorage::class, StorageFactory::class);
