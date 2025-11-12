@@ -28,6 +28,8 @@ class Player
 
     public array $data;
 
+    public int $curse = 0;
+
     public function calculation(League $league, ?Player $enemy = null): array
     {
         $modifiers = array_filter([
@@ -76,6 +78,9 @@ class Player
         $player = $card->modifier ? $this->withModifier($card->modifier) : clone $this;
         foreach ($card->data as $key => $value) {
             $player->data[$key] += $value;
+        }
+        if (in_array(Card::CURSE, $card->tags, true)) {
+            $player->curse++;
         }
         return $player;
     }
