@@ -16,7 +16,7 @@ class Player
 
     public int $y = 0;
 
-    public Modifier $modifier;
+    public ?Modifier $modifier = null;
 
     /** @var array<string, Modifier>  */
     public array $modifiers = [];
@@ -26,7 +26,13 @@ class Player
     /** @var array<Specialization> */
     public array $specializations = [];
 
-    public array $data;
+    public array $data = [
+        'health' => 0,
+        'damage' => 0,
+        'defense' => 0,
+        'magic' => 0,
+        'speed' => 0,
+    ];
 
     public int $curse = 0;
 
@@ -60,7 +66,7 @@ class Player
      */
     public function mods(): array
     {
-        return [$this->modifier, ...($this->specialization?->modifiers ?: []), ...$this->modifiers];
+        return array_filter([$this->modifier, ...($this->specialization?->modifiers ?: []), ...$this->modifiers]);
     }
 
     public function withModifier(Modifier $modifier): Player

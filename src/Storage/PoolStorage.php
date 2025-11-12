@@ -37,6 +37,12 @@ class PoolStorage extends Storage
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
 
+    public function fetchCardsForUser(string $userId): Generator
+    {
+        $statement = 'SELECT `identifier` FROM `pool_cards` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId]);
+    }
+
     public function fetchTypeCountForUser(string $userId, string $tag): int
     {
         $statement = 'SELECT SUM(`count`) AS `sum` FROM `pool_cards` WHERE `user_id` = ? AND `type` = ?';

@@ -59,6 +59,18 @@ class CardHelper
         return array_pop($draw);
     }
 
+    public function get(string $identifier): ?Card
+    {
+        foreach ($this->cards as $tier => $tierCards) {
+            $input = array_find($tierCards, static fn (array $card) => $card['identifier'] === $identifier);
+            if ($input) {
+                $input['tier'] = $tier;
+                return $this->create($input);
+            }
+        }
+        return null;
+    }
+
     private function cardsForTier(League $league, Player $player): array
     {
         mt_srand($league->id);
