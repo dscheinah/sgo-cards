@@ -6,6 +6,8 @@ use App\Handler\AchievementListHandler;
 use App\Handler\CastleRankingHandler;
 use App\Handler\CastleResultHandler;
 use App\Handler\CastleTournamentHandler;
+use App\Handler\HeroGetHandler;
+use App\Handler\HeroListHandler;
 use App\Handler\HeroModifierHandler;
 use App\Handler\HeroShrineHandler;
 use App\Handler\HeroSpecializationHandler;
@@ -56,6 +58,10 @@ class RouterFactory implements FactoryInterface
         $router->get($prefix . 'castle/result', CastleResultHandler::class);
         $router->get($prefix . 'castle/tournament', CastleTournamentHandler::class);
 
+        $router->get($prefix . 'castle/hero/list', AchievementListMiddleware::class);
+        $router->get($prefix . 'castle/hero/list', HeroListHandler::class);
+        $router->get($prefix . 'castle/hero/get', AchievementListMiddleware::class);
+        $router->get($prefix . 'castle/hero/get', HeroGetHandler::class);
         $router->get($prefix . 'castle/hero/modifier', HeroModifierHandler::class);
         $router->get($prefix . 'castle/hero/shrine', HeroShrineHandler::class);
         $router->get($prefix . 'castle/hero/specialization', HeroSpecializationHandler::class);
