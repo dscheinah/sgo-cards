@@ -135,7 +135,7 @@
         });
 
         action('#castle-heroes [data-hero]', 'click', (event, target) => {
-            state.dispatch('castle-hero', [user?.id, parseInt(target.value)]);
+            state.dispatch('castle-hero', [user?.id, target.value ? parseInt(target.value) : null]);
             page.show('castle-hero');
         });
 
