@@ -16,4 +16,17 @@ class HeroStorage extends Storage
     {
         return $this->fetch('SELECT * FROM `hero_cards` WHERE `hero_id` = ?', [$id]);
     }
+
+    public function updateActive(string $userId, int $heroId): void
+    {
+        $this->execute(
+            'UPDATE `heroes` SET `active` = IF(`id` = ?, 1, 0) WHERE `user_id` = ?',
+            [$heroId, $userId]
+        );
+    }
+
+    public function fetchIdsForUser(string $userId): Generator
+    {
+        return $this->fetch('SELECT `id` FROM `heroes` WHERE `user_id` = ?', [$userId]);
+    }
 }

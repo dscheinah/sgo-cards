@@ -276,14 +276,14 @@
             ].forEach(([identifier, card]) => {
                 data.append(`cards[${identifier}]`, card.amount);
             })
-            state.dispatch('castle-hero-save', [user?.id, hero.hero_id, data]);
+            state.dispatch('castle-hero-save', [user?.id, hero.id, data]);
         });
 
         action('#castle-hero [data-change]', 'click', (event, target) => {
             const identifier = target.dataset.change;
             const amount = parseInt(target.value);
             ['base', 'tier_1', 'tier_2', 'tier_3', 'final'].forEach((type) => {
-                if (hero[type][identifier]) {
+                if (hero[type] && hero[type][identifier]) {
                     hero[type][identifier].amount = amount;
                 }
             })
