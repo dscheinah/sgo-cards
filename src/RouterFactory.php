@@ -61,6 +61,7 @@ class RouterFactory implements FactoryInterface
         $router->get($prefix . 'castle/tournament', CastleTournamentHandler::class);
 
         $router->get($prefix . 'castle/hero/list', AchievementListMiddleware::class);
+        $router->get($prefix . 'castle/hero/list', TournamentMiddleware::class);
         $router->get($prefix . 'castle/hero/list', HeroListHandler::class);
         $router->get($prefix . 'castle/hero/get', AchievementListMiddleware::class);
         $router->get($prefix . 'castle/hero/get', HeroGetHandler::class);

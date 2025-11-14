@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Helper\ModifierHelper;
 use App\Helper\ShrineHelper;
 use App\Helper\SpecializationHelper;
+use App\Model\Tournament;
 use App\Provider\HeroBuilder;
 use App\Storage\HeroStorage;
 use App\Storage\PlayerStorage;
@@ -50,7 +51,7 @@ class HeroRepository
         return array_filter($specializations);
     }
 
-    public function getListForUser(string $userId, array $achievements, ?int $heroId): array
+    public function getListForUser(string $userId, array $achievements, ?Tournament $tournament, ?int $heroId): array
     {
         $tier = $this->tierFromAchievements($achievements);
 
@@ -60,7 +61,7 @@ class HeroRepository
 
         $heroes = [];
         foreach ($this->heroStorage->fetchIdsForUser($userId) as $data) {
-            $heroes[] = $this->heroBuilder->load($tier, $data['id'])?->list(null);
+            $heroes[] = $this->heroBuilder->load($tier, $data['id'])?->list($tournament?->modifier);
         }
         return array_pad(array_filter($heroes), 3, null);
     }

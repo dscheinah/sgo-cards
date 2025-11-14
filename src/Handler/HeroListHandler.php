@@ -2,6 +2,7 @@
 
 namespace App\Handler;
 
+use App\Model\Tournament;
 use App\Repository\HeroRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,7 +24,11 @@ class HeroListHandler implements RequestHandlerInterface
             return $this->helper->create(400);
         }
         $achievements = $request->getAttribute('achievements', []);
+        $tournament = $request->getAttribute(Tournament::class);
         $heroId = $request->getQueryParams()['hero_id'] ?? null;
-        return $this->helper->create(200, $this->heroRepository->getListForUser($userId, $achievements, $heroId));
+        return $this->helper->create(
+            200,
+            $this->heroRepository->getListForUser($userId, $achievements, $tournament, $heroId)
+        );
     }
 }
