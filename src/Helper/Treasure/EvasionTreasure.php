@@ -14,7 +14,7 @@ class EvasionTreasure implements TreasureInterface
 
     public static function trigger(Treasure $treasure, Battlefield $battlefield): void
     {
-        if (array_sum($battlefield->player->calculation($battlefield->league)) >= $treasure->trigger) {
+        if (array_sum($battlefield->player->calculation($battlefield->league->modifier)) >= $treasure->trigger) {
             $treasure->trigger = 0;
         }
     }

@@ -107,8 +107,8 @@ class CardHelper
     {
         $nextPlayer = $player->withCard($card);
 
-        $nextCalculation = $nextPlayer->calculation($league, $player);
-        $baseCalculation = $player->calculation($league, $nextPlayer);
+        $nextCalculation = $nextPlayer->calculation($league->modifier, $player);
+        $baseCalculation = $player->calculation($league->modifier, $nextPlayer);
 
         return max(array_sum($nextCalculation) - array_sum($baseCalculation), 0);
     }

@@ -17,7 +17,7 @@ class StatTreasure implements TreasureInterface
         if (!$treasure->type) {
             return;
         }
-        $calculation = $battlefield->player->calculation($battlefield->league);
+        $calculation = $battlefield->player->calculation($battlefield->league->modifier);
         if (!isset($calculation[$treasure->type])) {
             return;
         }

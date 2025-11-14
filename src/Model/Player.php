@@ -30,10 +30,10 @@ class Player
 
     public int $curse = 0;
 
-    public function calculation(League $league, ?Player $enemy = null): array
+    public function calculation(?Modifier $global, ?Player $enemy = null): array
     {
         $modifiers = array_filter([
-            $league->modifier,
+            $global,
             ...array_filter($enemy?->mods() ?: [], static fn (Modifier $modifier) => $modifier->enemy),
             ...array_filter($this->mods(), static fn (Modifier $modifier) => $modifier->self),
         ]);
@@ -85,7 +85,7 @@ class Player
         return $player;
     }
 
-    public function output(League $league, ?Player $enemy = null): array
+    public function output(?Modifier $global, ?Player $enemy = null): array
     {
         return [
             'name' => $this->name,
@@ -103,7 +103,7 @@ class Player
                 $this->specializations
             ),
             'data' => array_map(static fn ($value) => (int) $value, $this->data),
-            'calculation' => $this->calculation($league, $enemy),
+            'calculation' => $this->calculation($global, $enemy),
         ];
     }
 }

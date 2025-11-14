@@ -27,7 +27,7 @@ class SnapshotStorage extends Storage
         );
 
         $totalBase = array_sum($player->data);
-        $totalCalculation = array_sum($player->calculation($league));
+        $totalCalculation = array_sum($player->calculation($league->modifier));
 
         $statement = 'INSERT INTO `snapshots` 
             (
