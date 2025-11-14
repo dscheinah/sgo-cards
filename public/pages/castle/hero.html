@@ -6,6 +6,7 @@
             <li>A set of base cards is available to all players.</li>
             <li>You can only select unlocked modifiers, blessings, specializations, and cards.</li>
             <li>You may choose up to 15 cards per section.</li>
+            <li>You can only select 5 cards with the same name at a time.</li>
             <li>Selecting cards increases your alignment, which proportionally enhances all cards of the same type.</li>
             <li>All selected cards and modifiers accumulate up to the final tier, following their order of appearance.</li>
             <li>Your final stats will be displayed in the castle after pressing <em>Apply</em>.</li>
@@ -138,7 +139,7 @@
             <td class="castle-hero-tags">${helper.tags(card.tags)}</td>
             <td><button type="button" ${card.amount < 1 ? 'disabled' : ''} value="${card.amount - 1}" data-change="${identifier}">&minus;</button></td>
             <td class="castle-hero-amount">${card.amount}</td>
-            <td><button type="button" ${count > 14 ? 'disabled' : ''} value="${card.amount + 1}" data-change="${identifier}">&plus;</button></td>
+            <td><button type="button" ${count > 14 || card.amount > 4 ? 'disabled' : ''} value="${card.amount + 1}" data-change="${identifier}">&plus;</button></td>
         `;
         return tr;
     }
