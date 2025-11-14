@@ -2,7 +2,7 @@
 
 namespace App\Handler;
 
-use App\Repository\CastleRepository;
+use App\Model\Tournament;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -12,12 +12,15 @@ class CastleTournamentHandler implements RequestHandlerInterface
 {
     public function __construct(
         private readonly ResponseHelperInterface $helper,
-        private readonly CastleRepository $castleRepository,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->helper->create(200, $this->castleRepository->getNextTournament());
+        $tournament = $request->getAttribute(Tournament::class);
+        if (!$tournament instanceof Tournament) {
+            return $this->helper->create(200);
+        }
+        return $this->helper->create(200, $tournament->output());
     }
 }

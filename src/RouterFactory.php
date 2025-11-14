@@ -22,6 +22,7 @@ use App\Handler\UserGetHandler;
 use App\Handler\UserLogoutHandler;
 use App\Middleware\AchievementListMiddleware;
 use App\Middleware\SpecializationMiddleware;
+use App\Middleware\TournamentMiddleware;
 use App\Middleware\UserTokenCreateMiddleware;
 use App\Middleware\UserTokenValidateMiddleware;
 use Sx\Container\FactoryInterface;
@@ -56,6 +57,7 @@ class RouterFactory implements FactoryInterface
 
         $router->get($prefix . 'castle/ranking', CastleRankingHandler::class);
         $router->get($prefix . 'castle/result', CastleResultHandler::class);
+        $router->get($prefix . 'castle/tournament', TournamentMiddleware::class);
         $router->get($prefix . 'castle/tournament', CastleTournamentHandler::class);
 
         $router->get($prefix . 'castle/hero/list', AchievementListMiddleware::class);
