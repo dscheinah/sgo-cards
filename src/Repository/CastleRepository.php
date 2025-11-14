@@ -2,21 +2,14 @@
 
 namespace App\Repository;
 
-use App\Helper\AreaHelper;
-use App\Helper\ModifierHelper;
 use App\Storage\RankingStorage;
 use App\Storage\ResultStorage;
-use App\Storage\TournamentStorage;
-use DateTime;
 
 class CastleRepository
 {
     public function __construct(
         private readonly RankingStorage $rankingStorage,
         private readonly ResultStorage $resultStorage,
-        private readonly TournamentStorage $tournamentStorage,
-        private readonly ModifierHelper $modifierHelper,
-        private readonly AreaHelper $areaHelper,
         private readonly int $tiers,
     ) {
     }
@@ -43,20 +36,6 @@ class CastleRepository
             }
         }
         return array_map('array_values', $rankings);
-    }
-
-    public function getNextTournament(): ?array
-    {
-        $tournament = $this->tournamentStorage->fetchLatest();
-        if (!$tournament) {
-            return null;
-        }
-        $hours = (new DateTime($tournament['date'])->getTimestamp() - time()) / 60 / 60;
-        return [
-            'modifier' => $this->modifierHelper->get($tournament['modifier'])?->output(),
-            'area' => $this->areaHelper->get($tournament['area'])?->output(),
-            'hours' => max((int) $hours, 0),
-        ];
     }
 
     public function getResults(string $userId): array

@@ -45,6 +45,8 @@ use App\Middleware\AchievementListMiddleware;
 use App\Middleware\AchievementListMiddlewareFactory;
 use App\Middleware\SpecializationMiddleware;
 use App\Middleware\SpecializationMiddlewareFactory;
+use App\Middleware\TournamentMiddleware;
+use App\Middleware\TournamentMiddlewareFactory;
 use App\Middleware\UserMiddlewareFactory;
 use App\Middleware\UserTokenCreateMiddleware;
 use App\Middleware\UserTokenValidateMiddleware;
@@ -62,6 +64,8 @@ use App\Provider\ShrineProvider;
 use App\Provider\ShrineProviderFactory;
 use App\Provider\StatisticProvider;
 use App\Provider\StatisticProviderFactory;
+use App\Provider\TournamentProvider;
+use App\Provider\TournamentProviderFactory;
 use App\Provider\TreasureProvider;
 use App\Provider\TreasureProviderFactory;
 use App\Repository\AchievementRepository;
@@ -149,6 +153,7 @@ class Provider implements ProviderInterface
 
         $injector->set(AchievementListMiddleware::class, AchievementListMiddlewareFactory::class);
         $injector->set(SpecializationMiddleware::class, SpecializationMiddlewareFactory::class);
+        $injector->set(TournamentMiddleware::class, TournamentMiddlewareFactory::class);
         $injector->set(UserTokenCreateMiddleware::class, UserMiddlewareFactory::class);
         $injector->set(UserTokenValidateMiddleware::class, UserMiddlewareFactory::class);
 
@@ -166,6 +171,7 @@ class Provider implements ProviderInterface
         $injector->set(PlayerProvider::class, PlayerProviderFactory::class);
         $injector->set(ShrineProvider::class, ShrineProviderFactory::class);
         $injector->set(StatisticProvider::class, StatisticProviderFactory::class);
+        $injector->set(TournamentProvider::class, TournamentProviderFactory::class);
         $injector->set(TreasureProvider::class, TreasureProviderFactory::class);
 
         $injector->set(AchievementRepository::class, AchievementRepositoryFactory::class);
