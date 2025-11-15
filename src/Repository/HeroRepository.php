@@ -83,6 +83,29 @@ class HeroRepository
         return null;
     }
 
+    public function save(string $userId, array $data, ?int $heroId): bool
+    {
+        $ids = array_column(iterator_to_array($this->heroStorage->fetchIdsForUser($userId)), 'id', 'id');
+        if (!$heroId) {
+            if (count($ids) >= $this->count) {
+                return false;
+            }
+            $heroId = $this->heroStorage->create($userId);
+            if (!$heroId) {
+                return false;
+            }
+        } else if (!isset($ids[$heroId])) {
+            return false;
+        }
+
+        $data['name'] = substr(strip_tags(html_entity_decode($data['name'])), 0, 23);
+        $this->heroStorage->updateData($heroId, $data);
+
+        $cards = array_filter($data['cards'], static fn (int $amount) => $amount && $amount <= 5);
+        $this->heroStorage->updateAmounts($heroId, $cards);
+        return true;
+    }
+
     private function tierFromAchievements(array $achievements): int
     {
         $percentage = round(array_sum(array_column($achievements, 'value')) / count($achievements));

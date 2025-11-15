@@ -328,5 +328,16 @@ export async function specializations(userId) {
     throw new Error('An error occurred. Please reload and try again.');
 }
 
-export function save(userId, heroId, data) {
+export async function save(userId, heroId, body) {
+    if (!userId) {
+        return null;
+    }
+    const params = new URLSearchParams();
+    params.set('user_id', userId);
+    params.set('hero_id', heroId);
+    const result = await fetch('castle/hero/save?' + params.toString(), {method: 'POST', body});
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
 }
