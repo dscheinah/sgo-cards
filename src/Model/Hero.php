@@ -26,6 +26,32 @@ class Hero
         if (!$card) {
             return $this;
         }
+        switch ($card->tier) {
+            case 0:
+                $counts = $this->cards[0] ?? [];
+                break;
+            case 1:
+            case 2:
+                $counts = array_merge($this->cards[1] ?? [], $this->cards[2] ?? []);
+                break;
+            case 3:
+            case 4:
+                $counts = array_merge($this->cards[3] ?? [], $this->cards[4] ?? []);
+                break;
+            case 5:
+            case 6:
+                $counts = array_merge($this->cards[5] ?? [], $this->cards[6] ?? []);
+                break;
+            case 7:
+                $counts = $this->cards[7] ?? [];
+                break;
+            default:
+                return $this;
+        }
+        if (array_sum(array_column($counts, 'amount')) + $amount > 15) {
+            $amount = 0;
+        }
+
         $hero = clone $this;
         $hero->cards[$card->tier][$card->identifier] = [
             'card' => $card,
