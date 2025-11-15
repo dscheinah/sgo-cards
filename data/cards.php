@@ -258,7 +258,7 @@ $tradeDefenseForDamage = [
         'damage' => 2,
         'defense' => -1,
     ],
-    'tags' => [Card::DAMAGE, Card::BASE],
+    'tags' => [Card::DAMAGE, Card::CONVERSION],
 ];
 $tradeDamageForDefense = [
     'identifier' => 'trade_defense',
@@ -268,7 +268,7 @@ $tradeDamageForDefense = [
         'defense' => 2,
         'damage' => -1,
     ],
-    'tags' => [Card::DEFENSE, Card::BASE],
+    'tags' => [Card::DEFENSE, Card::CONVERSION],
 ];
 $tradePhysicalForMagic = [
     'identifier' => 'trade_magic',
@@ -279,7 +279,7 @@ $tradePhysicalForMagic = [
         'damage' => -1,
         'defense' => -1,
     ],
-    'tags' => [Card::MAGIC, Card::BASE],
+    'tags' => [Card::MAGIC, Card::CONVERSION],
 ];
 
 $boostDefenseFromSpeed = [
