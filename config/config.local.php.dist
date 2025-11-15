@@ -17,4 +17,5 @@ return [
     'health' => 10,
     'damage' => 1,
     'tiers' => 3,
+    'hero_count' => 3,
 ];

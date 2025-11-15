@@ -24,6 +24,7 @@ class HeroRepositoryFactory implements FactoryInterface
             $injector->get(ModifierHelper::class),
             $injector->get(ShrineHelper::class),
             $injector->get(SpecializationHelper::class),
+            $options['hero_count'],
         );
     }
 
