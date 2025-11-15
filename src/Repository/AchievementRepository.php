@@ -48,6 +48,11 @@ class AchievementRepository
                 'max' => 4,
             ],
             [
+                'description' => 'Have a total of 1000 tries',
+                'value' => $this->playerStorage->fetchCountForUser($userId),
+                'max' => 1000,
+            ],
+            [
                 'description' => 'Pick 1000 base cards',
                 'value' => $this->poolStorage->fetchTypeCountForUser($userId, Card::BASE),
                 'max' => 1000,
@@ -78,9 +83,14 @@ class AchievementRepository
                 'max' => $this->modifierHelper->countPlayer(),
             ],
             [
-                'description' => 'Have 400 total stats',
+                'description' => 'Have 300 total stats',
                 'value' => $this->snapshotStorage->fetchMaxTotalCalculation($userId),
-                'max' => 400,
+                'max' => 300,
+            ],
+            [
+                'description' => 'Have 600 total stats',
+                'value' => $this->snapshotStorage->fetchMaxTotalCalculation($userId),
+                'max' => 600,
             ],
             [
                 'description' => 'Have 400 total base stats',
@@ -91,6 +101,11 @@ class AchievementRepository
                 'description' => 'Double total base stats',
                 'value' => $this->snapshotStorage->fetchMaxTotalBoost($userId),
                 'max' => 100,
+            ],
+            [
+                'description' => 'Triple total base stats',
+                'value' => $this->snapshotStorage->fetchMaxTotalBoost($userId),
+                'max' => 200,
             ],
             [
                 'description' => 'Place each shrine',

@@ -94,4 +94,10 @@ class PlayerStorage extends Storage
         $statement = 'SELECT COUNT(DISTINCT `modifier`) AS `count` FROM `players` WHERE `user_id` = ?';
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
+
+    public function fetchCountForUser(string $userId): int
+    {
+        $statement = 'SELECT COUNT(*) AS `count` FROM `players` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
+    }
 }
