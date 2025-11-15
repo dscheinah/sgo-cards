@@ -21,6 +21,7 @@ class HeroRepository
         private readonly ModifierHelper $modifierHelper,
         private readonly ShrineHelper $shrineHelper,
         private readonly SpecializationHelper $specializationHelper,
+        private readonly int $count,
     ) {
     }
 
@@ -63,7 +64,7 @@ class HeroRepository
         foreach ($this->heroStorage->fetchIdsForUser($userId) as $data) {
             $heroes[] = $this->heroBuilder->load($tier, $data['id'])?->list($tournament?->modifier);
         }
-        return array_pad(array_filter($heroes), 3, null);
+        return array_pad(array_filter($heroes), $this->count, null);
     }
 
     public function getForUser(string $userId, array $achievements, ?int $heroId): ?array
