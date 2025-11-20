@@ -83,6 +83,17 @@ class HeroRepository
         return null;
     }
 
+    public function getRandomEnemies(array $achievements, ?Tournament $tournament): array
+    {
+        $tier = $this->tierFromAchievements($achievements);
+
+        $heroes = [];
+        foreach ($this->heroStorage->fetchRandomIds($this->count * $this->count) as $data) {
+            $heroes[] = $this->heroBuilder->load($tier, $data['id'])?->list($tournament?->modifier);
+        }
+        return array_filter($heroes);
+    }
+
     public function save(string $userId, array $data, ?int $heroId): bool
     {
         $ids = array_column(iterator_to_array($this->heroStorage->fetchIdsForUser($userId)), 'id', 'id');

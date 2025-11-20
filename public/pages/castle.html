@@ -130,7 +130,7 @@
         });
 
         action('#castle-heroes [data-training]', 'click', (event, target) => {
-            state.dispatch('castle-enemies', parseInt(target.value));
+            state.dispatch('castle-enemies', [user?.id, parseInt(target.value)]);
             page.show('castle-training');
         });
 

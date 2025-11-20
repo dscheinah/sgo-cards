@@ -9,6 +9,7 @@ use App\Handler\CastleHandlerFactory;
 use App\Handler\CastleRankingHandler;
 use App\Handler\CastleResultHandler;
 use App\Handler\CastleTournamentHandler;
+use App\Handler\HeroEnemyListHandler;
 use App\Handler\HeroGetHandler;
 use App\Handler\HeroHandlerFactory;
 use App\Handler\HeroListHandler;
@@ -138,6 +139,7 @@ class Provider implements ProviderInterface
         $injector->set(CastleRankingHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleResultHandler::class, CastleHandlerFactory::class);
         $injector->set(CastleTournamentHandler::class, CastleHandlerFactory::class);
+        $injector->set(HeroEnemyListHandler::class, HeroHandlerFactory::class);
         $injector->set(HeroGetHandler::class, HeroHandlerFactory::class);
         $injector->set(HeroListHandler::class, HeroHandlerFactory::class);
         $injector->set(HeroModifierHandler::class, HeroHandlerFactory::class);

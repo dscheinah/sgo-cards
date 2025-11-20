@@ -62,4 +62,9 @@ class HeroStorage extends Storage
             );
         }
     }
+
+    public function fetchRandomIds(int $count): Generator
+    {
+        return $this->fetch('SELECT `id` FROM `heroes` ORDER BY RAND() LIMIT ?', [$count]);
+    }
 }

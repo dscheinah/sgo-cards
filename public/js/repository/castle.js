@@ -25,97 +25,18 @@ export async function results(userId) {
     throw new Error('An error occurred. Please reload and try again.');
 }
 
-export async function enemies(heroId) {
-    return [
-        {
-            hero_id: heroId,
-            enemy_id: 1,
-            name: 'Tattersail',
-            tiers: [
-                {
-                    health: 20,
-                    damage: 10,
-                    defense: 10,
-                    magic: 10,
-                    speed: 5,
-                    curse: 0,
-                },
-                {
-                    health: 50,
-                    damage: 20,
-                    defense: 20,
-                    magic: 20,
-                    speed: 5,
-                    curse: 12,
-                },
-                {
-                    health: 100,
-                    damage: 50,
-                    defense: 50,
-                    magic: 20,
-                    speed: 10,
-                    curse: 12,
-                },
-            ],
-            shrine: {icon: "🍂⛩️", text: "Shrine of Nature"},
-            specialization: {icon: "🤺", name: "Warrior"},
-        },
-        {
-            hero_id: heroId,
-            enemy_id: 2,
-            name: 'Weatherwax',
-            tiers: [
-                {
-                    health: 10,
-                    damage: 20,
-                    defense: 30,
-                    magic: 40,
-                    speed: 50,
-                    curse: 0,
-                },
-            ],
-        },
-        {
-            hero_id: heroId,
-            enemy_id: 3,
-            name: 'Celebrimbor',
-            tiers: [
-                {
-                    health: 20,
-                    damage: 10,
-                    defense: 10,
-                    magic: 10,
-                    speed: 0,
-                    curse: 0,
-                },
-                {
-                    health: 40,
-                    damage: 20,
-                    defense: 20,
-                    magic: 10,
-                    speed: 0,
-                    curse: 24,
-                },
-            ],
-            specialization: {icon: "🤺", name: "Warrior"},
-        },
-        {
-            hero_id: heroId,
-            enemy_id: 4,
-            name: 'Beric',
-            tiers: [
-                {
-                    health: 10,
-                    damage: 20,
-                    defense: 30,
-                    magic: 40,
-                    speed: 50,
-                    curse: 60,
-                }
-            ],
-            shrine: {icon: "🍂⛩️", text: "Shrine of Nature"},
-        },
-    ];
+export async function enemies(userId, heroId) {
+    if (!userId) {
+        return null;
+    }
+    const params = new URLSearchParams();
+    params.set('user_id', userId);
+    const result = await fetch('castle/hero/enemies?' + params.toString());
+    if (result.ok) {
+        const enemies = await result.json();
+        return enemies.map(enemy => ({...enemy, hero_id: heroId}));
+    }
+    throw new Error('An error occurred. Please reload and try again.');
 }
 
 export async function training(heroId, enemyId) {
