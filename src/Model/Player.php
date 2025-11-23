@@ -27,8 +27,8 @@ class Player
     public array $specializations = [];
 
     public array $data = [
-        'health' => 0,
-        'damage' => 0,
+        'health' => 10,
+        'damage' => 1,
         'defense' => 0,
         'magic' => 0,
         'speed' => 0,
