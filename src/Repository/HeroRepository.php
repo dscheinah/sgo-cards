@@ -31,7 +31,9 @@ class HeroRepository
         foreach ($this->playerStorage->fetchModifiersForUser($userId) as $modifier) {
             $modifiers[] = $this->modifierHelper->get($modifier['modifier'])?->output();
         }
-        return array_filter($modifiers);
+        $modifiers = array_filter($modifiers);
+        usort($modifiers, static fn ($a, $b) => $a['text'] <=> $b['text']);
+        return $modifiers;
     }
 
     public function getAvailableShrines(string $userId): array
@@ -40,7 +42,9 @@ class HeroRepository
         foreach ($this->poolStorage->fetchShrinesForUser($userId) as $shrine) {
             $shrines[] = $this->shrineHelper->get($shrine['identifier'])?->output();
         }
-        return array_filter($shrines);
+        $shrines = array_filter($shrines);
+        usort($shrines, static fn ($a, $b) => $a['text'] <=> $b['text']);
+        return $shrines;
     }
 
     public function getAvailableSpecializations(string $userId): array
@@ -49,7 +53,9 @@ class HeroRepository
         foreach ($this->poolStorage->fetchSpecializationsForUser($userId) as $specialization) {
             $specializations[] = $this->specializationHelper->get($specialization['identifier'])?->output();
         }
-        return array_filter($specializations);
+        $specializations = array_filter($specializations);
+        usort($specializations, static fn ($a, $b) => $a['name'] <=> $b['name']);
+        return $specializations;
     }
 
     public function getListForUser(string $userId, array $achievements, ?Tournament $tournament, ?int $heroId): array
