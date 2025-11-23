@@ -14,18 +14,16 @@ class ShrineHelper
     ) {
     }
 
-    public function get(array $input): ?Shrine
+    public function get(?string $modifier): ?Shrine
     {
-        if (!isset($this->shrines[$input['modifier']])) {
+        if (!isset($this->shrines[$modifier])) {
             return null;
         }
 
         $shrine = new Shrine();
-        $shrine->x = $input['x'];
-        $shrine->y = $input['y'];
-        $shrine->modifier = $input['modifier'];
+        $shrine->modifier = $modifier;
 
-        $data = $this->shrines[$input['modifier']];
+        $data = $this->shrines[$modifier];
 
         $shrine->text = $data['text'];
         $shrine->icon = $data['icon'];
@@ -34,6 +32,16 @@ class ShrineHelper
         $shrine->handler = $data['handler'];
         $shrine->tags = $data['tags'];
 
+        return $shrine;
+    }
+
+    public function create(array $input): ?Shrine
+    {
+        $shrine = $this->get($input['modifier']);
+        if ($shrine) {
+            $shrine->x = $input['x'];
+            $shrine->y = $input['y'];
+        }
         return $shrine;
     }
 

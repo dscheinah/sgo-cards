@@ -4,7 +4,7 @@ namespace App\Model;
 
 class League
 {
-    public int $id;
+    public ?int $id = null;
 
     public ?Modifier $modifier = null;
 

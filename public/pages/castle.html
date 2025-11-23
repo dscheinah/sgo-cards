@@ -1,0 +1,169 @@
+<template>
+    <h1>Castle</h1>
+    <div id="castle-login" hidden>
+        <p>Please log in to start playing.</p>
+        <button type="button" data-navigation value="overview"><span class="sx-button-icon">🪟</span> Login</button>
+    </div>
+    <div id="castle-main" hidden>
+        <p>Gather your heroes in the castle and let them compete in tournaments to win fame and glory.</p>
+        <h2>Tournament</h2>
+        <details>
+            <summary>Once a tournament is held, your active hero will compete against all other heroes across all tiers. Win to increase your rank.</summary>
+            <ul>
+                <li>Each tournament has a league modifier that applies to all tiers.</li>
+                <li>An additional area effect is active in the final tier.</li>
+                <li>Only your active hero will compete.</li>
+                <li>You enter a separate tournament for each tier, limiting your hero accordingly.</li>
+                <li>You can review the results of your previous tournaments.</li>
+                <li>Your rank is determined by comparing your win/loss ratio with the surrounding heroes.</li>
+            </ul>
+        </details>
+        <div id="castle-tournament" hidden></div>
+        <div id="castle-result" hidden>
+            <h3>Previous Results</h3>
+            <div id="castle-result-tiers" class="sx-cards"></div>
+        </div>
+        <h2>Heroes</h2>
+        <details>
+            <summary>Manage your heroes, run sparring matches, and activate one for the tournament.</summary>
+            <ul>
+                <li>You can send up to three heroes to the castle.</li>
+                <li>Only one hero can participate in the tournament.</li>
+                <li>The stat summary shows your final tier.</li>
+                <li>Edit a hero to view detailed information about the tiers.</li>
+                <li>You can run training matches against other heroes outside the rankings.</li>
+            </ul>
+        </details>
+        <table id="castle-heroes" class="sx-list">
+            <tbody></tbody>
+        </table>
+    </div>
+</template>
+<script type="module">
+    import {helper, page, state} from '../js/app.js';
+
+    let user = state.get('user');
+    let tournament = state.get('castle-tournament');
+    let results = state.get('castle-results');
+    let heroes = state.get('castle-heroes') || [];
+
+    page.register('castle', ({render, show, action, listen}) => {
+        render(() => {
+            if (!user) {
+                return;
+            }
+            helper.set('#castle-main', 'hidden', !user.id);
+            helper.set('#castle-login', 'hidden', !user.create);
+            helper.set('#castle-tournament', 'hidden', !tournament);
+            helper.set('#castle-result', 'hidden', !results?.length);
+            if (tournament) {
+                helper.set('#castle-tournament', 'innerHTML', `
+                    <p>The next tournament will start in about <strong>${tournament.hours}</strong> ${tournament.hours === 1 ? 'hour' : 'hours'}.</p>
+                    <table>
+                        <tbody>
+                            <tr><th>Modifier</th>
+                            <td>${tournament.modifier?.text}</td></tr>
+                            <tr><th>Area</th>
+                            <td>${tournament.area?.icon} ${tournament.area?.name}<br/>${tournament.area?.description}</td></tr>
+                        </tbody>
+                    </table>
+                `);
+            }
+            helper.list('#castle-result-tiers', results || [], (entry, index) => {
+                const div = helper.create('div');
+                div.classList.add('sx-card');
+                div.innerHTML = `
+                    <h4>
+                        ${helper.league(index, 'icon')} ${helper.league(index, 'name')}<br/>
+                        <small>${helper.league(index, 'tier')}</small>
+                    </h4>
+                    <table>
+                        <tbody>
+                            <tr><th>Win</th><td>${entry.win}</td></tr>
+                            <tr><th>Loose</th><td>${entry.loose}</td></tr>
+                        </tbody>
+                    </table>
+                `;
+                const p = helper.create('p');
+                if (entry.current === entry.last) {
+                    p.innerHTML = 'You <strong>successfully defended</strong> rank';
+                } else if (entry.current < entry.last) {
+                    p.innerHTML = 'You were <strong class="sx-highlight">promoted</strong> to rank';
+                } else {
+                    p.innerHTML = 'You were downgraded to rank';
+                }
+                p.innerHTML += ` <strong>${entry.current}</strong>.`;
+                div.appendChild(p);
+                return div;
+            });
+            helper.list('#castle-heroes tbody', heroes, (hero) => {
+                const tr = helper.create('tr');
+                if (!hero) {
+                    tr.innerHTML = `
+                        <td>
+                            <p><em>Empty slot</em></p>
+                            <button type="button" data-hero><span class="sx-button-icon">⚙️</span> Manage</button>
+                        </td>
+                    `;
+                    return tr;
+                }
+                tr.innerHTML = `
+                    <td>
+                        ${helper.hero(hero)}
+                        <button type="button" value="${hero.id}" data-hero><span class="sx-button-icon">⚙️</span> Manage</button>
+                        <button type="button" value="${hero.id}" data-training><span class="sx-button-icon">🏋️</span> Training</button>
+                        <button type="button" value="${hero.id}" ${hero.active ? 'disabled' :''} data-activate><span class="sx-button-icon">⭐️</span> Activate</button>
+                    </td>
+                `
+                return tr;
+            })
+        });
+
+        show(() => {
+            state.dispatch('castle-tournament', null);
+            state.dispatch('castle-results', user?.id);
+            state.dispatch('castle-heroes', [user?.id]);
+        });
+
+        action('#castle-heroes [data-activate]', 'click', (event, target) => {
+            state.dispatch('castle-heroes', [user?.id, parseInt(target.value)]);
+        });
+
+        action('#castle-heroes [data-training]', 'click', (event, target) => {
+            state.dispatch('castle-enemies', [user?.id, parseInt(target.value)]);
+            page.show('castle-training');
+        });
+
+        action('#castle-heroes [data-hero]', 'click', (event, target) => {
+            state.dispatch('castle-hero', [user?.id, target.value ? parseInt(target.value) : null]);
+            page.show('castle-hero');
+        });
+
+        listen('user', (payload) => {
+            user = payload;
+            state.dispatch('castle-results', user.id);
+            state.dispatch('castle-heroes', [user.id]);
+        });
+
+        listen('castle-tournament', (payload) => {
+            tournament = payload;
+        });
+
+        listen('castle-results', (payload) => {
+            results = payload;
+        });
+
+        listen('castle-heroes', (payload) => {
+            heroes = payload || [];
+        });
+    });
+</script>
+<style>
+    #castle-result-tiers .sx-card {
+        width: 240px;
+    }
+
+    #castle-heroes button {
+        margin-right: 1rem;
+    }
+</style>

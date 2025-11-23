@@ -5,6 +5,7 @@ namespace App\Storage;
 use App\Model\Card;
 use App\Model\Shrine;
 use App\Model\Specialization;
+use Generator;
 use Sx\Data\Storage;
 
 class PoolStorage extends Storage
@@ -36,6 +37,12 @@ class PoolStorage extends Storage
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
 
+    public function fetchCardsForUser(string $userId): Generator
+    {
+        $statement = 'SELECT `identifier` FROM `pool_cards` WHERE `user_id` = ? ORDER BY `tier`, `type`, `identifier`';
+        return $this->fetch($statement, [$userId]);
+    }
+
     public function fetchTypeCountForUser(string $userId, string $tag): int
     {
         $statement = 'SELECT SUM(`count`) AS `sum` FROM `pool_cards` WHERE `user_id` = ? AND `type` = ?';
@@ -48,9 +55,21 @@ class PoolStorage extends Storage
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
     }
 
+    public function fetchShrinesForUser(string $userId): Generator
+    {
+        $statement = 'SELECT `identifier` FROM `pool_shrines` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId]);
+    }
+
     public function fetchSpecializationCountForUser(string $userId): int
     {
         $statement = 'SELECT COUNT(*) AS `count` FROM `pool_specializations` WHERE `user_id` = ?';
         return $this->fetch($statement, [$userId])->current()['count'] ?? 0;
+    }
+
+    public function fetchSpecializationsForUser(string $userId): Generator
+    {
+        $statement = 'SELECT `identifier` FROM `pool_specializations` WHERE `user_id` = ?';
+        return $this->fetch($statement, [$userId]);
     }
 }

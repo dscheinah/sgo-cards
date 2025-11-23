@@ -26,7 +26,7 @@ class RoundRepository
                 'modifier' => $battlefield->league->modifier?->output(),
                 'area' => $battlefield->area?->output(),
             ],
-            'player' => $battlefield->player->output($battlefield->league),
+            'player' => $battlefield->player->output($battlefield->league->modifier),
             'cards' => $cards,
             'treasures' => array_map(static fn (Treasure $treasure) => $treasure->output(), $battlefield->treasures),
             'shrines' => $battlefield->shrines,
@@ -43,7 +43,7 @@ class RoundRepository
             'duration' => $battlefield->battle->duration,
             'enemy' => $battlefield->battle->league || $battlefield->battle->finished
                 ? null
-                : $battlefield->enemy->output($battlefield->league, $battlefield->player),
+                : $battlefield->enemy->output($battlefield->league->modifier, $battlefield->player),
             'log' => $battlefield->battle->log,
         ];
     }

@@ -31,7 +31,7 @@ class StatisticProvider
         $statistics->player_count = $counts['players'];
 
         foreach ($this->shrineStorage->fetchAllActive($id) as $input) {
-            $shrine = $this->shrineHelper->get($input);
+            $shrine = $this->shrineHelper->create($input);
             if (!$shrine) {
                 continue;
             }

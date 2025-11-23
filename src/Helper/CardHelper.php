@@ -33,7 +33,8 @@ class CardHelper
         $draw = [];
         for ($i = 0; $i < $this->amount; $i++) {
             do {
-                $card = $this->create($league, $player, $cards[array_rand($cards)]);
+                $card = $this->create($cards[array_rand($cards)]);
+                $card->value = $this->powerLevel($league, $player, $card);
             } while (array_any($treasures, static fn (Treasure $treasure) => $treasure->needToRedraw($card)));
             $draw[] = $card;
         }
@@ -49,12 +50,25 @@ class CardHelper
 
         $draw = [];
         for ($i = 0; $i < $this->amount; $i++) {
-            $card = $this->create($league, $player, $cards[array_rand($cards)]);
+            $card = $this->create($cards[array_rand($cards)]);
+            $card->value = $this->powerLevel($league, $player, $card);
             $draw[$card->value] = $card;
         }
 
         ksort($draw);
         return array_pop($draw);
+    }
+
+    public function get(string $identifier): ?Card
+    {
+        foreach ($this->cards as $tier => $tierCards) {
+            $input = array_find($tierCards, static fn (array $card) => $card['identifier'] === $identifier);
+            if ($input) {
+                $input['tier'] = $tier;
+                return $this->create($input);
+            }
+        }
+        return null;
     }
 
     private function cardsForTier(League $league, Player $player): array
@@ -88,7 +102,7 @@ class CardHelper
         return array_merge(...$cards);
     }
 
-    private function create(League $league, Player $player, array $input): Card
+    private function create(array $input): Card
     {
         $card = new Card();
         $card->identifier = $input['identifier'];
@@ -96,7 +110,6 @@ class CardHelper
         $card->text = $input['text'];
         $card->data = $input['data'] ?? [];
         $card->modifier = $this->modifierHelper->get($input['modifier'] ?? null);
-        $card->value = $this->powerLevel($league, $player, $card);
         $card->tags = $input['tags'] ?? [];
         $card->tier = $input['tier'];
         return $card;
@@ -106,8 +119,8 @@ class CardHelper
     {
         $nextPlayer = $player->withCard($card);
 
-        $nextCalculation = $nextPlayer->calculation($league, $player);
-        $baseCalculation = $player->calculation($league, $nextPlayer);
+        $nextCalculation = $nextPlayer->calculation($league->modifier, $player);
+        $baseCalculation = $player->calculation($league->modifier, $nextPlayer);
 
         return max(array_sum($nextCalculation) - array_sum($baseCalculation), 0);
     }

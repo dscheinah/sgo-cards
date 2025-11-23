@@ -18,7 +18,7 @@ class AreaHelper
      *
      * @return array<Area>
      */
-    public function get(League $league): array
+    public function getForLeague(League $league): array
     {
         mt_srand($league->id);
 
@@ -32,13 +32,7 @@ class AreaHelper
             $y = mt_rand($h + 5, $h + 15);
             $h = mt_rand($y + 10, $y + 20);
 
-            $input = array_pop($pool);
-
-            $area = new Area();
-            $area->icon = $input['icon'];
-            $area->name = $input['name'];
-            $area->description = $input['description'];
-            $area->handler = $input['handler'];
+            $area = $this->create(array_pop($pool));
             $area->y = $y;
             $area->h = $h;
 
@@ -46,5 +40,23 @@ class AreaHelper
         }
 
         return $areas;
+    }
+
+    public function get(?string $identifier): ?Area
+    {
+        if (!isset($this->areas[$identifier])) {
+            return null;
+        }
+        return $this->create($this->areas[$identifier]);
+    }
+
+    private function create($input): Area
+    {
+        $area = new Area();
+        $area->icon = $input['icon'];
+        $area->name = $input['name'];
+        $area->description = $input['description'];
+        $area->handler = $input['handler'];
+        return $area;
     }
 }

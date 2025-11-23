@@ -5,6 +5,7 @@ import init from './app/init.js';
 import navigate from './app/navigate.js';
 import * as data from './repository/data.js';
 import * as achievement from './repository/achievement.js';
+import * as castle from './repository/castle.js';
 import * as league from './repository/league.js';
 import * as round from './repository/round.js';
 import * as treasure from './repository/treasure.js';
@@ -54,6 +55,17 @@ state.listen('sx-show', () => state.dispatch('loading', false));
 state.handle('backend-data', (payload) => data.load(payload));
 
 state.handle('achievements', async(payload, next) => next(await achievement.list(payload)));
+state.handle('castle-rankings', (payload) => castle.rankings(payload));
+state.handle('castle-tournament', (payload) => castle.tournament(payload));
+state.handle('castle-results', (payload) => castle.results(payload));
+state.handle('castle-enemies', (payload) => castle.enemies(...payload));
+state.handle('castle-training', (payload) => castle.training(...payload));
+state.handle('castle-heroes', (payload) => castle.heroes(...payload));
+state.handle('castle-hero', (payload) => castle.hero(...payload));
+state.handle('castle-hero-save', (payload) => castle.save(...payload));
+state.handle('castle-modifiers', (payload) => castle.modifiers(payload));
+state.handle('castle-shrines', (payload) => castle.shrines(payload));
+state.handle('castle-specializations', (payload) => castle.specializations(payload));
 state.handle('leagues', () => league.list());
 state.handle('league', (payload) => league.information(payload));
 state.handle('round', async(payload, next) => next(await round.load(payload)));
@@ -75,6 +87,9 @@ page.add('overview', 'pages/overview.html', window.location.href);
 page.add('game', 'pages/game.html', window.location.href);
 page.add('game-treasure', 'pages/game/treasure.html', window.location.href);
 page.add('statistics', 'pages/statistics.html', window.location.href);
+page.add('castle', 'pages/castle.html', window.location.href);
+page.add('castle-hero', 'pages/castle/hero.html', window.location.href);
+page.add('castle-training', 'pages/castle/training.html', window.location.href);
 // If used with routing this must be replaced with a check on the called route.
 page.show('overview');
 

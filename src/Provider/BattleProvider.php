@@ -56,12 +56,12 @@ class BattleProvider
         return $battle;
     }
 
-    private function battle(Battlefield $battlefield): Battle
+    public function battle(Battlefield $battlefield): Battle
     {
         $battle = new Battle();
 
-        $playerCalculation = $battlefield->player->calculation($battlefield->league, $battlefield->enemy);
-        $enemyCalculation = $battlefield->enemy->calculation($battlefield->league, $battlefield->player);
+        $playerCalculation = $battlefield->player->calculation($battlefield->league->modifier, $battlefield->enemy);
+        $enemyCalculation = $battlefield->enemy->calculation($battlefield->league->modifier, $battlefield->player);
 
         $player = $this->prepare($playerCalculation, $enemyCalculation);
         $enemy = $this->prepare($enemyCalculation, $playerCalculation);

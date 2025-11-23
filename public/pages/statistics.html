@@ -40,7 +40,7 @@
         if (!winner) {
             return '';
         }
-        return `<p><strong>${winner.name} at try #${winner['try']}</strong></p>`
+        return `<p><strong>${helper.escape(winner.name)} at try #${winner['try']}</strong></p>`
             + helper.player(winner);
     }
 

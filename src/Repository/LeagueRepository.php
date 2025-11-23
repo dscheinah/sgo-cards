@@ -46,7 +46,7 @@ class LeagueRepository
             ],
             'user_count' => $statistics->user_count,
             'player_count' => $statistics->player_count,
-            'winner' => $this->playerProvider->createWinner($league)?->output($league),
+            'winner' => $this->playerProvider->createWinner($league)?->output($league->modifier),
         ];
     }
 }

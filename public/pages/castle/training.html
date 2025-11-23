@@ -1,0 +1,71 @@
+<template>
+    <h2>Training</h2>
+    <p>Select other heroes to test your build and see the detailed result.</p>
+    <table id="castle-training" class="sx-list">
+        <tbody></tbody>
+    </table>
+</template>
+<script type="module">
+    import {helper, page, state} from '../../js/app.js';
+
+    let user = state.get('user');
+    let heroes = state.get('castle-heroes') || [];
+    let enemies = state.get('castle-enemies') || [];
+
+    page.register('castle-training', ({render, action, listen}) => {
+        render(() => {
+            helper.list('#castle-training tbody', enemies, (enemy, index) => {
+                const tr = helper.create('tr');
+                const result = enemy.result ? `
+                    <h3>Result</h3>
+                    ${enemy.result.tiers
+                        .map((tier, index) => `${helper.league(index, 'icon')}: ${tier.winner ? 'Victory' : 'Defeat'} in ${tier.duration} ${tier.duration === 1 ? 'round' : 'rounds'}`)
+                        .join('<br/>')}
+                    ${helper.log(enemy.result.log)}
+                ` : '';
+                const hero = heroes.find((hero) => hero.id === enemy.hero_id);
+                tr.innerHTML = `
+                    <td>
+                        ${helper.hero(enemy, hero)}
+                        <button type="button" value="${index}"><span class="sx-button-icon">🤼</span> Fight</button>
+                        ${result}
+                    </td>
+                `;
+                return tr;
+            });
+        });
+
+        action('#castle-training button', 'click', (event, target) => {
+            const enemy = enemies[parseInt(target.value)];
+            if (enemy) {
+                state.dispatch('castle-training', [user?.id, enemy.hero_id, enemy.id]);
+            }
+        });
+
+        listen('user', (payload) => {
+            user = payload;
+        });
+
+        listen('castle-heroes', (payload) => {
+            heroes = payload || [];
+        });
+
+        listen('castle-enemies', (payload) => {
+            enemies = payload || [];
+        });
+
+        listen('castle-training', (payload) => {
+            const enemy = enemies.find((enemy) => enemy.id === payload.enemy_id);
+            if (enemy) {
+                enemy.result = payload;
+            }
+        })
+    });
+</script>
+<style>
+    #castle-training svg {
+        width: 100%;
+        height: auto;
+        max-height: 33vh;
+    }
+</style>

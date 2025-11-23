@@ -1,0 +1,372 @@
+<template>
+    <h2>Hero</h2>
+    <details>
+        <summary>Configure your hero for each unlocked tier.</summary>
+        <ul>
+            <li>A set of base cards is available to all players.</li>
+            <li>You can only select unlocked modifiers, blessings, specializations, and cards.</li>
+            <li>You may choose up to 15 cards per section.</li>
+            <li>You can only select 5 cards with the same name at a time.</li>
+            <li>Selecting cards increases your alignment, which proportionally enhances all cards of the same type.</li>
+            <li>All selected cards and modifiers accumulate up to the final tier, following their order of appearance.</li>
+            <li>Your final stats will be displayed in the castle after pressing <em>Apply</em>.</li>
+        </ul>
+    </details>
+    <form id="castle-hero">
+        <input id="castle-hero-name" name="name" required/>
+        <label for="castle-hero-name">Name <span>max. 23 characters</span></label>
+        <p>
+            <strong>Tournament modifier:</strong><br/>
+            <span id="castle-hero-tournament"></span>
+        </p>
+        <select id="castle-hero-modifier" name="modifier"></select>
+        <label for="castle-hero-modifier">Hero modifier</label>
+        <div id="castle-hero-base">
+            <h3>Base</h3>
+            <table class="sx-list">
+                <colgroup>
+                    <col class="castle-hero-icons"/>
+                    <col/>
+                    <col/>
+                    <col class="sx-action"/>
+                    <col class="castle-hero-amount"/>
+                    <col class="sx-action"/>
+                </colgroup>
+                <tbody></tbody>
+            </table>
+            <table class="castle-hero-boost"></table>
+        </div>
+        <div id="castle-hero-tier-1">
+            <h3>Tier 1</h3>
+            <p hidden><em>Is unlocked once you pick higher-level cards during gameplay.</em></p>
+            <div hidden>
+                <select id="castle-hero-shrine" name="shrine"></select>
+                <label for="castle-hero-shrine">Blessing</label>
+                <table class="sx-list">
+                    <colgroup>
+                        <col class="castle-hero-icons"/>
+                        <col/>
+                        <col/>
+                        <col class="sx-action"/>
+                        <col class="castle-hero-amount"/>
+                        <col class="sx-action"/>
+                    </colgroup>
+                    <tbody></tbody>
+                </table>
+                <table class="castle-hero-boost"></table>
+            </div>
+        </div>
+        <div id="castle-hero-tier-2">
+            <h3>Tier 2</h3>
+            <p hidden><em>Is unlocked once you reach 33 % achievements and pick high-level cards during gameplay.</em></p>
+            <div hidden>
+                <select id="castle-hero-specialization" name="specialization"></select>
+                <label for="castle-hero-specialization">Specialization</label>
+                <table class="sx-list">
+                    <colgroup>
+                        <col class="castle-hero-icons"/>
+                        <col/>
+                        <col/>
+                        <col class="sx-action"/>
+                        <col class="castle-hero-amount"/>
+                        <col class="sx-action"/>
+                    </colgroup>
+                    <tbody></tbody>
+                </table>
+                <table class="castle-hero-boost"></table>
+            </div>
+        </div>
+        <div id="castle-hero-tier-3">
+            <h3>Tier 3</h3>
+            <p hidden><em>Is unlocked once you reach 66 % achievements and pick even higher-level cards during gameplay.</em></p>
+            <div hidden>
+                <p>
+                    <strong>Area:</strong><br/>
+                    <span id="castle-hero-area"></span>
+                </p>
+                <table class="sx-list">
+                    <colgroup>
+                        <col class="castle-hero-icons"/>
+                        <col/>
+                        <col/>
+                        <col class="sx-action"/>
+                        <col class="castle-hero-amount"/>
+                        <col class="sx-action"/>
+                    </colgroup>
+                    <tbody></tbody>
+                </table>
+                <table class="castle-hero-boost"></table>
+            </div>
+        </div>
+        <div id="castle-hero-final">
+            <h3>Finalization</h3>
+            <p hidden><em>Is unlocked once you pick highest-level cards during gameplay.</em></p>
+            <div hidden>
+                <table class="sx-list">
+                    <colgroup>
+                        <col class="castle-hero-icons"/>
+                        <col/>
+                        <col/>
+                        <col class="sx-action"/>
+                        <col class="castle-hero-amount"/>
+                        <col class="sx-action"/>
+                    </colgroup>
+                    <tbody></tbody>
+                </table>
+                <table class="castle-hero-boost"></table>
+            </div>
+        </div>
+        <div class="sx-actions">
+            <button type="submit"><span class="sx-button-icon">💾</span> Apply</button>
+        </div>
+    </form>
+</template>
+<script type="module">
+    import {helper, page, state} from '../../js/app.js';
+
+    let user = state.get('user');
+    let hero = state.get('castle-hero') || {};
+    let modifiers = state.get('castle-modifiers') || [];
+    let shrines = state.get('castle-shrines') || [];
+    let specializations = state.get('castle-specializations') || [];
+    let tournament = state.get('castle-tournament') || {};
+
+    function createCard(card, identifier, count) {
+        const tr = helper.create('tr');
+        tr.innerHTML = `
+            <td class="castle-hero-icons">${card.icon}</td>
+            <td>${card.text}</td>
+            <td class="castle-hero-tags">${helper.tags(card.tags)}</td>
+            <td><button type="button" ${card.amount < 1 ? 'disabled' : ''} value="${card.amount - 1}" data-change="${identifier}">&minus;</button></td>
+            <td class="castle-hero-amount">${card.amount}</td>
+            <td><button type="button" ${count > 14 || card.amount > 4 ? 'disabled' : ''} value="${card.amount + 1}" data-change="${identifier}">&plus;</button></td>
+        `;
+        return tr;
+    }
+
+    function createBoost(cards) {
+        const boost = {
+            health: 0,
+            damage: 0,
+            defense: 0,
+            magic: 0,
+            speed: 0,
+            base: 0,
+            modifier: 0,
+            curse: 0,
+            conversion: 0,
+        };
+        cards.forEach(([,card]) => card.tags.forEach((tag) => boost[tag] += card.amount));
+        return `
+            <tr class="castle-hero-tags">
+                <td>${helper.tags(['health'])}️</td>
+                <td>${helper.tags(['damage'])}</td>
+                <td>${helper.tags(['defense'])}</td>
+                <td>${helper.tags(['magic'])}</td>
+                <td>${helper.tags(['speed'])}</td>
+                <td>${helper.tags(['base'])}</td>
+                <td>${helper.tags(['modifier'])}</td>
+                <td>${helper.tags(['curse'])}</td>
+                <td>${helper.tags(['conversion'])}</td>
+                <td></td>
+            </tr>
+            <tr class="castle-hero-boost-values">
+                <td>${boost.health}</td>
+                <td>${boost.damage}</td>
+                <td>${boost.defense}</td>
+                <td>${boost.magic}</td>
+                <td>${boost.speed}</td>
+                <td>${boost.base}</td>
+                <td>${boost.modifier}</td>
+                <td>${boost.curse}</td>
+                <td>${boost.conversion}</td>
+                <td>%</td>
+            </tr>
+        `;
+    }
+
+    page.register('castle-hero', ({render, show, action, listen}) => {
+        render(() => {
+            helper.list('#castle-hero-modifier', [null, ...modifiers], (modifier) => {
+                const option = helper.create('option');
+                if (modifier) {
+                    option.value = modifier.identifier;
+                    option.innerHTML = modifier.text;
+                }
+                return option;
+            });
+
+            helper.list('#castle-hero-shrine', [null, ...shrines], (shrines) => {
+                const option = helper.create('option');
+                if (shrines) {
+                    option.value = shrines.identifier;
+                    option.innerText = `${shrines.icon} ${shrines.text}: ${shrines.description}`;
+                }
+                return option;
+            });
+
+            helper.list('#castle-hero-specialization', [null, ...specializations], (specialization) => {
+                const option = helper.create('option');
+                if (specialization) {
+                    option.value = specialization.identifier;
+                    option.innerText = `${specialization.icon} ${specialization.name}: ${specialization.description}`;
+                }
+                return option;
+            });
+
+            helper.set('#castle-hero-name', 'value', hero.name || '');
+            helper.set('#castle-hero-modifier', 'value', hero.modifier || '');
+            helper.set('#castle-hero-shrine', 'value', hero.shrine || '');
+            helper.set('#castle-hero-specialization', 'value', hero.specialization || '');
+
+            const base = Object.entries(hero.base || {});
+            const baseCount = base.reduce((amount, [,card]) => amount + card.amount, 0);
+            helper.list('#castle-hero-base .sx-list tbody', base, ([identifier, card]) => createCard(card, identifier, baseCount));
+            helper.set('#castle-hero-base .castle-hero-boost', 'innerHTML', createBoost([...base]));
+
+            const tier1 = Object.entries(hero.tier_1 || {});
+            const tier1Count = tier1.reduce((amount, [,card]) => amount + card.amount, 0);
+            helper.set('#castle-hero-tier-1 > h3', 'innerHTML', `${helper.league(0, 'tier')} - ${helper.league(0, 'icon')} ${helper.league(0, 'name')}`);
+            helper.set('#castle-hero-tier-1 > p', 'hidden', tier1.length);
+            helper.set('#castle-hero-tier-1 > div', 'hidden', !tier1.length);
+            helper.list('#castle-hero-tier-1 .sx-list tbody', tier1, ([identifier, card]) => createCard(card, identifier, tier1Count));
+            helper.set('#castle-hero-tier-1 .castle-hero-boost', 'innerHTML', createBoost([...base, ...tier1]));
+
+            const tier2 = Object.entries(hero.tier_2 || {});
+            const tier2Count = tier2.reduce((amount, [,card]) => amount + card.amount, 0);
+            helper.set('#castle-hero-tier-2 > h3', 'innerHTML', `${helper.league(1, 'tier')} - ${helper.league(1, 'icon')} ${helper.league(1, 'name')}`);
+            helper.set('#castle-hero-tier-2 > p', 'hidden', tier2.length);
+            helper.set('#castle-hero-tier-2 > div', 'hidden', !tier2.length);
+            helper.list('#castle-hero-tier-2 .sx-list tbody', tier2, ([identifier, card]) => createCard(card, identifier, tier2Count));
+            helper.set('#castle-hero-tier-2 .castle-hero-boost', 'innerHTML', createBoost([...base, ...tier1, ...tier2]));
+
+            const tier3 = Object.entries(hero.tier_3 || {});
+            const tier3Count = tier3.reduce((amount, [,card]) => amount + card.amount, 0);
+            helper.set('#castle-hero-tier-3 > h3', 'innerHTML', `${helper.league(2, 'tier')} - ${helper.league(2, 'icon')} ${helper.league(2, 'name')}`);
+            helper.set('#castle-hero-tier-3 > p', 'hidden', tier3.length);
+            helper.set('#castle-hero-tier-3 > div', 'hidden', !tier3.length);
+            helper.list('#castle-hero-tier-3 .sx-list tbody', tier3, ([identifier, card]) => createCard(card, identifier, tier3Count));
+            helper.set('#castle-hero-tier-3 .castle-hero-boost', 'innerHTML', createBoost([...base, ...tier1, ...tier2, ...tier3]));
+
+            const final = Object.entries(hero.final || {});
+            const finalCount = final.reduce((amount, [,card]) => amount + card.amount, 0);
+            helper.set('#castle-hero-final > p', 'hidden', final.length);
+            helper.set('#castle-hero-final > div', 'hidden', !final.length);
+            helper.list('#castle-hero-final .sx-list tbody', final, ([identifier, card]) => createCard(card, identifier, finalCount));
+            helper.set('#castle-hero-final .castle-hero-boost', 'innerHTML', createBoost([...base, ...tier1, ...tier2, ...tier3, ...final]));
+
+            helper.set('#castle-hero-tournament', 'innerHTML', tournament.modifier?.text);
+            helper.set('#castle-hero-area', 'innerHTML', `${tournament.area?.icon} ${tournament.area?.name}<br/>${tournament.area?.description}`);
+        });
+
+        show(() => {
+            state.dispatch('castle-modifiers', user?.id);
+            state.dispatch('castle-shrines', user?.id);
+            state.dispatch('castle-specializations', user?.id);
+        });
+
+        action('#castle-hero', 'submit', (event, target) => {
+            event.preventDefault();
+            const data = new FormData(target);
+            [
+                ...Object.entries(hero.base || {}),
+                ...Object.entries(hero.tier_1 || {}),
+                ...Object.entries(hero.tier_2 || {}),
+                ...Object.entries(hero.tier_3 || {}),
+                ...Object.entries(hero.final || {}),
+            ].forEach(([identifier, card]) => {
+                data.append(`cards[${identifier}]`, card.amount);
+            })
+            state.dispatch('castle-hero-save', [user?.id, hero.id, data]);
+        });
+
+        action('#castle-hero', 'change', (event, target) => {
+            hero.name = target.name.value;
+            hero.modifier = target.modifier.value;
+            hero.shrine = target.shrine.value;
+            hero.specialization = target.specialization.value;
+            state.set('castle-hero', hero);
+        });
+
+        action('#castle-hero [data-change]', 'click', (event, target) => {
+            const identifier = target.dataset.change;
+            const amount = parseInt(target.value);
+            ['base', 'tier_1', 'tier_2', 'tier_3', 'final'].forEach((type) => {
+                if (hero[type] && hero[type][identifier]) {
+                    hero[type][identifier].amount = amount;
+                }
+            })
+            state.set('castle-hero', hero);
+        });
+
+        listen('user', (payload) => {
+            user = payload;
+            state.dispatch('castle-modifiers', user.id);
+            state.dispatch('castle-shrines', user.id);
+            state.dispatch('castle-specializations', user.id);
+        });
+
+        listen('castle-hero', (payload) => {
+            hero = payload || {};
+        });
+
+        listen('castle-modifiers', (payload) => {
+            modifiers = payload || [];
+        });
+
+        listen('castle-shrines', (payload) => {
+            shrines = payload || [];
+        });
+
+        listen('castle-specializations', (payload) => {
+            specializations = payload || [];
+        });
+
+        listen('castle-tournament', (payload) => {
+            tournament = payload || {};
+        });
+
+        listen('castle-hero-save', () => {
+            history.back();
+        });
+    });
+</script>
+<style>
+    #castle-hero .sx-list button {
+        background: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        width: auto;
+        height: auto;
+        color: var(--secondary-color);
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .castle-hero-icons.castle-hero-icons {
+        width: 4em;
+        text-align: center;
+    }
+
+    .castle-hero-amount.castle-hero-amount {
+        width: 1.5em;
+        text-align: center;
+    }
+
+    .castle-hero-tags.castle-hero-tags {
+        filter: grayscale(1);
+        opacity: .5;
+        font-size: .7em;
+        text-align: right;
+    }
+
+    .castle-hero-boost-values.castle-hero-boost-values {
+        font-size: .8em;
+    }
+
+    .castle-hero-boost td {
+        text-align: center;
+    }
+</style>

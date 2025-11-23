@@ -20,7 +20,7 @@
     --tertiary-color-highlight: lightgrey;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 550px) {
     .sx-navigation {
         font-size: 0;
     }
@@ -67,4 +67,18 @@ progress {
     background: var(--primary-color);
     border-radius: 50%;
     z-index: 3000;
+}
+
+.hero span {
+    display: inline-block;
+}
+
+.hero-table.hero-table {
+    width: 100%;
+    max-width: 520px;
+    margin: .5em 0
+}
+
+.hero-table td {
+    min-width: 25px;
 }

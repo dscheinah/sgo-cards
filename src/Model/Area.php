@@ -12,9 +12,9 @@ class Area
 
     public string $description;
 
-    public int $y;
+    public int $y = 0;
 
-    public int $h;
+    public int $h = 0;
 
     /** @var class-string<AreaInterface> */
     public string $handler;

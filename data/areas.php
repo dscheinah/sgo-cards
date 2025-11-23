@@ -13,67 +13,67 @@ use App\Helper\Area\TournamentArea;
 use App\Helper\Area\VoidArea;
 
 return [
-    [
+    'desert' => [
         'icon' => '🌵️',
         'name' => 'Hot Desert',
         'description' => 'Drains Health with increased temperature.',
         'handler' => DesertArea::class,
     ],
-    [
+    'river' => [
         'icon' => '🌊',
         'name' => 'Crossing Rivers',
         'description' => 'Stop your way and prevent combat Damage.',
         'handler' => RiverArea::class,
     ],
-    [
+    'forest' => [
         'icon' => '🌳',
         'name' => 'Dark Forest',
         'description' => 'Allows hidden attacks ignoring Defense.',
         'handler' => ForestArea::class,
     ],
-    [
+    'city' => [
         'icon' => '🏚️',
         'name' => 'Ancient City',
         'description' => 'Has a barrier to prevent offensive Magic.',
         'handler' => CityArea::class,
     ],
-    [
+    'swamp' => [
         'icon' => '🦟',
         'name' => 'Muddy Swamp',
         'description' => 'Makes it difficult to use Speed.',
         'handler' => SwampArea::class,
     ],
-    [
+    'void' => [
         'icon' => '🌌',
         'name' => 'Endless Void',
         'description' => 'Creates confusion to randomize all stats.',
         'handler' => VoidArea::class,
     ],
-    [
+    'ritual' => [
         'icon' => '🩸',
         'name' => 'Bloody Ritual',
         'description' => 'Sacrifices Health for offensive Magic.',
         'handler' => RitualArea::class,
     ],
-    [
+    'cave' => [
         'icon' => '🕷️',
         'name' => 'Deep Caves',
         'description' => 'Use Defense as defensive Magic.',
         'handler' => CaveArea::class,
     ],
-    [
+    'runway' => [
         'icon' => '🛤️',
         'name' => 'Clear Runways',
         'description' => 'Allow evading to give Speed as Health.',
         'handler' => RunwayArea::class,
     ],
-    [
+    'dungeon' => [
         'icon' => '🕳️',
         'name' => 'Trapped Dungeons',
         'description' => 'Reflect back the dealt Damage.',
         'handler' => DungeonArea::class,
     ],
-    [
+    'tournament' => [
         'icon' => '👿',
         'name' => 'Godly Tournament',
         'description' => 'Declares the winner by Total stats.',

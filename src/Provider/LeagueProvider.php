@@ -36,7 +36,7 @@ class LeagueProvider
         $league = new League();
         $league->id = $input['id'];
         $league->modifier = $this->modifierHelper->get($input['modifier']);
-        $league->areas = $this->areaHelper->get($league);
+        $league->areas = $this->areaHelper->getForLeague($league);
         return $league;
     }
 }

@@ -12,11 +12,11 @@ class Player
 
     public int $try = 0;
 
-    public int $x;
+    public int $x = 0;
 
-    public int $y;
+    public int $y = 0;
 
-    public Modifier $modifier;
+    public ?Modifier $modifier = null;
 
     /** @var array<string, Modifier>  */
     public array $modifiers = [];
@@ -26,12 +26,20 @@ class Player
     /** @var array<Specialization> */
     public array $specializations = [];
 
-    public array $data;
+    public array $data = [
+        'health' => 0,
+        'damage' => 0,
+        'defense' => 0,
+        'magic' => 0,
+        'speed' => 0,
+    ];
 
-    public function calculation(League $league, ?Player $enemy = null): array
+    public int $curse = 0;
+
+    public function calculation(?Modifier $global, ?Player $enemy = null): array
     {
         $modifiers = array_filter([
-            $league->modifier,
+            $global,
             ...array_filter($enemy?->mods() ?: [], static fn (Modifier $modifier) => $modifier->enemy),
             ...array_filter($this->mods(), static fn (Modifier $modifier) => $modifier->self),
         ]);
@@ -58,7 +66,7 @@ class Player
      */
     public function mods(): array
     {
-        return [$this->modifier, ...($this->specialization?->modifiers ?: []), ...$this->modifiers];
+        return array_filter([$this->modifier, ...($this->specialization?->modifiers ?: []), ...$this->modifiers]);
     }
 
     public function withModifier(Modifier $modifier): Player
@@ -77,10 +85,13 @@ class Player
         foreach ($card->data as $key => $value) {
             $player->data[$key] += $value;
         }
+        if (in_array(Card::CURSE, $card->tags, true)) {
+            $player->curse++;
+        }
         return $player;
     }
 
-    public function output(League $league, ?Player $enemy = null): array
+    public function output(?Modifier $global, ?Player $enemy = null): array
     {
         return [
             'name' => $this->name,
@@ -98,7 +109,7 @@ class Player
                 $this->specializations
             ),
             'data' => array_map(static fn ($value) => (int) $value, $this->data),
-            'calculation' => $this->calculation($league, $enemy),
+            'calculation' => $this->calculation($global, $enemy),
         ];
     }
 }

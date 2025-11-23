@@ -35,6 +35,12 @@
             <a href="https://github.com/dscheinah/sgo-cards" target="_blank">https://github.com/dscheinah/sgo-cards</a>
         </p>
     </div>
+    <h2>Tournament Rankings</h2>
+    <p id="overview-no-tournament" hidden>Rankings will be available after the first tournament.</p>
+    <div id="overview-tournament" class="sx-cards" hidden></div>
+    <button id="overview-castle" type="button" data-navigation value="castle" hidden>
+        <span class="sx-button-icon">🏰️</span> Visit Castle
+    </button>
 </template>
 
 <script type="module">
@@ -42,17 +48,37 @@
 
     let user = state.get('user');
     let loading = state.get('loading');
+    let rankings = state.get('rankings') || [];
 
-    page.register('overview', ({render, action, listen}) => {
+    page.register('overview', ({render, show, action, listen}) => {
         render(() => {
             helper.set('#overview-submit', 'disabled', loading || null);
+            helper.set('#overview-tournament', 'hidden', !rankings.length);
+            helper.set('#overview-no-tournament', 'hidden', rankings.length);
+            helper.list('#overview-tournament', rankings, (ranking, index) => {
+                const div = helper.create('div');
+                div.classList.add('sx-card');
+                div.innerHTML = `
+                    <h3>
+                        ${helper.league(index, 'icon')} ${helper.league(index, 'name')}<br/>
+                        <small>${helper.league(index, 'tier')}</small>
+                    </h3>
+                    <p>${ranking.map((rank) => helper.escape(rank)).join('<br/>')}</p>
+                `;
+                return div;
+            });
             if (!user) {
                 return;
             }
             helper.set('#overview-user', 'hidden', !user.id);
             helper.set('#overview-create', 'hidden', !user.create);
             helper.set('#overview-error', 'hidden', !user.error);
-            helper.set('#overview-name', 'innerHTML', user.name);
+            helper.set('#overview-name', 'innerText', user.name);
+            helper.set('#overview-castle', 'hidden', !user.id);
+        });
+
+        show(() => {
+            state.dispatch('castle-rankings', user?.id)
         });
 
         action('#overview-form', 'submit', (event) => {
@@ -67,6 +93,7 @@
 
         listen('user', (payload) => {
             user = payload;
+            state.dispatch('castle-rankings', user.id);
         });
 
         listen('loading', (payload) => {
@@ -76,11 +103,27 @@
         listen('user-logout', () => {
             state.dispatch('loading', false);
         })
+
+        listen('castle-rankings', (payload) => {
+            rankings = payload;
+        })
     });
 </script>
 
 <style>
     #overview-user button {
         min-width: 100px;
+    }
+
+    #overview-tournament {
+        margin-bottom: 2em;
+    }
+
+    #overview-tournament > * {
+        justify-content: flex-start;
+    }
+
+    #overview-tournament p {
+        text-align: left;
     }
 </style>
