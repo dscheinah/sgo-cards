@@ -8,6 +8,7 @@
 <script type="module">
     import {helper, page, state} from '../../js/app.js';
 
+    let user = state.get('user');
     let heroes = state.get('castle-heroes') || [];
     let enemies = state.get('castle-enemies') || [];
 
@@ -37,8 +38,12 @@
         action('#castle-training button', 'click', (event, target) => {
             const enemy = enemies[parseInt(target.value)];
             if (enemy) {
-                state.dispatch('castle-training', [enemy.hero_id, enemy.id]);
+                state.dispatch('castle-training', [user?.id, enemy.hero_id, enemy.id]);
             }
+        });
+
+        listen('user', (payload) => {
+            user = payload;
         });
 
         listen('castle-heroes', (payload) => {

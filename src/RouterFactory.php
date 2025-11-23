@@ -13,6 +13,7 @@ use App\Handler\HeroModifierHandler;
 use App\Handler\HeroSaveHandler;
 use App\Handler\HeroShrineHandler;
 use App\Handler\HeroSpecializationHandler;
+use App\Handler\HeroTrainingHandler;
 use App\Handler\LeagueInformationHandler;
 use App\Handler\LeagueListHandler;
 use App\Handler\ListHandler;
@@ -74,6 +75,9 @@ class RouterFactory implements FactoryInterface
         $router->post($prefix . 'castle/hero/save', HeroSaveHandler::class);
         $router->get($prefix . 'castle/hero/shrine', HeroShrineHandler::class);
         $router->get($prefix . 'castle/hero/specialization', HeroSpecializationHandler::class);
+        $router->get($prefix . 'castle/hero/training', AchievementListMiddleware::class);
+        $router->get($prefix . 'castle/hero/training', TournamentMiddleware::class);
+        $router->get($prefix . 'castle/hero/training', HeroTrainingHandler::class);
 
         $router->get($prefix . 'league/list', LeagueListHandler::class);
         $router->get($prefix . 'league/information', LeagueInformationHandler::class);

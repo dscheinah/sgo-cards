@@ -6,7 +6,11 @@ use App\Helper\CardHelper;
 use App\Helper\ModifierHelper;
 use App\Helper\ShrineHelper;
 use App\Helper\SpecializationHelper;
+use App\Model\Battle;
+use App\Model\Battlefield;
 use App\Model\Hero;
+use App\Model\League;
+use App\Model\Tournament;
 use App\Storage\HeroStorage;
 use App\Storage\PoolStorage;
 
@@ -19,6 +23,7 @@ class HeroBuilder
         private readonly ModifierHelper $modifierHelper,
         private readonly ShrineHelper $shrineHelper,
         private readonly SpecializationHelper $specializationHelper,
+        private readonly BattleProvider $battleProvider,
     ) {
     }
 
@@ -63,5 +68,29 @@ class HeroBuilder
         }
 
         return $hero;
+    }
+
+    public function battle(int $tier, int $heroId, int $enemyId, ?Tournament $tournament): ?Battle
+    {
+        $hero = $this->load($tier, $heroId);
+        $enemy = $this->load($tier, $enemyId);
+
+        if (!$hero || !$enemy) {
+            return null;
+        }
+
+        $battlefield = new Battlefield();
+        $battlefield->player = $hero->player($tier);
+        $battlefield->enemy = $enemy->player($tier);
+        $battlefield->shrines = array_filter([$hero->shrine, $enemy->shrine]);
+
+        $battlefield->league = new League();
+        $battlefield->league->modifier = $tournament?->modifier;
+
+        if ($tier > 1) {
+            $battlefield->area = $tournament?->area;
+        }
+
+        return $this->battleProvider->battle($battlefield);
     }
 }

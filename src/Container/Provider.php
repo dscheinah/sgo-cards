@@ -17,6 +17,7 @@ use App\Handler\HeroModifierHandler;
 use App\Handler\HeroSaveHandler;
 use App\Handler\HeroShrineHandler;
 use App\Handler\HeroSpecializationHandler;
+use App\Handler\HeroTrainingHandler;
 use App\Handler\LeagueHandlerFactory;
 use App\Handler\LeagueInformationHandler;
 use App\Handler\LeagueListHandler;
@@ -146,6 +147,7 @@ class Provider implements ProviderInterface
         $injector->set(HeroSaveHandler::class, HeroHandlerFactory::class);
         $injector->set(HeroShrineHandler::class, HeroHandlerFactory::class);
         $injector->set(HeroSpecializationHandler::class, HeroHandlerFactory::class);
+        $injector->set(HeroTrainingHandler::class, HeroHandlerFactory::class);
         $injector->set(LeagueListHandler::class, LeagueHandlerFactory::class);
         $injector->set(LeagueInformationHandler::class, LeagueHandlerFactory::class);
         $injector->set(RoundLoadHandler::class, RoundHandlerFactory::class);

@@ -117,6 +117,29 @@ class HeroRepository
         return true;
     }
 
+    public function battle(array $achievements, ?Tournament $tournament, int $heroId, int $enemyId): ?array
+    {
+        $tier = $this->tierFromAchievements($achievements);
+
+        $tiers = [];
+        $log = [];
+        for ($i = 0; $i <= $tier; $i++) {
+            $battle = $this->heroBuilder->battle($i, $heroId, $enemyId, $tournament);
+            if (!$battle) {
+                return null;
+            }
+            $tiers[] = ['winner' => $battle->winner, 'duration' => $battle->duration];
+            $log[] = $battle->log;
+        }
+
+        return [
+            'hero_id' => $heroId,
+            'enemy_id' => $enemyId,
+            'tiers' => $tiers,
+            'log' => array_merge(...$log),
+        ];
+    }
+
     private function tierFromAchievements(array $achievements): int
     {
         $percentage = round(array_sum(array_column($achievements, 'value')) / count($achievements));

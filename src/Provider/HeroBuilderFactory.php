@@ -22,6 +22,7 @@ class HeroBuilderFactory implements FactoryInterface
             $injector->get(ModifierHelper::class),
             $injector->get(ShrineHelper::class),
             $injector->get(SpecializationHelper::class),
+            $injector->get(BattleProvider::class),
         );
     }
 }

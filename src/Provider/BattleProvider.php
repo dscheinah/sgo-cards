@@ -56,7 +56,7 @@ class BattleProvider
         return $battle;
     }
 
-    private function battle(Battlefield $battlefield): Battle
+    public function battle(Battlefield $battlefield): Battle
     {
         $battle = new Battle();
 
