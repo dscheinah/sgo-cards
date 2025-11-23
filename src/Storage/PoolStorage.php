@@ -39,7 +39,7 @@ class PoolStorage extends Storage
 
     public function fetchCardsForUser(string $userId): Generator
     {
-        $statement = 'SELECT `identifier` FROM `pool_cards` WHERE `user_id` = ?';
+        $statement = 'SELECT `identifier` FROM `pool_cards` WHERE `user_id` = ? ORDER BY `tier`, `type`, `identifier`';
         return $this->fetch($statement, [$userId]);
     }
 
