@@ -46,6 +46,23 @@ class Modifier
         return $modifier;
     }
 
+    public function withAffinity(float $affinity): Modifier
+    {
+        $modifier = clone $this;
+        if ($modifier->multiplicative) {
+            $modifier->data = array_map(
+                static fn ($value) => $value < 1 ? $value / $affinity : 1 + ($value - 1) * $affinity,
+                $modifier->data
+            );
+        } else {
+            $modifier->data = array_map(
+                static fn ($value) => $value * $affinity,
+                $modifier->data
+            );
+        }
+        return $modifier;
+    }
+
     public function output(): array
     {
         return [

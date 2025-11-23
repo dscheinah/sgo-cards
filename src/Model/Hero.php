@@ -75,13 +75,10 @@ class Hero
         );
 
         $affinities = [];
-        foreach ($cards as $entry) {
-            foreach ($entry['card']->tags as $tag) {
-                if (isset($affinities[$tag])) {
-                    $affinities[$tag]++;
-                } else {
-                    $affinities[$tag] = 1;
-                }
+        foreach (array_column($cards, 'card') as $card) {
+            assert($card instanceof Card);
+            foreach ($card->tags as $tag) {
+                $affinities[$tag] = ($affinities[$tag] ?? 0) + 1;
             }
         }
 
@@ -91,26 +88,16 @@ class Hero
             $player->specialization = $this->specialization;
         }
         foreach ($cards as $entry) {
-            for ($i = 0; $i < $entry['amount']; $i++) {
-                $affinity = 0;
-                foreach ($entry['card']->tags as $tag) {
-                    if ($affinities[$tag] ?? 0 > $affinity) {
-                        $affinity = $affinities[$tag];
-                    }
-                }
-                $affinity = ($affinity + 100) / 100;
+            $card = $entry['card'];
+            assert($card instanceof Card);
 
-                $card = clone $entry['card'];
-                $card->data = array_map(static fn ($value) => $value * $affinity, $card->data);
-                if ($card->modifier) {
-                    $card->modifier = clone $card->modifier;
-                    $card->modifier->data = array_map(
-                        static fn ($value) => $card->modifier->multiplicative && $value < 1
-                            ? $value / $affinity
-                            : $value * $affinity,
-                        $card->modifier->data
-                    );
-                }
+            $affinity = 0;
+            foreach ($card->tags as $tag) {
+                $affinity += $affinities[$tag] ?? 0;
+            }
+            $card = $card->withAffinity(1 + ($affinity / count($card->tags) / 100));
+
+            for ($i = 0; $i < $entry['amount']; $i++) {
                 $player = $player->withCard($card);
             }
         }

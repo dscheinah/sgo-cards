@@ -30,6 +30,16 @@ class Card
 
     public int $tier;
 
+    public function withAffinity(float $affinity): Card
+    {
+        $card = clone $this;
+        $card->data = array_map(static fn ($value) => $value * $affinity, $card->data);
+        if ($card->modifier) {
+            $card->modifier = $card->modifier->withAffinity($affinity);
+        }
+        return $card;
+    }
+
     public function output(): array
     {
         return [
