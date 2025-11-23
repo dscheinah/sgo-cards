@@ -280,6 +280,14 @@
             state.dispatch('castle-hero-save', [user?.id, hero.id, data]);
         });
 
+        action('#castle-hero', 'change', (event, target) => {
+            hero.name = target.name.value;
+            hero.modifier = target.modifier.value;
+            hero.shrine = target.shrine.value;
+            hero.specialization = target.specialization.value;
+            state.set('castle-hero', hero);
+        });
+
         action('#castle-hero [data-change]', 'click', (event, target) => {
             const identifier = target.dataset.change;
             const amount = parseInt(target.value);
