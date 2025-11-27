@@ -9,7 +9,7 @@
             <li>You can only select 5 cards with the same name at a time.</li>
             <li>Selecting cards increases your alignment, which proportionally enhances all cards of the same type.</li>
             <li>All selected cards and modifiers accumulate up to the final tier, following their order of appearance.</li>
-            <li>Your final stats will be displayed in the castle after pressing <em>Apply</em>.</li>
+            <li>The stat summary only shows the final tier without tournament modifier.</li>
         </ul>
     </details>
     <form id="castle-hero">
@@ -118,6 +118,7 @@
         </div>
         <div class="sx-actions">
             <button type="submit"><span class="sx-button-icon">💾</span> Apply</button>
+            <table id="castle-hero-stats"></table>
         </div>
     </form>
 </template>
@@ -183,6 +184,24 @@
                 <td>%</td>
             </tr>
         `;
+    }
+
+    function createFormData() {
+        const data = new FormData();
+        data.set('name', hero.name);
+        data.set('modifier', hero.modifier);
+        data.set('shrine', hero.shrine);
+        data.set('specialization', hero.specialization);
+        [
+            ...Object.entries(hero.base || {}),
+            ...Object.entries(hero.tier_1 || {}),
+            ...Object.entries(hero.tier_2 || {}),
+            ...Object.entries(hero.tier_3 || {}),
+            ...Object.entries(hero.final || {}),
+        ].forEach(([identifier, card]) => {
+            data.append(`cards[${identifier}]`, card.amount);
+        });
+        return data;
     }
 
     page.register('castle-hero', ({render, show, action, listen}) => {
@@ -257,6 +276,19 @@
 
             helper.set('#castle-hero-tournament', 'innerHTML', tournament.modifier?.text);
             helper.set('#castle-hero-area', 'innerHTML', `${tournament.area?.icon} ${tournament.area?.name}<br/>${tournament.area?.description}`);
+
+            helper.set('#castle-hero-stats', 'innerHTML', `
+                <tr>
+                    <td>${helper.tags(['health'])} ${hero.stats?.health || 0}</td>
+                    <td>${helper.tags(['damage'])} ${hero.stats?.damage || 0}</td>
+                    <td>${helper.tags(['defense'])} ${hero.stats?.defense || 0}</td>
+                </tr>
+                 <tr>
+                    <td>${helper.tags(['magic'])} ${hero.stats?.magic || 0}</td>
+                    <td> ${helper.tags(['speed'])} ${hero.stats?.speed || 0}</td>
+                    <td>${helper.tags(['curse'])} ${hero.stats?.curse || 0}</td>
+                </tr>
+            `);
         });
 
         show(() => {
@@ -265,19 +297,9 @@
             state.dispatch('castle-specializations', user?.id);
         });
 
-        action('#castle-hero', 'submit', (event, target) => {
+        action('#castle-hero', 'submit', (event) => {
             event.preventDefault();
-            const data = new FormData(target);
-            [
-                ...Object.entries(hero.base || {}),
-                ...Object.entries(hero.tier_1 || {}),
-                ...Object.entries(hero.tier_2 || {}),
-                ...Object.entries(hero.tier_3 || {}),
-                ...Object.entries(hero.final || {}),
-            ].forEach(([identifier, card]) => {
-                data.append(`cards[${identifier}]`, card.amount);
-            })
-            state.dispatch('castle-hero-save', [user?.id, hero.id, data]);
+            state.dispatch('castle-hero-save', [user?.id, hero.id, createFormData()]);
         });
 
         action('#castle-hero', 'change', (event, target) => {
@@ -286,6 +308,7 @@
             hero.shrine = target.shrine.value;
             hero.specialization = target.specialization.value;
             state.set('castle-hero', hero);
+            state.dispatch('castle-hero-stats', createFormData());
         });
 
         action('#castle-hero [data-change]', 'click', (event, target) => {
@@ -297,6 +320,7 @@
                 }
             })
             state.set('castle-hero', hero);
+            state.dispatch('castle-hero-stats', createFormData());
         });
 
         listen('user', (payload) => {
@@ -308,6 +332,10 @@
 
         listen('castle-hero', (payload) => {
             hero = payload || {};
+        });
+
+        listen('castle-hero-stats', (payload) => {
+            hero.stats = payload || {};
         });
 
         listen('castle-modifiers', (payload) => {
@@ -368,5 +396,17 @@
 
     .castle-hero-boost td {
         text-align: center;
+    }
+
+    #castle-hero-stats {
+        flex: 0 0 auto;
+        margin-bottom: 0;
+        width: auto;
+        margin-left: auto;
+    }
+
+    #castle-hero-stats td {
+        padding-top: 0;
+        padding-bottom: 0;
     }
 </style>

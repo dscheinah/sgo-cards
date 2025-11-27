@@ -119,6 +119,14 @@ export async function specializations(userId) {
     throw new Error('An error occurred. Please reload and try again.');
 }
 
+export async function stats(body) {
+    const result = await fetch('castle/hero/stats', {method: 'POST', body});
+    if (result.ok) {
+        return result.json();
+    }
+    throw new Error('An error occurred. Please reload and try again.');
+}
+
 export async function save(userId, heroId, body) {
     if (!userId) {
         return null;

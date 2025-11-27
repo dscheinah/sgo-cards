@@ -24,6 +24,7 @@ class HeroBuilder
         private readonly ShrineHelper $shrineHelper,
         private readonly SpecializationHelper $specializationHelper,
         private readonly BattleProvider $battleProvider,
+        private readonly int $tiers,
     ) {
     }
 
@@ -55,6 +56,19 @@ class HeroBuilder
             $hero = $hero->withCard($this->cardHelper->get($identifier), $amounts[$identifier] ?? 0);
         }
 
+        return $hero;
+    }
+
+    public function createFromData(array $data): Hero
+    {
+        $hero = new Hero();
+        $hero->modifier = $this->modifierHelper->get($data['modifier'] ?? '');
+        $hero->shrine = $this->shrineHelper->get($data['shrine'] ?? '');
+        $hero->specialization = $this->specializationHelper->get($data['specialization'] ?? '');
+        $hero->tier = $this->tiers;
+        foreach ((array) ($data['cards'] ?? []) as $identifier => $amount) {
+            $hero = $hero->withCard($this->cardHelper->get($identifier), $amount);
+        }
         return $hero;
     }
 

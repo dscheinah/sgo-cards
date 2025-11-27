@@ -140,6 +140,16 @@ class Hero
             'tier_2' => $this->tier > 0 ? array_map($mapCard, [...$this->cards[3], ...$this->cards[4]]) : null,
             'tier_3' => $this->tier > 1 ? array_map($mapCard, [...$this->cards[5], ...$this->cards[6]]) : null,
             'final' => $this->tier > 1 ? array_map($mapCard, $this->cards[7]) : null,
+            'stats' => $this->stats(),
         ];
+    }
+
+    public function stats(): array
+    {
+        $player = $this->player($this->tier);
+        if (!$player) {
+            return [];
+        }
+        return [...$player->calculation(null), 'curse' => $player->curse];
     }
 }

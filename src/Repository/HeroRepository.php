@@ -89,6 +89,11 @@ class HeroRepository
         return null;
     }
 
+    public function stats(array $data): array
+    {
+        return $this->heroBuilder->createFromData($data)->stats();
+    }
+
     public function getRandomEnemies(array $achievements, ?Tournament $tournament): array
     {
         $tier = $this->tierFromAchievements($achievements);
