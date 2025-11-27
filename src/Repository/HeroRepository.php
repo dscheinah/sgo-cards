@@ -120,6 +120,11 @@ class HeroRepository
 
         $cards = array_filter($data['cards'], static fn (int $amount) => $amount && $amount <= 5);
         $this->heroStorage->updateAmounts($heroId, $cards);
+
+        if (!$ids) {
+            $this->heroStorage->updateActive($userId, $heroId);
+        }
+
         return true;
     }
 
