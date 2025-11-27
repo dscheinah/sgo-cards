@@ -10,9 +10,10 @@ class ChargeTreasure implements TreasureInterface
 {
     public static function beginOfTurn(Treasure $treasure, Battlefield $battlefield): void
     {
+        $power = max(1, (int) ($treasure->power / 3));
         foreach ($battlefield->treasures as $dependent) {
             if ($dependent->charges_base) {
-                $dependent->charges_base += $treasure->power;
+                $dependent->charges_base += $power;
             }
         }
     }

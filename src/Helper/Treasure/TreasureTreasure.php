@@ -10,7 +10,7 @@ class TreasureTreasure implements TreasureInterface
 {
     public static function beginOfTurn(Treasure $treasure, Battlefield $battlefield): void
     {
-        $power = $treasure->power;
+        $power = max(1, (int) ($treasure->power / 3));
         $treasure->power = 0;
         foreach ($battlefield->treasures as $dependent) {
             $dependent->power += $power;
