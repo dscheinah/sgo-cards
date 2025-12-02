@@ -99,7 +99,7 @@
     }
 
     function progressClassName(value) {
-        return `statistics-achievements-${value > 66 ? `two` : (value > 33 ? 'one' : '')}`;
+        return `statistics-achievements-${value >= 66 ? `two` : (value >= 33 ? 'one' : '')}`;
     }
 
     function markAchievementsRead() {
