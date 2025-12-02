@@ -37,8 +37,14 @@
 
         action('#castle-training button', 'click', (event, target) => {
             const enemy = enemies[parseInt(target.value)];
-            if (enemy) {
+            if (!enemy) {
+                return;
+            }
+            if (!enemy.result) {
                 state.dispatch('castle-training', [user?.id, enemy.hero_id, enemy.id]);
+            } else {
+                enemy.result = null;
+                state.set('castle-enemies', enemies);
             }
         });
 
