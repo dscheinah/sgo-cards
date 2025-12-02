@@ -17,7 +17,9 @@ class PoisonTreasure implements TreasureInterface
         if ($battlefield->battle?->finished) {
             $treasure->trigger--;
         }
-        self::levels($treasure, $battlefield);
+        if ($battlefield->battle) {
+            $treasure->experience = max($battlefield->battle->duration ** 2, $treasure->experience);
+        }
     }
 
     public static function levels(Treasure $treasure, Battlefield $battlefield): bool
