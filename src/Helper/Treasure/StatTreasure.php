@@ -46,8 +46,14 @@ class StatTreasure implements TreasureInterface
             return null;
         }
         $reduction = (int) ($treasure->power / count($calculation));
-        $calculation = array_map(static fn (int $value) => max($value - $reduction, 0), $calculation);
-        $calculation[$treasure->type] += $treasure->power;
+        foreach ($calculation as $key => $value) {
+            $calculation[$key] = $value - $reduction;
+            if ($calculation[$key] < 0) {
+                $treasure->power -= $calculation[$key];
+                $calculation[$key] = 0;
+            }
+        }
+        $calculation[$treasure->type] += max(0, $treasure->power);
         if ($calculation['health'] < 1) {
             $calculation['health'] = 1;
         }
