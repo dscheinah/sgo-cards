@@ -76,7 +76,7 @@ return [
     'tournament' => [
         'icon' => '👿',
         'name' => 'Godly Tournament',
-        'description' => 'Declares the winner by Total stats.',
+        'description' => 'Spreads the Total stats evenly across all attributes.',
         'handler' => TournamentArea::class,
     ]
 ];
