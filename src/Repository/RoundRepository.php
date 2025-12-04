@@ -5,11 +5,14 @@ namespace App\Repository;
 use App\Model\Card;
 use App\Model\Treasure;
 use App\Provider\BattlefieldBuilder;
+use App\Storage\PlayerStorage;
+use RuntimeException;
 
 class RoundRepository
 {
     public function __construct(
         private readonly BattlefieldBuilder $battlefieldBuilder,
+        private readonly PlayerStorage $playerStorage,
     ) {
     }
 
@@ -35,7 +38,16 @@ class RoundRepository
 
     public function run(string $userId, int $league, int $card): ?array
     {
-        $battlefield = $this->battlefieldBuilder->createAndFight($userId, $league, $card);
+        $battlefield = $this->battlefieldBuilder->create($userId);
+        if ($battlefield->league->id !== $league) {
+            throw new RuntimeException('league has changed');
+        }
+
+        $this->playerStorage->transactional(function () use ($battlefield, $card) {
+            $this->battlefieldBuilder->fight($battlefield, $card);
+            return true;
+        });
+
         return [
             'winner' => $battlefield->battle->winner,
             'league' => $battlefield->battle->league,

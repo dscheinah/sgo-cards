@@ -5,7 +5,6 @@ namespace App\Provider;
 use App\Helper\CardHelper;
 use App\Model\Battlefield;
 use App\Storage\PoolStorage;
-use RuntimeException;
 
 class BattlefieldBuilder
 {
@@ -51,14 +50,8 @@ class BattlefieldBuilder
         return $battlefield;
     }
 
-    public function createAndFight(string $userId, int $league, int $card): Battlefield
+    public function fight(Battlefield $battlefield, int $card): void
     {
-        $battlefield = $this->create($userId);
-
-        if ($battlefield->league->id !== $league) {
-            throw new RuntimeException();
-        }
-
         $battlefield->enemy = $this->playerProvider->createEnemy($battlefield->league, $battlefield->player);
 
         if ($card === 542123) {
@@ -75,7 +68,5 @@ class BattlefieldBuilder
         mt_srand();
         $battlefield->battle = $this->battleProvider->create($battlefield);
         $this->treasureProvider->endOfTurn($battlefield);
-
-        return $battlefield;
     }
 }
