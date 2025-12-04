@@ -128,17 +128,17 @@ class AchievementRepository
                 'max' => 900,
             ],
             [
-                'description' => 'Have a battle with 50 rounds from treasure',
+                'description' => '50 battle rounds with the matching Treasure identified',
                 'value' => $this->treasureStorage->fetchExperienceMaxForUserInclude($userId, 'poison'),
                 'max' => 2500,
             ],
             [
-                'description' => 'Defeat 1000 users from treasure',
+                'description' => 'Defeat 1000 users with the matching Treasure identified',
                 'value' => $this->treasureStorage->fetchExperienceSumForUser($userId, 'treasure'),
                 'max' => 1000,
             ],
             [
-                'description' => 'Defeat 1000 bots from treasure',
+                'description' => 'Defeat 1000 bots with the matching Treasure identified',
                 'value' => $this->treasureStorage->fetchExperienceSumForUser($userId, 'consumable'),
                 'max' => 1000,
             ],
