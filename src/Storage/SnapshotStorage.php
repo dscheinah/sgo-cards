@@ -48,7 +48,7 @@ class SnapshotStorage extends Storage
                 $player->try,
                 (int) $totalBase,
                 (int) $totalCalculation,
-                $totalBase ? (int) ($totalCalculation / $totalBase * 100) - 100 : 0,
+                max(0, $totalBase ? (int) ($totalCalculation / $totalBase * 100) - 100 : 0),
             ]
         );
     }
