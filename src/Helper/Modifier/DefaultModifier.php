@@ -21,9 +21,9 @@ class DefaultModifier implements ModifierInterface
                 continue;
             }
             if ($value < 1) {
-                $data[$key] -= $data[$key] * max(0, 1 - max($value / $change, .25));
+                $data[$key] -= $data[$key] * max(log((1 - $value) * $change + 1, 10), 0);
             } else {
-                $data[$key] += $data[$key] * max(0, log($value * $change, 10));
+                $data[$key] += $data[$key] * max(log(($value - 1) * $change + 1, 10), 0);
             }
         }
         return $data;

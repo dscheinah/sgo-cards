@@ -76,7 +76,7 @@ return [
     ],
     'more_modifiers' => [
         'data' => [
-            'mods' => 1.8,
+            'mods' => 1.7,
         ],
         'modifiers' => true,
         'world' => true,
@@ -84,7 +84,7 @@ return [
     ],
     'reduce_modifiers' => [
         'data' => [
-            'mods' => 0.5,
+            'mods' => 0.6,
         ],
         'modifiers' => true,
         'world' => true,
