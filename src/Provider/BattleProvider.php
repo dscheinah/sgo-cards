@@ -150,7 +150,7 @@ class BattleProvider
     }
 
     private function stats(array $player, array $enemy): array {
-        $crit = (rand() % 100 < $player['speed'] % 100 ? 1.2 : 1) + (int) ($player['speed'] / 100) * .2;
+        $crit = (rand() % 100 < (int) $player['speed'] % 100 ? 1.2 : 1) + (int) ($player['speed'] / 100) * .2;
         return  [
             'crit' => $crit,
             'damage' => max($player['damage'] * $crit - $enemy['defense'], 0),
