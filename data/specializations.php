@@ -61,7 +61,7 @@ return [
         'name' => 'Fighter',
         'description' => 'Increase Damage',
         'data' => [
-            'damage' => 10,
+            'damage' => 15,
         ],
         'modifiers' => [
             'add_damage',
@@ -86,7 +86,7 @@ return [
         'name' => 'Barbarian',
         'description' => 'More Damage and special Defense',
         'data' => [
-            'damage' => 90,
+            'damage' => 60,
         ],
         'modifiers' => [
             'add_damage',
@@ -141,7 +141,7 @@ return [
         'name' => 'Wizard',
         'description' => 'Increase Magic',
         'data' => [
-            'magic' => 10,
+            'magic' => 20,
         ],
         'modifiers' => [
             'add_magic',
@@ -153,7 +153,7 @@ return [
         'name' => 'Mage',
         'description' => 'Increase Magic and offensive Magic',
         'data' => [
-            'magic' => 30,
+            'magic' => 40,
         ],
         'modifiers' => [
             'add_magic',
@@ -166,7 +166,7 @@ return [
         'name' => 'Sorcerer',
         'description' => 'More Magic and offensive Magic',
         'data' => [
-            'magic' => 90,
+            'magic' => 80,
         ],
         'modifiers' => [
             'add_magic',
