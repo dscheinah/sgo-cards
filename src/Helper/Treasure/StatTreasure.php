@@ -49,7 +49,7 @@ class StatTreasure implements TreasureInterface
         foreach ($calculation as $key => $value) {
             $calculation[$key] = $value - $reduction;
             if ($calculation[$key] < 0) {
-                $treasure->power -= $calculation[$key];
+                $treasure->power += $calculation[$key];
                 $calculation[$key] = 0;
             }
         }
