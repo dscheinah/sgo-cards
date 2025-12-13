@@ -155,8 +155,8 @@ return [
     ],
     'convert_damage_to_health' => [
         'data' => [
-            'damage' => 0.9,
-            'health' => 1.1,
+            'damage' => 0.8,
+            'health' => 1.2,
         ],
         'multiplicative' => true,
         'self' => true,
@@ -164,8 +164,8 @@ return [
     ],
     'convert_defense_to_health' => [
         'data' => [
-            'defense' => 0.9,
-            'health' => 1.1,
+            'defense' => 0.8,
+            'health' => 1.2,
         ],
         'multiplicative' => true,
         'self' => true,
@@ -173,8 +173,8 @@ return [
     ],
     'convert_magic_to_health' => [
         'data' => [
-            'magic' => 0.9,
-            'health' => 1.1,
+            'magic' => 0.8,
+            'health' => 1.2,
         ],
         'multiplicative' => true,
         'self' => true,
@@ -182,8 +182,8 @@ return [
     ],
     'convert_speed_to_health' => [
         'data' => [
-            'speed' => 0.9,
-            'health' => 1.1,
+            'speed' => 0.8,
+            'health' => 1.2,
         ],
         'multiplicative' => true,
         'self' => true,
@@ -223,7 +223,7 @@ return [
     ],
     'convert_all_to_damage' => [
         'data' => [
-            'damage' => 1.3,
+            'damage' => 1.4,
             'health' => 0.9,
             'defense' => 0.9,
             'magic' => 0.9,
