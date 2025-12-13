@@ -124,9 +124,9 @@ class BattleProvider
 
             $battle->log($player, $enemy, $playerStats, $enemyStats);
 
-            $drain = 1.1 ** $battle->duration;
-            $player['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + (int) $drain;
-            $enemy['health'] -= $playerStats['damage'] + $playerStats['magic'] + (int) $drain;
+            $drain = (int) (1.1 ** $battle->duration);
+            $player['health'] -= $enemyStats['damage'] + $enemyStats['magic'] + $drain;
+            $enemy['health'] -= $playerStats['damage'] + $playerStats['magic'] + $drain;
             $battle->duration++;
 
             $battle->log($player, $enemy, $playerStats, $enemyStats);
@@ -150,8 +150,10 @@ class BattleProvider
     }
 
     private function stats(array $player, array $enemy): array {
+        $crit = (rand() % 100 < $player['speed'] % 100 ? 1.2 : 1) + (int) ($player['speed'] / 100) * .2;
         return  [
-            'damage' => max($player['damage'] - $enemy['defense'], 0),
+            'crit' => $crit,
+            'damage' => max($player['damage'] * $crit - $enemy['defense'], 0),
             'magic' => max($player['magic_offense'] - $enemy['magic_defense'], 0),
         ];
     }

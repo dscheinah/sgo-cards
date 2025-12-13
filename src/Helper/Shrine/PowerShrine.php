@@ -11,4 +11,10 @@ class PowerShrine extends NoopShrine
         }
         return $player;
     }
+
+    public static function stats(array $stats): array
+    {
+        $stats['magic'] *= ($stats['crit'] - 1) / 2 + 1;
+        return $stats;
+    }
 }
