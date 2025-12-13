@@ -19,7 +19,7 @@ class VoidArea implements AreaInterface
 
         shuffle($values);
 
-        $player['health'] = $values[0] * 10;
+        $player['health'] = max(1, $values[0]) * 10;
         $player['damage'] = $values[1];
         $player['defense'] = $values[2];
         $player['magic'] = $values[3];
