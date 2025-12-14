@@ -65,7 +65,7 @@ class BattleProvider
 
         $player = $this->prepare($playerCalculation, $enemyCalculation);
         $enemy = $this->prepare($enemyCalculation, $playerCalculation);
-        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
+        $battle->log($player, $enemy, $this->stats($player, $enemy, false), $this->stats($enemy, $player, false));
 
         foreach ($battlefield->treasures as $treasure) {
             $playerCalculation = $treasure->calculation($playerCalculation);
@@ -77,7 +77,7 @@ class BattleProvider
 
         $player = $this->prepare($playerCalculation, $enemyCalculation);
         $enemy = $this->prepare($enemyCalculation, $playerCalculation);
-        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
+        $battle->log($player, $enemy, $this->stats($player, $enemy, false), $this->stats($enemy, $player, false));
 
         foreach ($battlefield->treasures as $treasure) {
             $player = $treasure->player($player);
@@ -91,12 +91,12 @@ class BattleProvider
             $enemy = $battlefield->area->handler::player($enemy);
         }
 
-        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
+        $battle->log($player, $enemy, $this->stats($player, $enemy, false), $this->stats($enemy, $player, false));
 
         $player['health'] -= $enemy['speed_damage'];
         $enemy['health'] -= $player['speed_damage'];
 
-        $battle->log($player, $enemy, $this->stats($player, $enemy), $this->stats($enemy, $player));
+        $battle->log($player, $enemy, $this->stats($player, $enemy, false), $this->stats($enemy, $player, false));
 
         while ($player['health'] > 0 && $enemy['health'] > 0) {
             foreach ($battlefield->treasures as $treasure) {
@@ -153,8 +153,12 @@ class BattleProvider
         return $player;
     }
 
-    private function stats(array $player, array $enemy): array {
-        $crit = (rand() % 100 < (int) $player['speed'] % 100 ? 1.2 : 1) + (int) ($player['speed'] / 100) * .2;
+    private function stats(array $player, array $enemy, bool $useCrit = true): array {
+        if ($useCrit) {
+            $crit = (rand() % 100 < (int) $player['speed'] % 100 ? 1.2 : 1) + (int) ($player['speed'] / 100) * .2;
+        } else {
+            $crit = 1;
+        }
         return  [
             'crit' => $crit,
             'damage' => max($player['damage'] * $crit - $enemy['defense'], 0),
