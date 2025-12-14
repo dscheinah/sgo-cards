@@ -4,6 +4,11 @@ namespace App\Helper\Area;
 
 class SwampArea implements AreaInterface
 {
+    public static function calculation(array $calculation): array
+    {
+        return $calculation;
+    }
+
     public static function player(array $player): array
     {
         $player['speed'] = 0;

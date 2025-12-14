@@ -70,6 +70,10 @@ class BattleProvider
         foreach ($battlefield->treasures as $treasure) {
             $playerCalculation = $treasure->calculation($playerCalculation);
         }
+        if ($battlefield->area?->handler) {
+            $playerCalculation = $battlefield->area->handler::calculation($playerCalculation);
+            $enemyCalculation = $battlefield->area->handler::calculation($enemyCalculation);
+        }
 
         $player = $this->prepare($playerCalculation, $enemyCalculation);
         $enemy = $this->prepare($enemyCalculation, $playerCalculation);

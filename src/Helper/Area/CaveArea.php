@@ -4,6 +4,11 @@ namespace App\Helper\Area;
 
 class CaveArea implements AreaInterface
 {
+    public static function calculation(array $calculation): array
+    {
+        return $calculation;
+    }
+
     public static function player(array $player): array
     {
         $player['magic_defense'] += $player['defense'];

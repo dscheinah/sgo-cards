@@ -4,30 +4,28 @@ namespace App\Helper\Area;
 
 class VoidArea implements AreaInterface
 {
-    public static function player(array $player): array
+    public static function calculation(array $calculation): array
     {
         $values = [
-            $player['health'] / 10,
-            $player['damage'],
-            $player['defense'],
-            $player['magic'],
-            $player['magic_offense'],
-            $player['magic_defense'],
-            $player['speed'],
-            $player['speed_damage'],
+            $calculation['health'],
+            $calculation['damage'],
+            $calculation['defense'],
+            $calculation['magic'],
+            $calculation['speed'],
         ];
 
         shuffle($values);
 
-        $player['health'] = max(1, $values[0]) * 10;
-        $player['damage'] = $values[1];
-        $player['defense'] = $values[2];
-        $player['magic'] = $values[3];
-        $player['magic_offense'] = $values[4];
-        $player['magic_defense'] = $values[5];
-        $player['speed'] = $values[6];
-        $player['speed_damage'] = $values[7];
+        $calculation['health'] = max(1, $values[0]);
+        $calculation['damage'] = $values[1];
+        $calculation['defense'] = $values[2];
+        $calculation['magic'] = $values[3];
+        $calculation['speed'] = $values[4];
+        return $calculation;
+    }
 
+    public static function player(array $player): array
+    {
         return $player;
     }
 

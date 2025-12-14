@@ -4,9 +4,14 @@ namespace App\Helper\Area;
 
 class RunwayArea implements AreaInterface
 {
+    public static function calculation(array $calculation): array
+    {
+        $calculation['health'] += $calculation['speed'] / 2;
+        return $calculation;
+    }
+
     public static function player(array $player): array
     {
-        $player['health'] += $player['speed'] * 5;
         return $player;
     }
 
