@@ -60,30 +60,26 @@ class HeroRepository
 
     public function getListForUser(string $userId, array $achievements, ?Tournament $tournament, ?int $heroId): array
     {
-        $tier = $this->tierFromAchievements($achievements);
-
         if ($heroId) {
             $this->heroStorage->updateActive($userId, $heroId);
         }
 
         $heroes = [];
         foreach ($this->heroStorage->fetchIdsForUser($userId) as $data) {
-            $heroes[] = $this->heroBuilder->load($tier, $data['id'])?->list($tournament?->modifier);
+            $heroes[] = $this->heroBuilder->load($achievements['tier'], $data['id'])?->list($tournament?->modifier);
         }
         return array_pad(array_filter($heroes), $this->count, null);
     }
 
     public function getForUser(string $userId, array $achievements, ?int $heroId): ?array
     {
-        $tier = $this->tierFromAchievements($achievements);
-
         if (!$heroId) {
-            return $this->heroBuilder->create($tier, $userId)->output();
+            return $this->heroBuilder->create($achievements['tier'], $userId)->output();
         }
 
         foreach ($this->heroStorage->fetchIdsForUser($userId) as $data) {
             if ($data['id'] === $heroId) {
-                return $this->heroBuilder->load($tier, $heroId)?->output();
+                return $this->heroBuilder->load($achievements['tier'], $heroId)?->output();
             }
         }
         return null;
@@ -96,11 +92,9 @@ class HeroRepository
 
     public function getRandomEnemies(array $achievements, ?Tournament $tournament): array
     {
-        $tier = $this->tierFromAchievements($achievements);
-
         $heroes = [];
         foreach ($this->heroStorage->fetchRandomIds($this->count * $this->count) as $data) {
-            $heroes[] = $this->heroBuilder->load($tier, $data['id'])?->list($tournament?->modifier);
+            $heroes[] = $this->heroBuilder->load($achievements['tier'], $data['id'])?->list($tournament?->modifier);
         }
         return array_filter($heroes);
     }
@@ -135,11 +129,9 @@ class HeroRepository
 
     public function battle(array $achievements, ?Tournament $tournament, int $heroId, int $enemyId): ?array
     {
-        $tier = $this->tierFromAchievements($achievements);
-
         $tiers = [];
         $log = [];
-        for ($i = 0; $i <= $tier; $i++) {
+        for ($i = 0; $i <= $achievements['tier']; $i++) {
             $battle = $this->heroBuilder->battle($i, $heroId, $enemyId, $tournament);
             if (!$battle) {
                 return null;
@@ -154,17 +146,5 @@ class HeroRepository
             'tiers' => $tiers,
             'log' => array_merge(...$log),
         ];
-    }
-
-    private function tierFromAchievements(array $achievements): int
-    {
-        $percentage = round(array_sum(array_column($achievements, 'value')) / count($achievements));
-        if ($percentage >= 66) {
-            return 2;
-        }
-        if ($percentage >= 33) {
-            return 1;
-        }
-        return 0;
     }
 }

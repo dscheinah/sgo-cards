@@ -31,7 +31,7 @@
     let league = {};
     let opened = {};
     let user = state.get('user');
-    let achievements = state.get('achievements') || [];
+    let achievements = state.get('achievements') || {achievements: [], amount: 0};
     const notify = {
         achievement: state.get('notify-achievement'),
     };
@@ -167,14 +167,11 @@
                 return details;
             });
 
-            helper.set('#statistics-achievements', 'hidden', !achievements.length);
-            const amount = achievements.length
-                ? Math.round(achievements.reduce((total, item) => total + item.value, 0) / achievements.length)
-                : 0;
-            helper.set('#statistics-achievements-amount', 'value', amount);
-            helper.set('#statistics-achievements-amount', 'innerHTML', `${amount} %`);
-            helper.set('#statistics-achievements-amount', 'className', progressClassName(amount));
-            helper.list('#statistics-achievements-list', achievements, (item) => {
+            helper.set('#statistics-achievements', 'hidden', !achievements.achievements.length);
+            helper.set('#statistics-achievements-amount', 'value', achievements.amount);
+            helper.set('#statistics-achievements-amount', 'innerHTML', `${achievements.amount} %`);
+            helper.set('#statistics-achievements-amount', 'className', progressClassName(achievements.amount));
+            helper.list('#statistics-achievements-list', achievements.achievements, (item) => {
                 const li = helper.create('li');
                 li.innerHTML = `
                     ${item.value > 99 ? '<strong>' : ''}${item.description}${item.value > 99 ? '</strong>' : ''}

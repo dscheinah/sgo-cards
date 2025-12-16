@@ -18,11 +18,10 @@ function achievement(payload, update) {
     if (!payload.length) {
         return false;
     }
-    const hash = Math.round(payload.reduce((total, item) => total + item.value, 0) / payload.length).toString();
     if (update) {
-        window.localStorage.setItem('notify-achievement', hash);
+        window.localStorage.setItem('notify-achievement', payload.amount);
     }
-    return window.localStorage.getItem('notify-achievement') !== hash;
+    return window.localStorage.getItem('notify-achievement') !== payload.amount;
 }
 
 export default function (state) {
