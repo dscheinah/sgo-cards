@@ -2,6 +2,7 @@
 
 namespace App\Storage;
 
+use Generator;
 use Sx\Data\BackendException;
 use Sx\Data\Storage;
 
@@ -66,5 +67,10 @@ class UserStorage extends Storage
     public function logout(string $id): void
     {
         $this->execute('UPDATE `users` SET `logged_in` = FALSE WHERE `id` = ?', [$id]);
+    }
+
+    public function fetchAllIds(): Generator
+    {
+        return $this->fetch('SELECT `id` FROM `users`');
     }
 }

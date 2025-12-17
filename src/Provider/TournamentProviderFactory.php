@@ -16,6 +16,7 @@ class TournamentProviderFactory implements FactoryInterface
             $injector->get(TournamentStorage::class),
             $injector->get(ModifierHelper::class),
             $injector->get(AreaHelper::class),
+            $options['next']
         );
     }
 }

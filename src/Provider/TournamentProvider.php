@@ -14,6 +14,7 @@ class TournamentProvider
         private readonly TournamentStorage $tournamentStorage,
         private readonly ModifierHelper $modifierHelper,
         private readonly AreaHelper $areaHelper,
+        private readonly string $next,
     ) {
     }
 
@@ -29,5 +30,14 @@ class TournamentProvider
         $tournament->area = $this->areaHelper->get($data['area']);
         $tournament->date = new DateTimeImmutable($data['date']);
         return $tournament;
+    }
+
+    public function create(): void
+    {
+        $this->tournamentStorage->create(
+            $this->modifierHelper->pickWorld(),
+            $this->areaHelper->pick(),
+            new DateTimeImmutable($this->next)->format('Y-m-d H:i:s'),
+        );
     }
 }

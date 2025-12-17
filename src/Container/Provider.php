@@ -84,6 +84,8 @@ use App\Repository\RoundRepository;
 use App\Repository\RoundRepositoryFactory;
 use App\Repository\SpecializationRepository;
 use App\Repository\SpecializationRepositoryFactory;
+use App\Repository\TournamentRepository;
+use App\Repository\TournamentRepositoryFactory;
 use App\Repository\TreasureRepository;
 use App\Repository\TreasureRepositoryFactory;
 use App\Repository\UserRepository;
@@ -188,6 +190,7 @@ class Provider implements ProviderInterface
         $injector->set(LeagueRepository::class, LeagueRepositoryFactory::class);
         $injector->set(RoundRepository::class, RoundRepositoryFactory::class);
         $injector->set(SpecializationRepository::class, SpecializationRepositoryFactory::class);
+        $injector->set(TournamentRepository::class, TournamentRepositoryFactory::class);
         $injector->set(TreasureRepository::class, TreasureRepositoryFactory::class);
         $injector->set(UserRepository::class, UserRepositoryFactory::class);
 

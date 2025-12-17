@@ -67,4 +67,9 @@ class HeroStorage extends Storage
     {
         return $this->fetch('SELECT `id` FROM `heroes` ORDER BY RAND() LIMIT ?', [$count]);
     }
+
+    public function fetchAllActive(): Generator
+    {
+        return $this->fetch('SELECT * FROM `heroes` WHERE `active` = 1');
+    }
 }

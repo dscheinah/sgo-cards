@@ -59,4 +59,9 @@ class AreaHelper
         $area->handler = $input['handler'];
         return $area;
     }
+
+    public function pick(): string
+    {
+        return array_rand($this->areas);
+    }
 }
