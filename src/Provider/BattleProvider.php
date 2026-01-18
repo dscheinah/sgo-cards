@@ -145,7 +145,7 @@ class BattleProvider
         $player['health'] *= 10;
 
         $player['magic_offense'] = $player['magic'];
-        $player['magic_defense'] = (int) ($player['magic'] / 3 * 2) + (int) ($player['defense'] / 3);
+        $player['magic_defense'] = (int) ($player['magic'] / 2) + (int) ($player['defense'] / 2);
 
         $player['speed'] = max(0, $player['speed'] - $enemy['speed']);
         $player['speed_damage'] = $player['speed'] > 0 ? $player['damage'] : 0;
